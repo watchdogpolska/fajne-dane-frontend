@@ -1,0 +1,19 @@
+
+.disabled:after {
+    content: "";  // :before and :after both require content
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #d7d7e2;
+    opacity: .7;
+    // mix-blend-mode: color;
+    // mix-blend-mode: hard-light;
+    // mix-blend-mode: hue;
+}
+
+.disabled {
+    position: relative;
+    display: flex;
+}
