@@ -8,36 +8,12 @@ import {withDashboardLayout} from '../../../hocs/with-dashboard-layout';
 import {gtm} from '../../../lib/gtm';
 import {Search as SearchIcon} from '../../../icons/search';
 import {campaignRepository} from '../../../api/repositories/campaign-repository';
-import {CampaignsListTable} from '../../../components/dashboard/campaigns/campaigns-list-table';
+import {CampaignsListTable} from '../../../components/dashboard/campaigns/campaigns-list/campaigns-list-table';
 import {CampaignDrawer} from '../../../components/dashboard/campaigns/campaigns-list/components/campaign-drawer';
 import {DeleteConfirmModal} from '../../../components/dashboard/common/delete-confirm-modal';
+import {CampaignsListInner} from '../../../components/dashboard/campaigns/campaigns-list/components/campaigns-list-inner';
+import {applyFilters, applySort, applyPagination} from './utils';
 
-
-const CampaignListInner = styled('div',
-    { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-        flexGrow: 1,
-        overflow: 'hidden',
-        paddingBottom: theme.spacing(8),
-        paddingTop: theme.spacing(8),
-        zIndex: 1,
-        [theme.breakpoints.up('lg')]: {
-            marginRight: -500
-        },
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen
-        }),
-        ...(open && {
-            [theme.breakpoints.up('lg')]: {
-                marginRight: 0
-            },
-            transition: theme.transitions.create('margin', {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen
-            })
-        })
-    }));
 
 const tabs = [
     {
@@ -60,47 +36,6 @@ const sortOptions = [
         value: 'id|asc'
     }
 ];
-
-const applyFilters = (campaigns, filters) => campaigns.filter((campaign) => {
-
-    return true;
-});
-
-const descendingComparator = (a, b, orderBy) => {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
-};
-
-const getComparator = (order, orderBy) => (order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy));
-
-const applySort = (campaigns, sort) => {
-    const [orderBy, order] = sort.split('|');
-    const comparator = getComparator(order, orderBy);
-    const stabilizedThis = campaigns.map((el, index) => [el, index]);
-
-    stabilizedThis.sort((a, b) => {
-        const newOrder = comparator(a[0], b[0]);
-
-        if (newOrder !== 0) {
-            return newOrder;
-        }
-
-        return a[1] - b[1];
-    });
-
-    return stabilizedThis.map((el) => el[0]);
-};
-
-const applyPagination = (campaigns, page, rowsPerPage) => campaigns.slice(page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage);
-
 
 const Campaigns = () => {
     const [drawer, setDrawer] = useState({
@@ -131,9 +66,7 @@ const Campaigns = () => {
 
     useEffect(() => {
         gtm.push({ event: 'page_view' });
-    }, []);
 
-    useEffect(() => {
         fetchCampaignData();
     }, []);
 
@@ -240,7 +173,7 @@ const Campaigns = () => {
                 <DeleteConfirmModal open={deleteModalOpen}
                                     onClose={handleCloseDelete}
                                     onAccept={handleAcceptDelete}/>
-                <CampaignListInner open={drawer.isOpen}>
+                <CampaignsListInner open={drawer.isOpen}>
                     <Box sx={{ mb: 4 }}>
                         <Grid container
                               justifyContent="space-between"
@@ -341,7 +274,7 @@ const Campaigns = () => {
                             </Card>
                         </Grid>
                     </Grid>
-                </CampaignListInner>
+                </CampaignsListInner>
                 <CampaignDrawer containerRef={rootRef} 
                                 onClose={handleCloseDrawer}
                                 onCampaignUpdate={handleCampaignUpdate}

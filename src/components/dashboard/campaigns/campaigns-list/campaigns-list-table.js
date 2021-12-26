@@ -13,9 +13,9 @@ import {
     TablePagination,
     TableRow
 } from '@mui/material';
-import {ArrowRight as ArrowRightIcon} from '../../../icons/arrow-right';
-import {PencilAlt as PencilAltIcon} from '../../../icons/pencil-alt';
-import {Scrollbar} from '../../scrollbar';
+import {ArrowRight as ArrowRightIcon} from '../../../../icons/arrow-right';
+import {PencilAlt as PencilAltIcon} from '../../../../icons/pencil-alt';
+import {Scrollbar} from '../../../scrollbar';
 
 
 export const CampaignsListTable = (props) => {
@@ -148,14 +148,11 @@ export const CampaignsListTable = (props) => {
                                             Edytuj
                                             <PencilAltIcon fontSize="small" />
                                         </Button>
-                                        <NextLink
-                                            href={`/dashboard/campaigns/${campaign.id}`}
-                                            passHref
-                                        >
+                                        <NextLink href={`/dashboard/campaigns/${campaign.id}`} 
+                                                  passHref>
                                             <Button component="a"
                                                     variant="contained">
-                                                Przejdź
-                                                <ArrowRightIcon fontSize="small" />
+                                                Przejdź <ArrowRightIcon fontSize="small" />
                                             </Button>
                                         </NextLink>
                                     </TableCell>

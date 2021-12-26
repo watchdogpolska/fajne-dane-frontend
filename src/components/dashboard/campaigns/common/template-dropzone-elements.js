@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import {Box, Button, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip, Typography} from '@mui/material';
-import {Duplicate as DuplicateIcon} from '../../../../../icons/duplicate';
-import {ArrowRight as ArrowRightIcon} from '../../../../../icons/arrow-right';
-import {Download as DownloadIcon} from '../../../../../icons/download';
-import {X as XIcon} from '../../../../../icons/x';
-import {bytesToSize} from '../../../../../utils/bytes-to-size';
+import {Duplicate as DuplicateIcon} from '../../../../icons/duplicate';
+import {ArrowRight as ArrowRightIcon} from '../../../../icons/arrow-right';
+import {Download as DownloadIcon} from '../../../../icons/download';
+import {X as XIcon} from '../../../../icons/x';
+import {bytesToSize} from '../../../../utils/bytes-to-size';
 
 
-export const CampaignTemplateDropzoneElements = (props) => {
+export const TemplateDropzoneElements = (props) => {
     const {
         file,
         onRemove,
@@ -107,7 +107,7 @@ export const CampaignTemplateDropzoneElements = (props) => {
     );
 };
 
-CampaignTemplateDropzoneElements.propTypes = {
+TemplateDropzoneElements.propTypes = {
     accept: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.arrayOf(PropTypes.string)
@@ -131,5 +131,5 @@ CampaignTemplateDropzoneElements.propTypes = {
     preventDropOnDocument: PropTypes.bool
 };
 
-CampaignTemplateDropzoneElements.defaultProps = {
+TemplateDropzoneElements.defaultProps = {
 };

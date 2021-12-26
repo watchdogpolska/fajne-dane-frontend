@@ -3,13 +3,12 @@ import {TemplateDropzone} from '../../common/template-dropzone';
 import {Download as DownloadIcon} from '../../../../../icons/download';
 
 
-export const CampaignTemplateCard = (props) => {
+export const ResourceFileCard = (props) => {
     const {
         formik,
         file,
         onDrop,
         disabled,
-        downloadMetaTemplate,
         ...other
     } = props;
 
@@ -36,13 +35,6 @@ export const CampaignTemplateCard = (props) => {
                                 Wgraj szablon zbioru danych zgodny ze schematem. Możesz pobrać schemat danych, aby zapoznać się z jego strukturą.
                             </Typography>
                         </Box>
-                        <Button onClick={downloadMetaTemplate}
-                                sx={{
-                                    m: 1 , mr: 'auto', ml: 0
-                                }}
-                                variant="outlined">
-                            Pobierz schemat <DownloadIcon fontSize="small"/>
-                        </Button>
                     </Grid>
                     <Grid item md={8} xs={12}>
                         <TemplateDropzone accept="application/json"
@@ -56,5 +48,5 @@ export const CampaignTemplateCard = (props) => {
     );
 };
 
-CampaignTemplateCard.propTypes = {
+ResourceFileCard.propTypes = {
 };

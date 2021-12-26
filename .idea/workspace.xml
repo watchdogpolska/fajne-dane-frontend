@@ -5,34 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1ffc2cd-6236-4fb0-9a5e-8027a540e296" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/api/models/campaign.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/models/template.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/repositories/campaign-repository.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/repositories/template-repository.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/session.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list-table.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-drawer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/common/delete-confirm-modal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/common/redirect-back-confirm-modal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hooks/use-has-changed.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/icons/database.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/icons/question-mark-circle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/create.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/text-to-file.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/hello.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/public/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/vercel.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Home.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/models/document.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/repositories/document-repository.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-details-form.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-details-preview.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-template-download.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/documents-list-table.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/components/resource-file-card.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/components/resource-validation-card.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list-table.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-drawer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-drawer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/campaigns-create-from.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/campaigns-create-from.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/components/campagin-template-card.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/components/campagin-template-card.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/components/campaign-name-card.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/components/campaign-details-card.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/components/campaign-template-dropzone-elements.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/components/campaign-template-dropzone.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/components/campaign-validation-card.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/components/campaign-validation-card.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +35,7 @@
       <list>
         <option value="CSS File" />
         <option value="SCSS File" />
+        <option value="Python Script" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -68,7 +60,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/dashboard/common" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/components" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -78,11 +70,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/components/dashboard/common" />
-      <recent name="$PROJECT_DIR$/src/icons" />
+      <recent name="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/components" />
+      <recent name="$PROJECT_DIR$/src/api/models" />
+      <recent name="$PROJECT_DIR$/src/components/dashboard/campaigns" />
       <recent name="$PROJECT_DIR$/src/api/repositories" />
-      <recent name="$PROJECT_DIR$/src/components" />
-      <recent name="$PROJECT_DIR$/src/pages/dashboard/campaigns" />
+      <recent name="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/pages/dashboard" />
@@ -127,7 +119,14 @@
       <workItem from="1639985520761" duration="4603000" />
       <workItem from="1639996623735" duration="7000" />
       <workItem from="1640012250455" duration="8053000" />
-      <workItem from="1640119554684" duration="9365000" />
+      <workItem from="1640119554684" duration="10199000" />
+      <workItem from="1640163757495" duration="597000" />
+      <workItem from="1640195661398" duration="3303000" />
+      <workItem from="1640250862867" duration="652000" />
+      <workItem from="1640272490714" duration="12000" />
+      <workItem from="1640431440839" duration="8900000" />
+      <workItem from="1640452076905" duration="11835000" />
+      <workItem from="1640477769715" duration="2249000" />
     </task>
     <servers />
   </component>

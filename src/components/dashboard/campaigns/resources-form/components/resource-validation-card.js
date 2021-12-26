@@ -2,7 +2,7 @@ import {TemplateDropzoneElements} from '../../common/template-dropzone-elements'
 import {Card, CardContent, Grid, Typography} from '@mui/material';
 
 
-export const CampaignValidationCard = (props) => {
+export const ResourceValidationCard = (props) => {
     const {
         formik,
         validationReport,
@@ -39,7 +39,7 @@ export const CampaignValidationCard = (props) => {
                                                           onDownloadReport={onDownloadReport}
                                                           onRemove={onRemove}
                                                           onValidate={onValidate}/>
-                            :
+                                :
                                 <Typography color="textSecondary"
                                             variant="body2"
                                             sx={{ mt: 1 }}>
@@ -53,5 +53,5 @@ export const CampaignValidationCard = (props) => {
     );
 };
 
-CampaignValidationCard.propTypes = {
+ResourceValidationCard.propTypes = {
 };

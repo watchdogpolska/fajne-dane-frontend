@@ -5,113 +5,75 @@ import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {Box, Button, Grid} from '@mui/material';
 import {campaignRepository} from '../../../../api/repositories/campaign-repository';
-import {templateRepository} from '../../../../api/repositories/template-repository';
 import {textToFile} from '../../../../utils/text-to-file';
-import {CampaignDetailsCard} from "./components/campaign-details-card";
-import {CampaignTemplateCard} from "./components/campagin-template-card";
-import {CampaignValidationCard} from "./components/campaign-validation-card";
+import {CampaignNameCard} from "./components/resource-details-card";
 import {useHasChanged} from "../../../../hooks/use-has-changed";
 import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
+import {ResourceDetailsCard} from "./components/resource-details-card";
+import {ResourceFileCard} from "./components/resource-file-card";
+import {ResourceValidationCard} from "./components/resource-validation-card";
 
 
-export const CampaignCreateForm = (props) => {
+export const ResourcesCreateForm = (props) => {
     const {
+        campaignId,
         ...other
     } = props;
 
     const router = useRouter();
     const [cancelModalOpen, setCancelModalOpen ] = useState(false);
-    const [loading, setLoading] = useState();
-    const [metaTemplate, setMetaTemplate] = useState();
-    const [template, setTemplate] = useState({
-        "file": null,
-        "template": null,
-        "report": null
-    });
-    const [hasTemplateChanged, prevTemplate] = useHasChanged(template);
+    const [campaign, setCampaign] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [resource, setResource] = useState({
+        file: null,
+        report: null
+    })
+
+    async function fetchCampaignData() {
+        if (campaignId) {
+            let campaign = await campaignRepository.getCampaign({id: campaignId});
+            setCampaign(campaign);
+            console.log(campaign);
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
-        async function fetchData() {
-            let metaTemplate = await templateRepository.getMetaTemplate();
-            setMetaTemplate(metaTemplate);
-        }
-        fetchData();
+        fetchCampaignData();
     }, []);
 
     const handleDrop = (newFiles) => {
-        setTemplate({
-            "file": newFiles[0],
-            "template": null,
-            "report": null
-        });
     };
 
     const handleRemove = (file) => {
-        setTemplate({
-            "file": null,
-            "template": null,
-            "report": null
-        });
-    };
-
-    useEffect(() => {
-        if (hasTemplateChanged && prevTemplate) {
-            if (template.file && template.file !== prevTemplate.file)
-                loadFile(template.file);
-        }
-    }, [template]);
-    
-    const loadFile = (file) => {
-        const fileReader = new FileReader();
-        fileReader.readAsText(file, "UTF-8");
-        fileReader.onload = e => {
-            let parsedData = JSON.parse(e.target.result);
-            setTemplate({
-                "file": template.file,
-                "template": parsedData,
-                "report": null
-            });
-        };
-    };
-
-    const handleValidate = () => {
-        async function fetchData() {
-            let report = await templateRepository.validate({template: template.template});
-            setTemplate({
-                "file": template.file,
-                "template": template.template,
-                "report": report
-            });
-        }
-        fetchData();
-    };
-
-    const downloadReport = () => {
-        textToFile("validation-report.json", JSON.stringify(template.report));
-    };
-
-    const downloadMetaTemplate = () => {
-        textToFile("campaign-meta-template.json", JSON.stringify(metaTemplate.template));
     };
 
     const handleOnCancel = () => {
 
     };
 
+    const downloadReport = () => {
+
+    };
+
+    const handleValidate = () => {
+
+    };
+
     const formik = useFormik({
         initialValues: {
-            name: ''
+            name: '',
+            source: '',
+            description: '',
         },
         validationSchema: Yup.object({
             name: Yup.string().max(255),
+            source: Yup.string().max(255),
+            description: Yup.string().max(1000),
         }),
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
-                values['template'] = template.template;
-                await campaignRepository.createCampaign(values);
-                toast.success('Dodano nową kampanię!');
-                router.push('/dashboard/campaigns');
             } catch (err) {
                 console.error(err);
             }
@@ -122,13 +84,9 @@ export const CampaignCreateForm = (props) => {
     const handleCloseCancel = () => {setCancelModalOpen(false)};
     const handleAcceptCancel = (e) => {
         e.preventDefault();
-        router.push('/dashboard/campaigns');
     };
 
     if (loading)
-        return <div>Loading</div>;
-
-    if (metaTemplate === null)
         return <div>Loading</div>;
 
     return (
@@ -139,24 +97,25 @@ export const CampaignCreateForm = (props) => {
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <CampaignDetailsCard formik={formik}/>
+                        <ResourceDetailsCard formik={formik}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <CampaignTemplateCard downloadMetaTemplate={downloadMetaTemplate}
-                                              disabled={formik.values.name == ""}
+                        <ResourceFileCard disabled={formik.values.name == ""}
                                               onDrop={handleDrop}
-                                              file={template.file}
+                                              file={resource.file}
                                               formik={formik}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <CampaignValidationCard formik={formik}
-                                                file={template.file}
-                                                disabled={formik.values.name == "" || template.template === null}
-                                                validationReport={template.report}
+                        <ResourceValidationCard formik={formik}
+                                                file={resource.file}
+                                                disabled={formik.values.name == "" || resource.file === null}
+                                                validationReport={resource.report}
                                                 onDownloadReport={downloadReport}
                                                 onDrop={handleDrop}
                                                 onRemove={handleRemove}
                                                 onValidate={handleValidate}/>
+                    </Grid>
+                    <Grid item xs={12}>
                         <Box
                             sx={{
                                 display: 'flex',
@@ -174,7 +133,6 @@ export const CampaignCreateForm = (props) => {
                             </Button>
                             <Button sx={{ m: 1 }}
                                     type="submit"
-                                    disabled={!(template.report && template.report.isValid)}
                                     variant="contained">
                                 Dodaj zbiór danych
                             </Button>
@@ -186,5 +144,5 @@ export const CampaignCreateForm = (props) => {
     );
 };
 
-CampaignCreateForm.propTypes = {
+ResourcesCreateForm.propTypes = {
 };

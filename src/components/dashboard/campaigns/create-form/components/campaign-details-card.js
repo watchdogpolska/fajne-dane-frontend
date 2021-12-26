@@ -1,7 +1,7 @@
 import {Card, CardContent, Grid, TextField, Typography} from '@mui/material';
 
 
-export const CampaignNameCard = (props) => {
+export const CampaignDetailsCard = (props) => {
     const {
         formik,
         ...other
@@ -40,5 +40,5 @@ export const CampaignNameCard = (props) => {
     );
 };
 
-CampaignNameCard.propTypes = {
+CampaignDetailsCard.propTypes = {
 };

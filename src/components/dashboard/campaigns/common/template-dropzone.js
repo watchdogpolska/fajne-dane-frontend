@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import {useDropzone} from 'react-dropzone';
 import {Box, Link, Typography} from '@mui/material';
 
-export const CampaignTemplateDropzone = (props) => {
+export const TemplateDropzone = (props) => {
     const {
         accept,
         disabled,
@@ -96,7 +96,7 @@ export const CampaignTemplateDropzone = (props) => {
     );
 };
 
-CampaignTemplateDropzone.propTypes = {
+TemplateDropzone.propTypes = {
     accept: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.arrayOf(PropTypes.string)
@@ -120,5 +120,5 @@ CampaignTemplateDropzone.propTypes = {
     preventDropOnDocument: PropTypes.bool
 };
 
-CampaignTemplateDropzone.defaultProps = {
+TemplateDropzone.defaultProps = {
 };
