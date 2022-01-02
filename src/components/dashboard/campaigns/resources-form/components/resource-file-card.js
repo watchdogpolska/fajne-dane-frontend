@@ -37,7 +37,7 @@ export const ResourceFileCard = (props) => {
                         </Box>
                     </Grid>
                     <Grid item md={8} xs={12}>
-                        <TemplateDropzone accept="application/json"
+                        <TemplateDropzone accept="text/csv"
                                           file={file}
                                           onDrop={onDrop}
                                           maxFiles={1}/>

@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react';
 import Head from 'next/head';
-import {Box, Container, Grid, Typography} from '@mui/material';
+import {Box, Container, Grid, Typography, Link} from '@mui/material';
+import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
+import NextLink from 'next/link';
 import {withAuthGuard} from '../../../hocs/with-auth-guard';
 import {withDashboardLayout} from '../../../hocs/with-dashboard-layout';
 import {gtm} from '../../../lib/gtm';
@@ -16,7 +18,7 @@ const CreateCampaign = () => {
         <>
             <Head>
                 <title>
-                    Dashboard: Overview | Material Kit Pro
+                    Fajne Dane - Utwórz zbiór danych
                 </title>
             </Head>
             <Box component="main"
@@ -29,11 +31,33 @@ const CreateCampaign = () => {
                         <Grid container
                               justifyContent="space-between"
                               spacing={3}>
-                            <Grid item>
+                            <Grid item md={12}>
+                                <NextLink href="/dashboard/campaigns" passHref>
+                                    <Link color="textPrimary"
+                                          component="a"
+                                          sx={{
+                                              alignItems: 'center',
+                                              display: 'flex'
+                                          }}>
+                                        <ArrowBackIcon fontSize="small"
+                                                       sx={{ mr: 1 }}/>
+                                        <Typography variant="subtitle2">
+                                            Lista zbiorów danych
+                                        </Typography>
+                                    </Link>
+                                </NextLink>
+                            </Grid>
+                            <Grid item md={12}>
                                 <Typography variant="h4">
-                                    Dodaj kampanie
+                                    Dodaj zbiór
+                                </Typography>
+                                <Typography color="textSecondary"
+                                            variant="body2"
+                                            sx={{ mt: 1 }}>
+                                    W tym miejscu utworzysz zbiór danych: nadasz nazwę i wczytasz szablon zbioru danych.
                                 </Typography>
                             </Grid>
+
                         </Grid>
                     </Box>
                     <CampaignCreateForm/>

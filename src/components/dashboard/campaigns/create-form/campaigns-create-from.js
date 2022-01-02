@@ -40,17 +40,17 @@ export const CampaignCreateForm = (props) => {
 
     const handleDrop = (newFiles) => {
         setTemplate({
-            "file": newFiles[0],
-            "template": null,
-            "report": null
+            file: newFiles[0],
+            template: null,
+            report: null
         });
     };
 
     const handleRemove = (file) => {
         setTemplate({
-            "file": null,
-            "template": null,
-            "report": null
+            file: null,
+            template: null,
+            report: null
         });
     };
 
@@ -67,9 +67,9 @@ export const CampaignCreateForm = (props) => {
         fileReader.onload = e => {
             let parsedData = JSON.parse(e.target.result);
             setTemplate({
-                "file": template.file,
-                "template": parsedData,
-                "report": null
+                file: template.file,
+                template: parsedData,
+                report: null
             });
         };
     };
@@ -78,9 +78,9 @@ export const CampaignCreateForm = (props) => {
         async function fetchData() {
             let report = await templateRepository.validate({template: template.template});
             setTemplate({
-                "file": template.file,
-                "template": template.template,
-                "report": report
+                file: template.file,
+                template: template.template,
+                report: report
             });
         }
         fetchData();
@@ -92,10 +92,6 @@ export const CampaignCreateForm = (props) => {
 
     const downloadMetaTemplate = () => {
         textToFile("campaign-meta-template.json", JSON.stringify(metaTemplate.template));
-    };
-
-    const handleOnCancel = () => {
-
     };
 
     const formik = useFormik({

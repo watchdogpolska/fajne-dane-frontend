@@ -1,18 +1,19 @@
 import {useEffect, useRef, useState} from 'react';
 import Head from 'next/head';
+import NextLink from 'next/link';
 import {styled} from '@mui/material/styles';
 import {useRouter} from 'next/router'
-import {Box, Card, Divider, Grid, InputAdornment, Tab, Tabs, TextField, Typography} from '@mui/material';
+import {Box, Card, Button, Divider, Grid, InputAdornment, Tab, Tabs, TextField, Typography} from '@mui/material';
 import {withAuthGuard} from '../../../hocs/with-auth-guard';
 import {withDashboardLayout} from '../../../hocs/with-dashboard-layout';
-import {gtm} from '../../../lib/gtm';
 import {Search as SearchIcon} from '../../../icons/search';
 import {campaignRepository} from '../../../api/repositories/campaign-repository';
 import {CampaignsListTable} from '../../../components/dashboard/campaigns/campaigns-list/campaigns-list-table';
 import {CampaignDrawer} from '../../../components/dashboard/campaigns/campaigns-list/components/campaign-drawer';
 import {DeleteConfirmModal} from '../../../components/dashboard/common/delete-confirm-modal';
+import { Plus as PlusIcon } from '../../../icons/plus';
 import {CampaignsListInner} from '../../../components/dashboard/campaigns/campaigns-list/components/campaigns-list-inner';
-import {applyFilters, applySort, applyPagination} from './utils';
+import {applyFilters, applySort, applyPagination} from '../../../utils/filter-utils';
 
 
 const tabs = [
@@ -65,8 +66,6 @@ const Campaigns = () => {
     }
 
     useEffect(() => {
-        gtm.push({ event: 'page_view' });
-
         fetchCampaignData();
     }, []);
 
@@ -174,12 +173,12 @@ const Campaigns = () => {
                                     onClose={handleCloseDelete}
                                     onAccept={handleAcceptDelete}/>
                 <CampaignsListInner open={drawer.isOpen}>
-                    <Box sx={{ mb: 4 }}>
+                    <Box sx={{ mb: 4, px: 3 }}>
                         <Grid container
                               justifyContent="space-between"
                               spacing={3}>
-                            <Grid item>
-                                <Typography variant="h6">
+                            <Grid item md={8} xs={12}>
+                                <Typography variant="h4">
                                     Lista zbiorów danych
                                 </Typography>
                                 <Typography color="textSecondary"
@@ -187,6 +186,27 @@ const Campaigns = () => {
                                             sx={{ mt: 1 }}>
                                     Kampanie Sprawdzamy Jak Jest lub inne, zewnętrze zbiory danych. W tym miejscu dodasz lub usuniesz zbiór danych.
                                 </Typography>
+                            </Grid>
+                            <Grid item md={4} xs={12}>
+                                <Grid container
+                                      spacing={1}
+                                      sx={{
+                                          flexDirection: 'row-reverse',
+                                          mt: 2,
+                                          pl: 3,
+                                          '@media screen and (max-width: 1000px)': {
+                                              flexDirection: 'row',
+                                          },
+                                      }}>
+                                    <Grid item>
+                                        <NextLink href='/dashboard/campaigns/create' passHref>
+                                            <Button component="a"
+                                                    variant="contained">
+                                                <PlusIcon fontSize="small" /> Dodaj zbiór
+                                            </Button>
+                                        </NextLink>
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Box>
@@ -240,11 +260,11 @@ const Campaigns = () => {
                                                     </InputAdornment>
                                                 )
                                             }}
-                                            placeholder="Search customers"
+                                            placeholder="Wyszukaj po nazwie"
                                         />
                                     </Box>
                                     <TextField
-                                        label="Sort By"
+                                        label="Sortuj"
                                         name="sort"
                                         onChange={handleSortChange}
                                         select
@@ -275,11 +295,11 @@ const Campaigns = () => {
                         </Grid>
                     </Grid>
                 </CampaignsListInner>
-                <CampaignDrawer containerRef={rootRef} 
+                <CampaignDrawer containerRef={rootRef}
                                 onClose={handleCloseDrawer}
                                 onCampaignUpdate={handleCampaignUpdate}
                                 onDeleteCampaign={handleOpenDelete}
-                                open={drawer.isOpen} 
+                                open={drawer.isOpen}
                                 campaignId={drawer.campaignId}/>
             </Box>
         </>

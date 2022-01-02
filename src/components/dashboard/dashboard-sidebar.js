@@ -58,23 +58,8 @@ const getSections = (t) => [
     title: t('Raporty'),
     items: [
       {
-        title: t('Customers'),
-        path: '/dashboard/customers',
-        icon: <UsersIcon fontSize="small" />,
-        children: [
-          {
-            title: t('List'),
-            path: '/dashboard/customers'
-          },
-          {
-            title: t('Details'),
-            path: '/dashboard/customers/1'
-          },
-          {
-            title: t('Edit'),
-            path: '/dashboard/customers/1/edit'
-          }
-        ]
+        title: t('Lista raportów'),
+        path: '/dashboard/reports',
       },
     ]
   },
@@ -130,6 +115,8 @@ export const DashboardSidebar = (props) => {
             height: '100%'
           }}
         >
+          <Box>
+          </Box>
           <Divider
             sx={{
               borderColor: '#2D3748',
@@ -155,34 +142,6 @@ export const DashboardSidebar = (props) => {
               borderColor: '#2D3748'  // dark divider
             }}
           />
-          <Box sx={{ p: 2 }}>
-            <Typography
-              color="neutral.100"
-              variant="subtitle2"
-            >
-              {t('Need Help?')}
-            </Typography>
-            <Typography
-              color="neutral.500"
-              variant="body2"
-            >
-              {t('Check our docs')}
-            </Typography>
-            <NextLink
-              href="/docs/welcome"
-              passHref
-            >
-              <Button
-                color="secondary"
-                component="a"
-                fullWidth
-                sx={{ mt: 2 }}
-                variant="contained"
-              >
-                {t('Documentation')}
-              </Button>
-            </NextLink>
-          </Box>
         </Box>
       </Scrollbar>
       <OrganizationPopover

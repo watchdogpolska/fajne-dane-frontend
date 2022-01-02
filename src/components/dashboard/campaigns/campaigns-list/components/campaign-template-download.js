@@ -41,9 +41,12 @@ export const CampaignTemplateDownload = (props) => {
             </Grid>
             <Grid item xs={4}>
                 <Button onClick={downloadCampaignTemplate}
+                        startIcon={(
+                            <DownloadIcon fontSize="small"/> 
+                        )}
                         size="small"
                         variant="outlined">
-                    <DownloadIcon fontSize="small"/> Pobierz
+                    Pobierz
                 </Button>
             </Grid>
         </Grid>

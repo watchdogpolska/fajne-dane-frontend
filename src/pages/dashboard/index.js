@@ -13,13 +13,6 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
-import { OverviewCryptoWallet } from '../../components/dashboard/overview/overview-crypto-wallet';
-import { OverviewInbox } from '../../components/dashboard/overview/overview-inbox';
-import { OverviewLatestTransactions } from '../../components/dashboard/overview/overview-latest-transactions';
-import { OverviewPrivateWallet } from '../../components/dashboard/overview/overview-private-wallet';
-import { OverviewTotalBalance } from '../../components/dashboard/overview/overview-total-balance';
-import { OverviewTotalTransactions } from '../../components/dashboard/overview/overview-total-transactions';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
 import { ArrowRight as ArrowRightIcon } from '../../icons/arrow-right';
@@ -90,7 +83,6 @@ const Overview = () => {
               md={6}
               xs={12}
             >
-              <OverviewCryptoWallet />
             </Grid>
           </Grid>
         </Container>

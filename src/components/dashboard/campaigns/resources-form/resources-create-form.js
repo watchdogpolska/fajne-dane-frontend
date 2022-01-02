@@ -5,11 +5,10 @@ import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {Box, Button, Grid} from '@mui/material';
 import {campaignRepository} from '../../../../api/repositories/campaign-repository';
+import {fileSourceRepository} from '../../../../api/repositories/file-source-repository';
 import {textToFile} from '../../../../utils/text-to-file';
-import {CampaignNameCard} from "./components/resource-details-card";
-import {useHasChanged} from "../../../../hooks/use-has-changed";
-import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
 import {ResourceDetailsCard} from "./components/resource-details-card";
+import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
 import {ResourceFileCard} from "./components/resource-file-card";
 import {ResourceValidationCard} from "./components/resource-validation-card";
 
@@ -33,7 +32,6 @@ export const ResourcesCreateForm = (props) => {
         if (campaignId) {
             let campaign = await campaignRepository.getCampaign({id: campaignId});
             setCampaign(campaign);
-            console.log(campaign);
             setLoading(false);
         }
     }
@@ -43,21 +41,37 @@ export const ResourcesCreateForm = (props) => {
     }, []);
 
     const handleDrop = (newFiles) => {
+        setResource({
+            file: newFiles[0],
+            report: null
+        });
     };
 
     const handleRemove = (file) => {
-    };
-
-    const handleOnCancel = () => {
-
+        setResource({
+            file: null,
+            report: null
+        });
     };
 
     const downloadReport = () => {
-
+        textToFile("resource-parsing-report.json", JSON.stringify(resource.report));
     };
 
     const handleValidate = () => {
+        async function fetchData() {
+            let report = await fileSourceRepository.validate({
+                campaignId: campaign.id,
+                file: resource.file
+            });
 
+            setResource({
+                file: resource.file,
+                report: report
+            });
+        }
+        
+        fetchData();
     };
 
     const formik = useFormik({
@@ -74,6 +88,15 @@ export const ResourcesCreateForm = (props) => {
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
+                await fileSourceRepository.create({
+                    campaignId: campaign.id,
+                    name: values['name'],
+                    description: values['description'],
+                    source: values['source'],
+                    file: resource.file
+                });
+                toast.success('Dodano nowe źródło danych!');
+                router.push(`/dashboard/campaigns/${campaign.id}/`);
             } catch (err) {
                 console.error(err);
             }
@@ -84,6 +107,7 @@ export const ResourcesCreateForm = (props) => {
     const handleCloseCancel = () => {setCancelModalOpen(false)};
     const handleAcceptCancel = (e) => {
         e.preventDefault();
+        router.push(`/dashboard/campaigns/${campaign.id}/`);
     };
 
     if (loading)
@@ -100,15 +124,22 @@ export const ResourcesCreateForm = (props) => {
                         <ResourceDetailsCard formik={formik}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <ResourceFileCard disabled={formik.values.name == ""}
-                                              onDrop={handleDrop}
-                                              file={resource.file}
-                                              formik={formik}/>
+                        <ResourceFileCard disabled={
+                                            formik.values.name == "" ||
+                                            formik.values.source == ""
+                                          }
+                                          onDrop={handleDrop}
+                                          file={resource.file}
+                                          formik={formik}/>
                     </Grid>
                     <Grid item xs={12}>
                         <ResourceValidationCard formik={formik}
                                                 file={resource.file}
-                                                disabled={formik.values.name == "" || resource.file === null}
+                                                disabled={
+                                                    formik.values.name == "" ||
+                                                    formik.values.source == "" ||
+                                                    resource.file === null
+                                                }
                                                 validationReport={resource.report}
                                                 onDownloadReport={downloadReport}
                                                 onDrop={handleDrop}
@@ -133,6 +164,11 @@ export const ResourcesCreateForm = (props) => {
                             </Button>
                             <Button sx={{ m: 1 }}
                                     type="submit"
+                                    disabled={
+                                        formik.values.name == "" ||
+                                        formik.values.source == "" ||
+                                        resource.file === null
+                                    }
                                     variant="contained">
                                 Dodaj zbiór danych
                             </Button>

@@ -61,7 +61,6 @@ export const ResourceDetailsCard = (props) => {
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     value={formik.values.description}
-                                    required
                                 />
                             </Grid>
                         </Grid>

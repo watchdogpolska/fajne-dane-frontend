@@ -24,7 +24,6 @@ class CampaignRepository extends Repository {
             `/campaigns/${id}/`,
             payload
         )
-        console.log(response);
         return response;
     }
     

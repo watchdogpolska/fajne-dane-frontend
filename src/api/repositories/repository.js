@@ -16,11 +16,7 @@ export default class Repository {
     }
 
     get _config() {
-        let config = {
-            headers: {
-                "Content-Type": "application/json",
-            }
-        }
+        let config = { headers: { "Content-Type": "application/json" } };
         if (this._session.accessToken)
             config['headers']['Authorization'] = `Bearer ${this._session.accessToken}`
         return config;
@@ -34,8 +30,24 @@ export default class Repository {
         return this._client.post(url, payload, this._config);
     }
 
+    postFile(url, payload) {
+        let formData = new FormData();
+        for (let [key, value] of Object.entries(payload)) {
+            formData.append(key, value);
+        }
+
+        let config = { headers: {"Content-Type": "multipart/form-data"}};
+        if (this._session.accessToken)
+            config['headers']['Authorization'] = `Bearer ${this._session.accessToken}`
+        return this._client.post(url, formData, config);
+    }
+
     put(url, payload) {
         return this._client.put(url, payload, this._config);
+    }
+
+    patch(url, payload) {
+        return this._client.patch(url, payload, this._config);
     }
     
     delete(url) {

@@ -83,23 +83,27 @@ export const TemplateDropzoneElements = (props) => {
                         justifyContent: 'flex-end',
                         mt: 2
                     }}>
-                    <Button
-                        onClick={onDownloadReport}
-                        size="small"
-                        sx={{ml: 2}}
-                        disabled={!(validationReport && validationReport.isValid === false)}
-                        type="button"
-                        variant="outlined"
-                    >
-                        Pobierz raport błędów <DownloadIcon fontSize="small"/>
+                    <Button onClick={onDownloadReport}
+                            size="small"
+                            sx={{ml: 2}}
+                            disabled={!(validationReport && validationReport.isValid === false)}
+                            type="button"
+                            endIcon={(
+                                <DownloadIcon fontSize="small"/>
+                            )}
+                            variant="outlined">
+                        Pobierz raport błędów
                     </Button>
                     <Button onClick={onValidate}
                             size="small"
                             disabled={file === null}
                             sx={{ ml: 2 }}
                             type="button"
+                            endIcon={(
+                                <ArrowRightIcon fontSize="small" />
+                            )}
                             variant="contained">
-                        Sprawdź <ArrowRightIcon fontSize="small" />
+                        Sprawdź
                     </Button>
                 </Box>
             </Box>

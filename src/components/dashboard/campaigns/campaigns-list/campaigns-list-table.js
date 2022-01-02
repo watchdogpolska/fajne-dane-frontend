@@ -144,15 +144,23 @@ export const CampaignsListTable = (props) => {
                                     <TableCell align="right">
                                         <Button component="a"
                                                 variant="outlined"
+                                                size="small"
+                                                sx={{ mr: 2 }}
+                                                endIcon={(
+                                                    <PencilAltIcon fontSize="small" />
+                                                )}
                                                 onClick={() => onCampaignSelect(campaign.id)}>
                                             Edytuj
-                                            <PencilAltIcon fontSize="small" />
                                         </Button>
                                         <NextLink href={`/dashboard/campaigns/${campaign.id}`} 
                                                   passHref>
                                             <Button component="a"
+                                                    size="small"
+                                                    endIcon={(
+                                                        <ArrowRightIcon fontSize="small" />
+                                                    )}
                                                     variant="contained">
-                                                Przejdź <ArrowRightIcon fontSize="small" />
+                                                Przejdź
                                             </Button>
                                         </NextLink>
                                     </TableCell>

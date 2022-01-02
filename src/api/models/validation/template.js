@@ -1,17 +1,4 @@
-
-
-class TemplateValidationError {
-    constructor(code, message) {
-        this.code = code;
-        this.message = message;
-    }
-
-    static fromJson(data) {
-        return new TemplateValidationError(
-            data['code'], data['message']
-        );
-    }
-}
+import {ValidationError} from "./errors";
 
 
 export class TemplateValidationReport {
@@ -23,7 +10,7 @@ export class TemplateValidationReport {
     static fromJson(data) {
         return new TemplateValidationReport(
             data['is_valid'], data['errors'].map(
-                (e) => new TemplateValidationError(e['code'], e['message'])
+                (e) => new ValidationError(e['code'], e['message'])
             )
         );
     }

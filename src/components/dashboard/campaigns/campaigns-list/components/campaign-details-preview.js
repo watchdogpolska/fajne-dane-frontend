@@ -34,24 +34,21 @@ export const CampaignDetailsPreview = (props) => {
                 >
                     Akcje
                 </Typography>
-                <Box
-                    sx={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        m: -1,
-                        '& > button': {
-                            m: 1
-                        }
-                    }}
-                >
+                <Box sx={{
+                         alignItems: 'center',
+                         display: 'flex',
+                         flexWrap: 'wrap',
+                         m: -1,
+                         '& > button': {
+                             m: 1
+                         }
+                     }}>
                     <Button
                         onClick={onEdit}
                         size="small"
                         startIcon={(
                             <EditIcon fontSize="small" />
-                        )}
-                    >
+                        )}>
                         Edytuj
                     </Button>
                 </Box>

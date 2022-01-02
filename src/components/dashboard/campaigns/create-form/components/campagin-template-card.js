@@ -40,8 +40,11 @@ export const CampaignTemplateCard = (props) => {
                                 sx={{
                                     m: 1 , mr: 'auto', ml: 0
                                 }}
+                                endIcon={(
+                                    <DownloadIcon fontSize="small"/>
+                                )}
                                 variant="outlined">
-                            Pobierz schemat <DownloadIcon fontSize="small"/>
+                            Pobierz schemat
                         </Button>
                     </Grid>
                     <Grid item md={8} xs={12}>

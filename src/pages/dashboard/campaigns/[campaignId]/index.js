@@ -2,14 +2,18 @@ import {useEffect, useRef, useState} from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import NextLink from 'next/link';
-import {Box, Card, Divider, Grid, InputAdornment, Tab, Tabs, TextField, Typography, Button} from '@mui/material';
+import {Box, Link, Card, Divider, Grid, InputAdornment, Tab, Tabs, TextField, Typography, Button} from '@mui/material';
 import {withAuthGuard} from '../../../../hocs/with-auth-guard';
 import {withDashboardLayout} from '../../../../hocs/with-dashboard-layout';
+import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
+import { Plus as PlusIcon } from '../../../../icons/plus';
 import {gtm} from '../../../../lib/gtm';
 import {Search as SearchIcon} from '../../../../icons/search';
-import {applyFilters, applyPagination, applySort} from '../utils';
+import {applyFilters, applySort, applyPagination} from '../../../../utils/filter-utils';
 import {documentRepository} from '../../../../api/repositories/document-repository';
 import {DocumentsListTable} from '../../../../components/dashboard/campaigns/documents-list-table';
+import {PencilAlt as PencilAltIcon} from '../../../../icons/pencil-alt';
+import {DocumentText as DocumentTextIcon} from '../../../../icons/document-text';
 
 
 const tabs = [
@@ -51,7 +55,7 @@ const CampaignDocumentsList = () => {
         isReturning: null
     });
 
-  const { campaignId } = router.query;
+    const { campaignId } = router.query;
 
     async function fetchCampaignData() {
         let documents = await documentRepository.list({campaignId: campaignId});
@@ -117,7 +121,7 @@ const CampaignDocumentsList = () => {
         <>
             <Head>
                 <title>
-                    Dashboard: Overview | Material Kit Pro
+                    Fajne Dane - Dokumenty kampanii
                 </title>
             </Head>
             <Box component="main"
@@ -126,12 +130,28 @@ const CampaignDocumentsList = () => {
                      flexGrow: 1,
                      py: 8
                  }}>
-                <Box sx={{ mb: 4 }}>
+                <Box sx={{ mb: 4, px: 3 }}>
                     <Grid container
                           justifyContent="space-between"
                           spacing={3}>
-                        <Grid item>
-                            <Typography variant="h6">
+                        <Grid item md={12}>
+                            <NextLink href="/dashboard/campaigns" passHref>
+                                <Link color="textPrimary"
+                                      component="a"
+                                      sx={{
+                                          alignItems: 'center',
+                                          display: 'flex'
+                                      }}>
+                                    <ArrowBackIcon fontSize="small"
+                                                   sx={{ mr: 1 }}/>
+                                    <Typography variant="subtitle2">
+                                        Lista zbiorów danych
+                                    </Typography>
+                                </Link>
+                            </NextLink>
+                        </Grid>
+                        <Grid item md={8} xs={12}>
+                            <Typography variant="h4">
                                 Lista zbiorów danych
                             </Typography>
                             <Typography color="textSecondary"
@@ -139,20 +159,52 @@ const CampaignDocumentsList = () => {
                                         sx={{ mt: 1 }}>
                                 Kampanie Sprawdzamy Jak Jest lub inne, zewnętrze zbiory danych. W tym miejscu dodasz lub usuniesz zbiór danych.
                             </Typography>
-
-
-                            <NextLink href={`/dashboard/campaigns/${campaignId}/resources/add`}
-                                      passHref>
-                                <Button component="a"
-                                        variant="contained">
-                                    Dodaj źródło danych
-                                </Button>
-                            </NextLink>
-
-                            <Button component="a"
-                                    variant="contained">
-                                Dodaj wpis ręcznie
-                            </Button>
+                        </Grid>
+                        <Grid item md={4} xs={12}>
+                            <Grid container
+                                  spacing={1}
+                                  sx={{
+                                      flexDirection: 'row-reverse',
+                                      mt: 2,
+                                      pl: 3,
+                                      '@media screen and (max-width: 1000px)': {
+                                          flexDirection: 'row',
+                                      },
+                                  }}>
+                                <Grid item>
+                                    <NextLink href={`/dashboard/campaigns/${campaignId}/resources/add`} passHref>
+                                        <Button component="a"
+                                                startIcon={(
+                                                    <PlusIcon fontSize="small" />
+                                                )}
+                                                variant="contained">
+                                            Dodaj źródło danych
+                                        </Button>
+                                    </NextLink>
+                                </Grid>
+                                <Grid item>
+                                    <NextLink href={`/dashboard/campaigns/${campaignId}/resources/`} passHref>
+                                        <Button component="a"
+                                                startIcon={(
+                                                    <PencilAltIcon fontSize="small" />
+                                                )}
+                                                variant="outlined">
+                                            Edytuj źródła
+                                        </Button>
+                                    </NextLink>
+                                </Grid>
+                                <Grid item>
+                                    <NextLink href={`/dashboard/campaigns/${campaignId}/documents/add`} passHref>
+                                        <Button component="a"
+                                                startIcon={(
+                                                    <DocumentTextIcon fontSize="small" />
+                                                )}
+                                                variant="contained">
+                                            Dodaj wpis ręcznie
+                                        </Button>
+                                    </NextLink>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Box>

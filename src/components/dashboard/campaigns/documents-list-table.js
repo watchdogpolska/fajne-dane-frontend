@@ -73,10 +73,6 @@ export const DocumentsListTable = (props) => {
                         sx={{ ml: 2 }}>
                     Delete
                 </Button>
-                <Button size="small"
-                        sx={{ ml: 2 }}>
-                    Edit
-                </Button>
             </Box>
             <Scrollbar>
                 <Table sx={{ minWidth: 700 }}>
@@ -141,8 +137,12 @@ export const DocumentsListTable = (props) => {
                                         <NextLink href={`/dashboard/campaigns/documents/${document.id}`} 
                                                   passHref>
                                             <Button component="a"
+                                                    size="small"
+                                                    endIcon={(
+                                                        <PencilAltIcon fontSize="small" />
+                                                    )}
                                                     variant="contained">
-                                                Edytuj <PencilAltIcon fontSize="small" />
+                                                Edytuj
                                             </Button>
                                         </NextLink>
                                     </TableCell>

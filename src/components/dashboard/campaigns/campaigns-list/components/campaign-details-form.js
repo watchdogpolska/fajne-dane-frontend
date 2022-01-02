@@ -48,16 +48,17 @@ export const CampaignDetailsForm = (props) => {
                 flexWrap: 'wrap',
                 justifyContent: 'space-between',
                 px: 3,
-                py: 2.5
+                py: 1
             }}>
                 <Typography variant="overline"
                             sx={{ mr: 2 }}
                             color="textSecondary">
-                    Campaign
+                    Akcje
                 </Typography>
                 <Box sx={{
                     alignItems: 'center',
                     display: 'flex',
+                    flexWrap: 'wrap',
                     m: -1,
                     '& > button': {
                         m: 1
