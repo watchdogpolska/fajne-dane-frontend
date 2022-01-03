@@ -115,7 +115,14 @@ export const DashboardSidebar = (props) => {
             height: '100%'
           }}
         >
-          <Box>
+          <Box sx={{
+            display: 'flex',
+            p: 4,
+            pb: 0
+          }}>
+            <Typography variant="h6">
+              FAJNE DANE
+            </Typography>
           </Box>
           <Divider
             sx={{

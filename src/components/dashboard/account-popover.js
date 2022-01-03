@@ -21,12 +21,12 @@ import { SwitchHorizontalOutlined as SwitchHorizontalOutlinedIcon } from '../../
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
   const router = useRouter();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   // To get the user from the authContext, you can use
   // `const { user } = useAuth();`
-  const user = {
+  user = {
     avatar: '/static/mock-images/avatars/avatar-anika_visser.png',
-    name: 'Anika Visser'
+    name: user ? user.email: ''
   };
 
   const handleLogout = async () => {
@@ -81,7 +81,7 @@ export const AccountPopover = (props) => {
             color="textSecondary"
             variant="body2"
           >
-            Acme Inc
+              Administator
           </Typography>
         </Box>
       </Box>
@@ -98,7 +98,7 @@ export const AccountPopover = (props) => {
             <ListItemText
               primary={(
                 <Typography variant="body1">
-                  Profile
+                    Profil
                 </Typography>
               )}
             />
@@ -115,24 +115,7 @@ export const AccountPopover = (props) => {
             <ListItemText
               primary={(
                 <Typography variant="body1">
-                  Settings
-                </Typography>
-              )}
-            />
-          </MenuItem>
-        </NextLink>
-        <NextLink
-          href="/dashboard"
-          passHref
-        >
-          <MenuItem component="a">
-            <ListItemIcon>
-              <SwitchHorizontalOutlinedIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={(
-                <Typography variant="body1">
-                  Change organization
+                    Ustawienia
                 </Typography>
               )}
             />
@@ -146,7 +129,7 @@ export const AccountPopover = (props) => {
           <ListItemText
             primary={(
               <Typography variant="body1">
-                Logout
+                  Wyloguj
               </Typography>
             )}
           />

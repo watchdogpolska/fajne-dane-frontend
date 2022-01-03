@@ -1,56 +1,17 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import Head from 'next/head';
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Container,
-  Divider,
-  Grid,
-  MenuItem,
-  TextField,
-  Typography
-} from '@mui/material';
-import { withAuthGuard } from '../../hocs/with-auth-guard';
-import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
-import { ArrowRight as ArrowRightIcon } from '../../icons/arrow-right';
-import { Briefcase as BriefcaseIcon } from '../../icons/briefcase';
-import { Download as DownloadIcon } from '../../icons/download';
-import { ExternalLink as ExternalLinkIcon } from '../../icons/external-link';
-import { InformationCircleOutlined as InformationCircleOutlinedIcon } from '../../icons/information-circle-outlined';
-import { Reports as ReportsIcon } from '../../icons/reports';
-import { Users as UsersIcon } from '../../icons/users';
-import { gtm } from '../../lib/gtm';
+import {Box, Container, Grid, Typography} from '@mui/material';
+import {withAuthGuard} from '../../hocs/with-auth-guard';
+import {withDashboardLayout} from '../../hocs/with-dashboard-layout';
+import {gtm} from '../../lib/gtm';
 
 const Overview = () => {
-  const [displayBanner, setDisplayBanner] = useState(true);
-
-  useEffect(() => {
-    gtm.push({ event: 'page_view' });
-  }, []);
-
-  useEffect(() => {
-    // Restore the persistent state from local/session storage
-    const value = globalThis.sessionStorage.getItem('dismiss-banner');
-
-    if (value === 'true') {
-      // setDisplayBanner(false);
-    }
-  }, []);
-
-  const handleDismissBanner = () => {
-    // Update the persistent state
-    // globalThis.sessionStorage.setItem('dismiss-banner', 'true');
-    setDisplayBanner(false);
-  };
 
   return (
     <>
       <Head>
         <title>
-          Dashboard: Overview | Material Kit Pro
+          Fajne Dane
         </title>
       </Head>
       <Box
@@ -69,7 +30,7 @@ const Overview = () => {
             >
               <Grid item>
                 <Typography variant="h4">
-                  Good Morning
+                  Witam. Tu może być jakieś wprowadzenie, albo w ogóle tego ekranu może nie być.
                 </Typography>
               </Grid>
             </Grid>
