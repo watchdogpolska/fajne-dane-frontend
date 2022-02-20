@@ -1,8 +1,8 @@
-import {Download as DownloadIcon} from '../../../../../icons/download';
-import {textToFile} from '../../../../../utils/text-to-file';
+import {Download as DownloadIcon} from '@/icons/download';
+import {textToFile} from '@/utils/text-to-file';
 import PropTypes from 'prop-types';
 import {Button, Grid, ListItem, ListItemIcon, ListItemText} from '@mui/material';
-import {Duplicate as DuplicateIcon} from '../../../../../icons/duplicate';
+import {Duplicate as DuplicateIcon} from '@/icons/duplicate';
 
 
 export const CampaignTemplateDownload = (props) => {

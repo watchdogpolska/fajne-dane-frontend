@@ -4,8 +4,9 @@ import {useRouter} from 'next/router'
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {Box, Button, Grid} from '@mui/material';
-import {fileSourceRepository} from '../../../../api/repositories/file-source-repository';
+import {fileSourceRepository} from '@/api/repositories/file-source-repository';
 import {ResourceDetailsCard} from "./components/resource-details-card";
+import {ResourceFileDownloadCard} from "./components/resource-file-download-card";
 import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
 
 
@@ -24,12 +25,14 @@ export const ResourceEditForm = (props) => {
     const formik = useFormik({
         initialValues: {
             name: resource.name,
-            source: resource.source,
+            sourceLink: resource.sourceLink,
+            sourceDate: resource.sourceDate,
             description: resource.description
         },
         validationSchema: Yup.object({
             name: Yup.string().max(255),
-            source: Yup.string().max(255),
+            sourceLink: Yup.string().max(255),
+            sourceDate: Yup.date().nullable(),
             description: Yup.string().max(1000),
         }),
         onSubmit: async (values, helpers) => {
@@ -40,7 +43,8 @@ export const ResourceEditForm = (props) => {
                     id: resourceId,
                     name: values['name'],
                     description: values['description'],
-                    source: values['source'],
+                    sourceLink: values['sourceLink'],
+                    sourceDate: values['sourceDate'],
                 });
                 toast.success('Zmiany zostały zapisane');
                 router.push(`/dashboard/campaigns/${campaignId}/resources`);
@@ -71,6 +75,7 @@ export const ResourceEditForm = (props) => {
                         <ResourceDetailsCard formik={formik}/>
                     </Grid>
                     <Grid item xs={12}>
+                        <ResourceFileDownloadCard file={resource.file}/>
                     </Grid>
                     <Grid item xs={12}>
                         <Box

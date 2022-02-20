@@ -1,6 +1,6 @@
 import {Button, Box, Card, CardContent, Grid, Typography} from '@mui/material';
 import {TemplateDropzone} from '../../common/template-dropzone';
-import {Download as DownloadIcon} from '../../../../../icons/download';
+import {Download as DownloadIcon} from '@/icons/download';
 
 
 export const ResourceFileCard = (props) => {
@@ -27,12 +27,12 @@ export const ResourceFileCard = (props) => {
                           }}>
                         <Box>
                             <Typography variant="h6">
-                                Szablon zbioru danych
+                                Plik ze źródłem danych
                             </Typography>
                             <Typography color="textSecondary"
                                         variant="body2"
                                         sx={{ mt: 1 }}>
-                                Wgraj szablon zbioru danych zgodny ze schematem. Możesz pobrać schemat danych, aby zapoznać się z jego strukturą.
+                                W tym miejsciu wgrasz pliki z danymi. Pamiętaj, że plik ten powinien być zgodny z szablonem zbioru danych.
                             </Typography>
                         </Box>
                     </Grid>

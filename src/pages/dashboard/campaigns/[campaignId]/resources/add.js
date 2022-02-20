@@ -2,10 +2,9 @@ import {useEffect} from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {Box, Link, Container, Grid, Typography} from '@mui/material';
-import {withAuthGuard} from '../../../../../hocs/with-auth-guard';
-import {withDashboardLayout} from '../../../../../hocs/with-dashboard-layout';
-import {gtm} from '../../../../../lib/gtm';
-import {ResourcesCreateForm} from '../../../../../components/dashboard/campaigns/resources-form/resources-create-form';
+import {withAuthGuard} from '@/hocs/with-auth-guard';
+import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
+import {ResourcesCreateForm} from '@/components/dashboard/campaigns/resources-form/resources-create-form';
 import NextLink from 'next/link';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 

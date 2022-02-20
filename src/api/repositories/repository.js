@@ -1,5 +1,6 @@
 import axios from "axios";
 import { session } from "../session";
+import { useAuth } from '../../hooks/use-auth';
 
 
 export default class Repository {
@@ -7,7 +8,7 @@ export default class Repository {
         this._session = session;
         this._client = axios.create({
             baseURL: api_url,
-            timeout: 1000,
+            timeout: 5000,
         });
     }
 

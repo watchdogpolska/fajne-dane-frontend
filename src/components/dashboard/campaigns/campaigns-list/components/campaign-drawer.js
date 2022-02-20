@@ -2,8 +2,8 @@ import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Box, Drawer, IconButton, Typography, useMediaQuery} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import {X as XIcon} from '../../../../../icons/x';
-import {campaignRepository} from '../../../../../api/repositories/campaign-repository';
+import {X as XIcon} from '@/icons/x';
+import {campaignRepository} from '@/api/repositories/campaign-repository';
 import {CampaignDetailsForm} from './campaign-details-form';
 import {CampaignDetailsPreview} from './campaign-details-preview';
 

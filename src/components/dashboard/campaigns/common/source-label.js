@@ -1,11 +1,6 @@
-import {
-    Box,
-    Typography
-} from '@mui/material';
-import {withAuthGuard} from '../../../../hocs/with-auth-guard';
-import {withDashboardLayout} from '../../../../hocs/with-dashboard-layout';
-import {DocumentText as DocumentTextIcon} from '../../../../icons/document-text';
-import {User as UserIcon} from '../../../../icons/user';
+import {Box, Typography} from '@mui/material';
+import {DocumentText as DocumentTextIcon} from '@/icons/document-text';
+import {User as UserIcon} from '@/icons/user';
 
 
 export const SourceLabel = (props) => {
@@ -20,17 +15,15 @@ export const SourceLabel = (props) => {
 
     return (
         <Box>
-            <div>
-                <Typography color="textSecondary"
-                            variant="body2"
-                            sx={{ mt: 1 }}>
-                    { icon }
+            <Box sx={{display: "flex", alignItems: "center"}}>
+                { icon}
+                <Typography variant="subtitle2">
                     {type}
                 </Typography>
-            </div>
-            <div>
+            </Box>
+            <Box>
                 { source.name }
-            </div>
+            </Box>
         </Box>
     );
 };

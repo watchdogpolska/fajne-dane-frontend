@@ -2,10 +2,12 @@ import Source from "./source";
 
 
 export default class FileSource extends Source {
-    constructor(id, name, description, source, file) {
+    constructor(id, name, description, sourceLink, sourceDate, created, file) {
         super(id, name);
         this.description = description;
-        this.source = source;
+        this.sourceLink = sourceLink;
+        this.sourceDate = sourceDate;
+        this.created = created;
         this.file = file;
     }
 
@@ -14,7 +16,9 @@ export default class FileSource extends Source {
             data['id'],
             data['name'],
             data['description'],
-            data['source'],
+            data['source_link'],
+            new Date(Date.parse(data['source_date'])),
+            new Date(Date.parse(data['created'])),
             data['file']
         );
     }

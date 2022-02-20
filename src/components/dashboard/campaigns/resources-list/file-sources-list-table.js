@@ -1,7 +1,10 @@
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
 import {Button, Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material';
-import {PencilAlt as PencilAltIcon} from '../../../../icons/pencil-alt';
+import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
+import {formatDate} from "@/utils/date-utils";
+import {LinkLabel} from "../common/link-label";
+import {FileLinkLabel} from "../common/file-link-label";
 
 
 export const FileSourcesListTable = (props) => {
@@ -23,10 +26,7 @@ export const FileSourcesListTable = (props) => {
                             Źródło pozyskania danych
                         </TableCell>
                         <TableCell>
-                            Data opracowania zbioru danych
-                        </TableCell>
-                        <TableCell>
-                            Data dodania
+                            Data opracowania źródła
                         </TableCell>
                         <TableCell>
                             Plik źródłowy
@@ -45,16 +45,13 @@ export const FileSourcesListTable = (props) => {
                                     {fileSource.name}
                                 </TableCell>
                                 <TableCell>
-                                    {fileSource.source}
+                                    <LinkLabel link={fileSource.sourceLink}/>
                                 </TableCell>
                                 <TableCell>
-                                    data 1
+                                    {formatDate(fileSource.sourceDate)}
                                 </TableCell>
                                 <TableCell>
-                                    data 2
-                                </TableCell>
-                                <TableCell>
-                                    {fileSource.file}
+                                    <FileLinkLabel link={fileSource.file}/>
                                 </TableCell>
                                 <TableCell align="right">
                                     <NextLink href={`/dashboard/campaigns/${campaignId}/resources/${fileSource.id}`}

@@ -1,7 +1,7 @@
 import { Avatar, Modal, Box, Button, Container, Paper, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import { Check as CheckIcon } from '../../../icons/check';
-import { QuestionMarkCircle as QuestionMarkCircleIcon } from '../../../icons/question-mark-circle';
+import { Check as CheckIcon } from '@/icons/check';
+import { QuestionMarkCircle as QuestionMarkCircleIcon } from '@/icons/question-mark-circle';
 
 
 export const ConfirmModal = (props) => {

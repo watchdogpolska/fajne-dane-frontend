@@ -2,10 +2,10 @@ import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {Box, Container, Card, Link, Grid, Typography} from '@mui/material';
-import {FileSourcesListTable} from '../../../../../components/dashboard/campaigns/resources-list/file-sources-list-table';
-import {withAuthGuard} from '../../../../../hocs/with-auth-guard';
-import {withDashboardLayout} from '../../../../../hocs/with-dashboard-layout';
-import {fileSourceRepository} from '../../../../../api/repositories/file-source-repository';
+import {FileSourcesListTable} from '@/components/dashboard/campaigns/resources-list/file-sources-list-table';
+import {withAuthGuard} from '@/hocs/with-auth-guard';
+import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
+import {fileSourceRepository} from '@/api/repositories/file-source-repository';
 import NextLink from 'next/link';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 

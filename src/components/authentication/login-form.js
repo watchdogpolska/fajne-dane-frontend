@@ -1,42 +1,48 @@
 import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { Box, Button, FormHelperText, TextField } from '@mui/material';
+import { Alert, Box, Button, FormHelperText, TextField } from '@mui/material';
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
 
-export const AmplifyPasswordRecovery = (props) => {
+export const LoginForm = (props) => {
   const isMounted = useMounted();
-  const { passwordRecovery } = useAuth();
   const router = useRouter();
+  const { login } = useAuth();
   const formik = useFormik({
+    validateOnBlur: false,
     initialValues: {
-      email: '',
+      email: null,
+      password: null,
       submit: null
     },
     validationSchema: Yup.object({
       email: Yup
         .string()
-        .email('Must be a valid email')
+        .email('Email nie ma poprawnego formatu')
         .max(255)
-        .required('Email is required')
+        .required('Email jest wymagany'),
+      password: Yup
+        .string()
+        .max(255)
+        .required('Hasło jest wymagane')
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await passwordRecovery(values.email);
+        await login(values.email, values.password);
 
         if (isMounted()) {
-          sessionStorage.setItem('username', values.email);
-          router.push('/authentication/password-reset');
+          const returnUrl = router.query.returnUrl || '/dashboard';
+          router.push(returnUrl);
         }
       } catch (err) {
         console.error(err);
-
-        if (isMounted()) {
-          helpers.setStatus({ success: false });
-          helpers.setErrors({ submit: err.message });
-          helpers.setSubmitting(false);
-        }
+        
+        helpers.setStatus({ success: false });
+        helpers.setErrors({
+          submit: `Wystąpił błąd: "${err.response.data['detail']}"`
+        });
+        helpers.setSubmitting(false);
       }
     }
   });
@@ -51,13 +57,25 @@ export const AmplifyPasswordRecovery = (props) => {
         error={Boolean(formik.touched.email && formik.errors.email)}
         fullWidth
         helperText={formik.touched.email && formik.errors.email}
-        label="Email Address"
+        label="Email"
         margin="normal"
         name="email"
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
         type="email"
         value={formik.values.email}
+      />
+      <TextField
+        error={Boolean(formik.touched.password && formik.errors.password)}
+        fullWidth
+        helperText={formik.touched.password && formik.errors.password}
+        label="Hasło"
+        margin="normal"
+        name="password"
+        onBlur={formik.handleBlur}
+        onChange={formik.handleChange}
+        type="password"
+        value={formik.values.password}
       />
       {formik.errors.submit && (
         <Box sx={{ mt: 3 }}>
@@ -66,15 +84,15 @@ export const AmplifyPasswordRecovery = (props) => {
           </FormHelperText>
         </Box>
       )}
-      <Box sx={{ mt: 3 }}>
+      <Box sx={{ mt: 2 }}>
         <Button
-          disabled={formik.isSubmitting}
+          disabled={formik.isSubmitting || (formik.values.email == null || formik.values.password == null)}
           fullWidth
           size="large"
           type="submit"
           variant="contained"
         >
-          Recover Password
+          Log In
         </Button>
       </Box>
     </form>

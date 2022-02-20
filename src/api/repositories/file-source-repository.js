@@ -23,26 +23,28 @@ class FileSourceRepository extends Repository {
         return ParsingReport.fromJson(response.data);
     }
 
-    async patchFileSource({campaignId, id, name, description, source, file}) {
+    async patchFileSource({campaignId, id, name, description, sourceLink, sourceDate, file}) {
         let response = await this.patch(
             `campaigns/${campaignId}/sources/${id}/`,
             {
                 name: name,
                 description: description,
-                source: source,
+                source_link: sourceLink,
+                source_date: sourceDate.toISOString(),
                 file: file
             }
         );
         return FileSource.fromJson(response.data);
     }
 
-    async create({campaignId, name, description, source, file}) {
+    async create({campaignId, name, description, sourceLink, sourceDate, file}) {
         let response = await this.postFile(
             `campaigns/${campaignId}/sources/create/`,
             {
                 name: name,
                 description: description,
-                source: source,
+                source_link: sourceLink,
+                source_date: sourceDate.toISOString(),
                 file: file
             }
         );

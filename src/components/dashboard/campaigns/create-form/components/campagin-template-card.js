@@ -1,6 +1,6 @@
 import {Button, Box, Card, CardContent, Grid, Typography} from '@mui/material';
 import {TemplateDropzone} from '../../common/template-dropzone';
-import {Download as DownloadIcon} from '../../../../../icons/download';
+import {Download as DownloadIcon} from '@/icons/download';
 
 
 export const CampaignTemplateCard = (props) => {

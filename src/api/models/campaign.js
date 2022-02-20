@@ -8,7 +8,7 @@ export default class Campaign {
         this.template = template;
     }
 
-    get created_date() {
+    get createdDate() {
         let result = this.created.toISOString().replace('-', '/').split('T')[0].replace('-', '/');
         return result.split('/').reverse().join('/');
     }

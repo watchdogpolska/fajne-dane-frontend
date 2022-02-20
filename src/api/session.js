@@ -5,12 +5,21 @@ class Session {
     }
 
     get accessToken() {
-        const accessToken = localStorage.getItem('accessToken');
-        return accessToken;
+        const _accessToken = localStorage.getItem('accessToken');
+        return _accessToken;
+    }
+    
+    get refreshToken() {
+        const _refreshToken = localStorage.getItem('refreshToken');
+        return _refreshToken;
     }
 
-    setAccessToken(token) {
-        localStorage.setItem("accessToken", token);
+    setAccessToken(accessToken) {
+        localStorage.setItem("accessToken", accessToken);
+    }
+
+    setRefreshToken(refreshToken) {
+        localStorage.setItem("refreshToken", refreshToken);
     }
     
     setup(user) {
@@ -20,6 +29,7 @@ class Session {
     logout() {
         this.user = null;
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
     }
 }
 

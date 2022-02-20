@@ -3,146 +3,153 @@ import PropTypes from 'prop-types';
 import { authRepository } from '../api/repositories/auth-repository';
 
 const initialState = {
-  isAuthenticated: false,
-  isInitialized: false,
-  user: null
+    isAuthenticated: false,
+    isInitialized: false,
+    user: null
 };
 
 const handlers = {
-  INITIALIZE: (state, action) => {
-    const { isAuthenticated, user } = action.payload;
+    INITIALIZE: (state, action) => {
+        const { isAuthenticated, user } = action.payload;
 
-    return {
-      ...state,
-      isAuthenticated,
-      isInitialized: true,
-      user
-    };
-  },
-  LOGIN: (state, action) => {
-    const { user } = action.payload;
+        return {
+            ...state,
+            isAuthenticated,
+            isInitialized: true,
+            user
+        };
+    },
+    LOGIN: (state, action) => {
+        const { user } = action.payload;
 
-    return {
-      ...state,
-      isAuthenticated: true,
-      user
-    };
-  },
-  LOGOUT: (state) => ({
-    ...state,
-    isAuthenticated: false,
-    user: null
-  }),
-  REGISTER: (state, action) => {
-    const { user } = action.payload;
+        return {
+            ...state,
+            isAuthenticated: true,
+            user
+        };
+    },
+    LOGOUT: (state) => ({
+        ...state,
+        isAuthenticated: false,
+        user: null
+    }),
+    REGISTER: (state, action) => {
+        const { user } = action.payload;
 
-    return {
-      ...state,
-      isAuthenticated: true,
-      user
-    };
-  }
+        return {
+            ...state,
+            isAuthenticated: true,
+            user
+        };
+    }
 };
 
 const reducer = (state, action) => (handlers[action.type]
-  ? handlers[action.type](state, action)
-  : state);
+    ? handlers[action.type](state, action)
+    : state);
 
 export const AuthContext = createContext({
-  ...initialState,
-  platform: 'JWT',
-  login: () => Promise.resolve(),
-  logout: () => Promise.resolve(),
-  register: () => Promise.resolve()
+    ...initialState,
+    platform: 'JWT',
+    login: () => Promise.resolve(),
+    logout: () => Promise.resolve(),
+    register: () => Promise.resolve()
 });
 
 export const AuthProvider = (props) => {
-  const { children } = props;
-  const [state, dispatch] = useReducer(reducer, initialState);
+    const { children } = props;
+    const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {
-    const initialize = async () => {
-      try {
-        if (authRepository.session.accessToken) {
-          const user = await authRepository.details();
+    useEffect(() => {
+        const interval = setInterval(() => {
+            authRepository.refresh();
+        }, 10 * 60 * 1000);
+        return () => clearInterval(interval);
+    });
 
-          dispatch({
-            type: 'INITIALIZE',
-            payload: {
-              isAuthenticated: true,
-              user
+    useEffect(() => {
+        const initialize = async () => {
+            try {
+                if (authRepository.session.accessToken) {
+                    const user = await authRepository.details();
+
+                    dispatch({
+                        type: 'INITIALIZE',
+                        payload: {
+                            isAuthenticated: true,
+                            user
+                        }
+                    });
+                } else {
+                    dispatch({
+                        type: 'INITIALIZE',
+                        payload: {
+                            isAuthenticated: false,
+                            user: null
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error(err);
+                dispatch({
+                    type: 'INITIALIZE',
+                    payload: {
+                        isAuthenticated: false,
+                        user: null
+                    }
+                });
             }
-          });
-        } else {
-          dispatch({
-            type: 'INITIALIZE',
-            payload: {
-              isAuthenticated: false,
-              user: null
-            }
-          });
-        }
-      } catch (err) {
-        console.error(err);
+        };
+
+        initialize();
+    }, []);
+
+    const login = async (email, password) => {
+        await authRepository.login({ email, password });
+        const user = await authRepository.details();
+
         dispatch({
-          type: 'INITIALIZE',
-          payload: {
-            isAuthenticated: false,
-            user: null
-          }
+            type: 'LOGIN',
+            payload: {
+                user
+            }
         });
-      }
     };
 
-    initialize();
-  }, []);
+    const logout = async () => {
+        authRepository.logout();
+        dispatch({ type: 'LOGOUT' });
+    };
 
-  const login = async (email, password) => {
-    await authRepository.login({ email, password });
-    const user = await authRepository.details();
-
-    dispatch({
-      type: 'LOGIN',
-      payload: {
-        user
-      }
-    });
-  };
-
-  const logout = async () => {
-    authRepository.logout();
-    dispatch({ type: 'LOGOUT' });
-  };
-
-  const register = async (email, name, password) => {
-    const accessToken = await authRepository.register({ email, name, password });
-    console.log("U NAS TO INACZEJ BEDZIE DZIAŁAĆ");
+    const register = async (email, name, password) => {
+        const accessToken = await authRepository.register({ email, name, password });
+        console.log("U NAS TO INACZEJ BEDZIE DZIAŁAĆ");
 
 
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-      }
-    });
-  };
+        dispatch({
+            type: 'REGISTER',
+            payload: {
+            }
+        });
+    };
 
-  return (
-    <AuthContext.Provider
-      value={{
-        ...state,
-        platform: 'JWT',
-        login,
-        logout,
-        register
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider
+            value={{
+                ...state,
+                platform: 'JWT',
+                login,
+                logout,
+                register
+            }}
+        >
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired
 };
 
 export const AuthConsumer = AuthContext.Consumer;

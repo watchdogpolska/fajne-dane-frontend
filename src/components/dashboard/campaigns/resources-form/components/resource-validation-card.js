@@ -22,12 +22,12 @@ export const ResourceValidationCard = (props) => {
                 <Grid container spacing={3}>
                     <Grid item md={4} xs={12}>
                         <Typography variant="h6">
-                            Zgodność ze schematem
+                            Zgodność z szablonem
                         </Typography>
                         <Typography color="textSecondary"
                                     variant="body2"
                                     sx={{ mt: 1 }}>
-                            Sprawdź, czy wgrany szablon zbioru danych jest zgodny z schematem
+                            Sprawdź, czy plik ze źródłem danych jest zgodny z szablonem zbioru danych.
                         </Typography>
                     </Grid>
                     <Grid item md={8} xs={12}>

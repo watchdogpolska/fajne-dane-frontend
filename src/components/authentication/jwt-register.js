@@ -46,12 +46,17 @@ export const JWTRegister = (props) => {
         }
       } catch (err) {
         console.error(err);
+      } catch (err) {
+          console.error(err);
+          helpers.setErrors({
+              submit: `Wystąpił błąd: "${err.response.data['detail']}"`
+          });
+      }
 
         if (isMounted()) {
           helpers.setStatus({ success: false });
           helpers.setErrors({ submit: err.message });
           helpers.setSubmitting(false);
-        }
       }
     }
   });

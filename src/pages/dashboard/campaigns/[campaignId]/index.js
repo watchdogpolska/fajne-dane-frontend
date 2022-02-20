@@ -3,17 +3,16 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import NextLink from 'next/link';
 import {Box, Link, Card, Divider, Grid, InputAdornment, Tab, Tabs, TextField, Typography, Button} from '@mui/material';
-import {withAuthGuard} from '../../../../hocs/with-auth-guard';
-import {withDashboardLayout} from '../../../../hocs/with-dashboard-layout';
+import {withAuthGuard} from '@/hocs/with-auth-guard';
+import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
-import { Plus as PlusIcon } from '../../../../icons/plus';
-import {gtm} from '../../../../lib/gtm';
-import {Search as SearchIcon} from '../../../../icons/search';
+import { Plus as PlusIcon } from '@/icons/plus';
+import {Search as SearchIcon} from '@/icons/search';
 import {applyFilters, applySort, applyPagination} from '../../../../utils/filter-utils';
-import {documentRepository} from '../../../../api/repositories/document-repository';
-import {DocumentsListTable} from '../../../../components/dashboard/campaigns/documents-list-table';
-import {PencilAlt as PencilAltIcon} from '../../../../icons/pencil-alt';
-import {DocumentText as DocumentTextIcon} from '../../../../icons/document-text';
+import {documentRepository} from '@/api/repositories/document-repository';
+import {DocumentsListTable} from '@/components/dashboard/campaigns/documents-list-table';
+import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
+import {DocumentText as DocumentTextIcon} from '@/icons/document-text';
 
 
 const tabs = [
@@ -64,7 +63,6 @@ const CampaignDocumentsList = () => {
     }
 
     useEffect(() => {
-        gtm.push({ event: 'page_view' });
         fetchCampaignData();
     }, []);
 
@@ -274,7 +272,8 @@ const CampaignDocumentsList = () => {
                                     ))}
                                 </TextField>
                             </Box>
-                            <DocumentsListTable documents={paginatedDocuments}
+                            <DocumentsListTable campaignId={campaignId}
+                                                documents={paginatedDocuments}
                                                 documentsCount={filteredDocuments.length}
                                                 onPageChange={handlePageChange}
                                                 onRowsPerPageChange={handleRowsPerPageChange}

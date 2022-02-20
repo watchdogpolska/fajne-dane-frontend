@@ -1,21 +1,11 @@
 import {useEffect, useState} from 'react';
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
-import {
-    Box,
-    Button,
-    Checkbox,
-    Chip,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TablePagination,
-    TableRow
-} from '@mui/material';
-import {ArrowRight as ArrowRightIcon} from '../../../../icons/arrow-right';
-import {PencilAlt as PencilAltIcon} from '../../../../icons/pencil-alt';
+import {Box, Button, Checkbox, Table, TableBody, TableCell, TableHead, TablePagination, TableRow} from '@mui/material';
+import {ArrowRight as ArrowRightIcon} from '@/icons/arrow-right';
+import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
 import {Scrollbar} from '../../../scrollbar';
+import {CampaignStatus} from '@/components/dashboard/common/statuses/campaign-status';
 
 
 export const CampaignsListTable = (props) => {
@@ -132,14 +122,10 @@ export const CampaignsListTable = (props) => {
                                         {campaign.name}
                                     </TableCell>
                                     <TableCell>
-                                        <Chip
-                                            label={campaign.status}
-                                            size="small"
-                                            sx={{ ml: 1 }}
-                                        />
+                                        <CampaignStatus status={campaign.status}/>
                                     </TableCell>
                                     <TableCell>
-                                        {campaign.created_date}
+                                        {campaign.createdDate}
                                     </TableCell>
                                     <TableCell align="right">
                                         <Button component="a"
@@ -159,7 +145,7 @@ export const CampaignsListTable = (props) => {
                                                     endIcon={(
                                                         <ArrowRightIcon fontSize="small" />
                                                     )}
-                                                    variant="contained">
+                                                    variant={campaign.status === "CLOSED" ? "outlined" : "contained"}>
                                                 Przejdź
                                             </Button>
                                         </NextLink>

@@ -4,13 +4,13 @@ import {useRouter} from 'next/router'
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {Box, Button, Grid} from '@mui/material';
-import {campaignRepository} from '../../../../api/repositories/campaign-repository';
-import {templateRepository} from '../../../../api/repositories/template-repository';
-import {textToFile} from '../../../../utils/text-to-file';
+import {campaignRepository} from '@/api/repositories/campaign-repository';
+import {templateRepository} from '@/api/repositories/template-repository';
+import {textToFile} from '@/utils/text-to-file';
 import {CampaignDetailsCard} from "./components/campaign-details-card";
 import {CampaignTemplateCard} from "./components/campagin-template-card";
 import {CampaignValidationCard} from "./components/campaign-validation-card";
-import {useHasChanged} from "../../../../hooks/use-has-changed";
+import {useHasChanged} from "@/hooks/use-has-changed";
 import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
 
 

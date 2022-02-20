@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import {Box, Button, Divider, Drawer, TextField, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import {campaignRepository} from '../../../../../api/repositories/campaign-repository';
+import {campaignRepository} from '@/api/repositories/campaign-repository';
 import {CampaignTemplateDownload} from "./campaign-template-download";
 
 

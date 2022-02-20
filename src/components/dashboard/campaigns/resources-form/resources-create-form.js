@@ -4,9 +4,9 @@ import {useRouter} from 'next/router'
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {Box, Button, Grid} from '@mui/material';
-import {campaignRepository} from '../../../../api/repositories/campaign-repository';
-import {fileSourceRepository} from '../../../../api/repositories/file-source-repository';
-import {textToFile} from '../../../../utils/text-to-file';
+import {campaignRepository} from '@/api/repositories/campaign-repository';
+import {fileSourceRepository} from '@/api/repositories/file-source-repository';
+import {textToFile} from '@/utils/text-to-file';
 import {ResourceDetailsCard} from "./components/resource-details-card";
 import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
 import {ResourceFileCard} from "./components/resource-file-card";
@@ -76,13 +76,15 @@ export const ResourcesCreateForm = (props) => {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
-            source: '',
+            name: null,
+            sourceLink: null,
+            sourceDate: null,
             description: '',
         },
         validationSchema: Yup.object({
-            name: Yup.string().max(255),
-            source: Yup.string().max(255),
+            name: Yup.string().max(255).required(),
+            sourceLink: Yup.string().url().max(255).required(),
+            sourceDate: Yup.date().required(),
             description: Yup.string().max(1000),
         }),
         onSubmit: async (values, helpers) => {
@@ -92,7 +94,8 @@ export const ResourcesCreateForm = (props) => {
                     campaignId: campaign.id,
                     name: values['name'],
                     description: values['description'],
-                    source: values['source'],
+                    sourceLink: values['sourceLink'],
+                    sourceDate: values['sourceDate'],
                     file: resource.file
                 });
                 toast.success('Dodano nowe źródło danych!');

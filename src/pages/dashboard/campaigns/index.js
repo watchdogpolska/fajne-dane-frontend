@@ -4,16 +4,16 @@ import NextLink from 'next/link';
 import {styled} from '@mui/material/styles';
 import {useRouter} from 'next/router'
 import {Box, Card, Button, Divider, Grid, InputAdornment, Tab, Tabs, TextField, Typography} from '@mui/material';
-import {withAuthGuard} from '../../../hocs/with-auth-guard';
-import {withDashboardLayout} from '../../../hocs/with-dashboard-layout';
-import {Search as SearchIcon} from '../../../icons/search';
-import {campaignRepository} from '../../../api/repositories/campaign-repository';
-import {CampaignsListTable} from '../../../components/dashboard/campaigns/campaigns-list/campaigns-list-table';
-import {CampaignDrawer} from '../../../components/dashboard/campaigns/campaigns-list/components/campaign-drawer';
-import {DeleteConfirmModal} from '../../../components/dashboard/common/delete-confirm-modal';
-import { Plus as PlusIcon } from '../../../icons/plus';
-import {CampaignsListInner} from '../../../components/dashboard/campaigns/campaigns-list/components/campaigns-list-inner';
-import {applyFilters, applySort, applyPagination} from '../../../utils/filter-utils';
+import {withAuthGuard} from '@/hocs/with-auth-guard';
+import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
+import {Search as SearchIcon} from '@/icons/search';
+import {campaignRepository} from '@/api/repositories/campaign-repository';
+import {CampaignsListTable} from '@/components/dashboard/campaigns/campaigns-list/campaigns-list-table';
+import {CampaignDrawer} from '@/components/dashboard/campaigns/campaigns-list/components/campaign-drawer';
+import {DeleteConfirmModal} from '@/components/dashboard/common/delete-confirm-modal';
+import { Plus as PlusIcon } from '@/icons/plus';
+import {CampaignsListInner} from '@/components/dashboard/campaigns/campaigns-list/components/campaigns-list-inner';
+import {applySort, applyPagination} from '@/utils/filter-utils';
 
 
 const tabs = [
@@ -29,14 +29,39 @@ const tabs = [
 
 const sortOptions = [
     {
-        label: 'Ostatni po ID',
-        value: 'id|desc'
+        label: 'Najnowsze u góry',
+        value: 'created|desc'
     },
     {
-        label: 'Pierwszy po ID',
-        value: 'id|asc'
+        label: 'Najstarsze u góry',
+        value: 'created|asc'
     }
 ];
+
+
+const applyFilters = (data, filters) => data.filter((element) => {
+
+    if (filters['tab'] == "PENDING") {
+        if (["CREATED", "INITIALIZED", "VALIDATING"].indexOf(element.status) < 0)
+            return false;
+    }
+
+    if (filters['query']) {
+        let queryTokens = filters['query'].split(' ');
+
+        let matchedTokens = 0;
+        for (let token of queryTokens) {
+            if (element.name.includes(token) ||
+                element.status.toLowerCase() === token.toLowerCase() ||
+                element.createdDate.includes(token))
+                matchedTokens+=1;
+        }
+        if (queryTokens.length != matchedTokens)
+            return false;
+    }
+    return true;
+});
+
 
 const Campaigns = () => {
     const [drawer, setDrawer] = useState({
@@ -55,9 +80,7 @@ const Campaigns = () => {
     const [sort, setSort] = useState(sortOptions[0].value);
     const [filters, setFilters] = useState({
         query: '',
-        hasAcceptedMarketing: null,
-        isProspect: null,
-        isReturning: null
+        tab: 'ALL'
     });
 
     async function fetchCampaignData() {
@@ -72,15 +95,8 @@ const Campaigns = () => {
     const handleTabsChange = (event, value) => {
         const updatedFilters = {
             ...filters,
-            hasAcceptedMarketing: null,
-            isProspect: null,
-            isReturning: null
         };
-
-        if (value !== 'all') {
-            updatedFilters[value] = true;
-        }
-
+        updatedFilters['tab'] = value;
         setFilters(updatedFilters);
         setCurrentTab(value);
     };

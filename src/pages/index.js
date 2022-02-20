@@ -4,7 +4,7 @@ import {withDashboardLayout} from '../hocs/with-dashboard-layout';
 
 const Index = () => {
     const router = useRouter();
-    router.push('/dashboard/');
+    router.push('/dashboard/campaigns');
     return <div>Loading</div>;
 };
 

@@ -1,26 +1,24 @@
 import {useEffect, useState} from 'react';
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
-import {
-    Box,
-    Button,
-    Checkbox,
-    Chip,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TablePagination,
-    TableRow
-} from '@mui/material';
-import {ArrowRight as ArrowRightIcon} from '../../../icons/arrow-right';
-import {PencilAlt as PencilAltIcon} from '../../../icons/pencil-alt';
+import {Box, Button, Checkbox, Table, TableBody, TableCell, TableHead, TablePagination, TableRow} from '@mui/material';
+import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
 import {Scrollbar} from '../../scrollbar';
 import {SourceLabel} from './common/source-label';
+import {DocumentStatus} from '@/components/dashboard/common/statuses/document-status';
+
+
+const buttonNameMapping = {
+    "CLOSED": "Edytuj",
+    "INITIALIZED": "Rozwiąż",
+    "VALIDATING": "Rozwiąż",
+    "CREATED": "Oznacz",
+}
 
 
 export const DocumentsListTable = (props) => {
     const {
+        campaignId,
         documents,
         documentsCount,
         onPageChange,
@@ -124,25 +122,21 @@ export const DocumentsListTable = (props) => {
                                         <SourceLabel source={document.source}/>
                                     </TableCell>
                                     <TableCell>
-                                        <Chip
-                                            label={document.status}
-                                            size="small"
-                                            sx={{ ml: 1 }}
-                                        />
+                                        <DocumentStatus status={document.status}/>
                                     </TableCell>
                                     <TableCell>
-                                        {document.created_date}
+                                        {document.createdDate}
                                     </TableCell>
                                     <TableCell align="right">
-                                        <NextLink href={`/dashboard/campaigns/documents/${document.id}`} 
+                                        <NextLink href={`/dashboard/campaigns/${campaignId}/documents/${document.id}`} 
                                                   passHref>
                                             <Button component="a"
                                                     size="small"
+                                                    variant={document.status === "CLOSED" ? "outlined" : "contained"}
                                                     endIcon={(
                                                         <PencilAltIcon fontSize="small" />
-                                                    )}
-                                                    variant="contained">
-                                                Edytuj
+                                                    )}>
+                                                {buttonNameMapping[document.status]}
                                             </Button>
                                         </NextLink>
                                     </TableCell>

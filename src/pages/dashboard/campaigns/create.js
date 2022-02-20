@@ -1,17 +1,15 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import Head from 'next/head';
-import {Box, Container, Grid, Typography, Link} from '@mui/material';
-import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
+import {Box, Container, Grid, Link, Typography} from '@mui/material';
+import {ArrowBack as ArrowBackIcon} from '@mui/icons-material';
 import NextLink from 'next/link';
-import {withAuthGuard} from '../../../hocs/with-auth-guard';
-import {withDashboardLayout} from '../../../hocs/with-dashboard-layout';
-import {gtm} from '../../../lib/gtm';
-import {CampaignCreateForm} from '../../../components/dashboard/campaigns/create-form/campaigns-create-from';
+import {withAuthGuard} from '@/hocs/with-auth-guard';
+import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
+import {CampaignCreateForm} from '@/components/dashboard/campaigns/create-form/campaigns-create-from';
 
 
 const CreateCampaign = () => {
     useEffect(() => {
-        gtm.push({ event: 'page_view' });
     }, []);
 
     return (

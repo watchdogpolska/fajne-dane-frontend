@@ -1,4 +1,6 @@
 import {Card, CardContent, Grid, TextField, Typography} from '@mui/material';
+import MobileDatePicker from '@mui/lab/MobileDatePicker';
+
 
 
 export const ResourceDetailsCard = (props) => {
@@ -40,14 +42,29 @@ export const ResourceDetailsCard = (props) => {
                                 <TextField
                                     fullWidth
                                     label="Źródło pozyskania daych"
-                                    name="source"
-                                    error={Boolean(formik.touched.source && formik.errors.source)}
-                                    helperText={formik.touched.source && formik.errors.source}
+                                    name="sourceLink"
+                                    error={Boolean(formik.touched.sourceLink && formik.errors.sourceLink)}
+                                    helperText={formik.touched.sourceLink && formik.errors.sourceLink}
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
-                                    value={formik.values.source}
+                                    value={formik.values.sourceLink}
                                     required
                                 />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <MobileDatePicker
+                                    label="Data źródła danych"
+                                    value={formik.values.sourceDate}
+                                    onChange={value => {
+                                        formik.setFieldValue("sourceDate", value);
+                                    }}
+                                    inputVariant="outlined"
+                                    format="yyyy.MM.dd"
+                                    renderInput={(params) => (
+                                        <TextField fullWidth
+                                                   {...params}
+                                                   helperText={params?.inputProps?.placeholder}/>
+                                    )}/>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField

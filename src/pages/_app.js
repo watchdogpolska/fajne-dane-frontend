@@ -18,8 +18,11 @@ import { gtmConfig } from '../config';
 import { gtm } from '../lib/gtm';
 import { store } from '../store';
 import { createTheme } from '../theme';
+import { plPL } from '@mui/material/locale';
 import '../i18n';
 import '../../styles/main.scss';
+
+import { pl } from 'date-fns/locale'
 
 Router.events.on('routeChangeStart', nProgress.start);
 Router.events.on('routeChangeError', nProgress.done);
@@ -46,7 +49,7 @@ const App = (props) => {
         />
       </Head>
       <ReduxProvider store={store}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} locale={pl}>
           <AuthProvider>
             <SettingsProvider>
               <SettingsConsumer>
