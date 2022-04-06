@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import {withAuthGuard} from '@/hocs/with-auth-guard';
 import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
-import {documentRepository} from '@/api/repositories/document-repository';
+import {useAuth} from "@/hooks/use-auth";
 import PdfViewer from '@/components/form/pdf-viewer';
 import {ArrowBack} from '@/components/dashboard/common/arrow-back';
 import NextLink from 'next/link';
@@ -42,10 +42,11 @@ const DocumentDetails = () => {
     const router = useRouter();
     const { campaignId, documentId } = router.query;
     const [document, setDocument] = useState(null);
+    const { repositories } = useAuth();
     const [loading, setLoading] = useState(true);
 
     async function fetchDocumentData() {
-        let result = await documentRepository.details({id: documentId});
+        let result = await repositories.document.details({id: documentId});
         setDocument(result);
         setLoading(false);
     }
@@ -61,7 +62,7 @@ const DocumentDetails = () => {
         <>
             <Head>
                 <title>
-                    Fajne Dane - Edycja wpisów
+                    Edycja wpisów | Fajne Dane
                 </title>
             </Head>
             <Box component="main"

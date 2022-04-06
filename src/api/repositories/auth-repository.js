@@ -1,9 +1,8 @@
 import Repository from "./repository";
 import User from "../models/user";
-import {backendConfig} from "../../config";
 
 
-class AuthRepository extends Repository {
+export class AuthRepository extends Repository {
     async login({email, password}) {
         let response = await this.post(
             '/token/',
@@ -68,5 +67,3 @@ class AuthRepository extends Repository {
         return response.data
     }
 }
-
-export const authRepository = new AuthRepository(backendConfig.url);

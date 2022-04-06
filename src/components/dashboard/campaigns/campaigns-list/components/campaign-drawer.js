@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {Box, Drawer, IconButton, Typography, useMediaQuery} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {X as XIcon} from '@/icons/x';
-import {campaignRepository} from '@/api/repositories/campaign-repository';
 import {CampaignDetailsForm} from './campaign-details-form';
+import {useAuth} from "@/hooks/use-auth";
 import {CampaignDetailsPreview} from './campaign-details-preview';
 
 
@@ -46,6 +46,7 @@ export const CampaignDrawer = (props) => {
     const [isEditing, setIsEditing] = useState(false);
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
     const [campaign, setCampaign] = useState(null);
+    const { repositories } = useAuth();
 
     const handleEdit = () => {
         setIsEditing(true);
@@ -57,7 +58,7 @@ export const CampaignDrawer = (props) => {
     
     async function fetchCampaignData() {
         if (campaignId) {
-            let campaign = await campaignRepository.getCampaign({id: campaignId});
+            let campaign = await repositories.campaign.getCampaign({id: campaignId});
             setCampaign(campaign);
             setIsEditing(false);
         }

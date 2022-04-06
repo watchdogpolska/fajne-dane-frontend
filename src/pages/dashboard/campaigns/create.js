@@ -16,7 +16,7 @@ const CreateCampaign = () => {
         <>
             <Head>
                 <title>
-                    Fajne Dane - Utwórz zbiór danych
+                    Utwórz zbiór danych | Fajne Dane
                 </title>
             </Head>
             <Box component="main"

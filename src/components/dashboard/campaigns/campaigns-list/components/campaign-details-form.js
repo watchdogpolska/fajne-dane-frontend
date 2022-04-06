@@ -3,14 +3,14 @@ import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import {Box, Button, Divider, Drawer, TextField, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import {campaignRepository} from '@/api/repositories/campaign-repository';
+import {useAuth} from "@/hooks/use-auth";
 import {CampaignTemplateDownload} from "./campaign-template-download";
 
 
 export const CampaignDetailsForm = (props) => {
     const { onCancel, onSave, onDelete, campaign } = props;
     const [loading, setLoading] = useState(false);
+    const { repositories } = useAuth();
 
     const formik = useFormik({
         initialValues: {
@@ -22,7 +22,7 @@ export const CampaignDetailsForm = (props) => {
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
-                await campaignRepository.updateCampaign(
+                await repositories.campaign.updateCampaign(
                     {id: campaign.id, payload: values});
                 toast.success('Zaktualizowano kampanię!');
                 setLoading(false);

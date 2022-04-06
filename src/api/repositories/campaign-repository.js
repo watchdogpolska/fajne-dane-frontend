@@ -1,9 +1,8 @@
 import Repository from "./repository";
-import {backendConfig} from "../../config";
 import Campaign from "../models/campaign";
 
 
-class CampaignRepository extends Repository {
+export class CampaignRepository extends Repository {
     async list() {
         let response = await this.get("campaigns/")
         return response.data.map((campaign_data) => Campaign.fromJson(campaign_data));
@@ -35,5 +34,3 @@ class CampaignRepository extends Repository {
         return response;
     }
 }
-
-export const campaignRepository = new CampaignRepository(backendConfig.url);

@@ -63,7 +63,7 @@ const ResetPassword = () => {
         <>
             <Head>
                 <title>
-                    Password Recovery | Material Kit Pro
+                    Zresetuj hasło | Fajne Dane
                 </title>
             </Head>
             <Box component="main"

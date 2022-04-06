@@ -4,14 +4,13 @@ import {useRouter} from 'next/router'
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {Box, Button, Grid} from '@mui/material';
-import {campaignRepository} from '@/api/repositories/campaign-repository';
-import {templateRepository} from '@/api/repositories/template-repository';
 import {textToFile} from '@/utils/text-to-file';
 import {CampaignDetailsCard} from "./components/campaign-details-card";
 import {CampaignTemplateCard} from "./components/campagin-template-card";
 import {CampaignValidationCard} from "./components/campaign-validation-card";
 import {useHasChanged} from "@/hooks/use-has-changed";
 import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
+import {useAuth} from "@/hooks/use-auth";
 
 
 export const CampaignCreateForm = (props) => {
@@ -22,6 +21,7 @@ export const CampaignCreateForm = (props) => {
     const router = useRouter();
     const [cancelModalOpen, setCancelModalOpen ] = useState(false);
     const [loading, setLoading] = useState();
+    const { repositories } = useAuth();
     const [metaTemplate, setMetaTemplate] = useState();
     const [template, setTemplate] = useState({
         "file": null,
@@ -32,7 +32,7 @@ export const CampaignCreateForm = (props) => {
 
     useEffect(() => {
         async function fetchData() {
-            let metaTemplate = await templateRepository.getMetaTemplate();
+            let metaTemplate = await repositories.template.getMetaTemplate();
             setMetaTemplate(metaTemplate);
         }
         fetchData();
@@ -76,7 +76,7 @@ export const CampaignCreateForm = (props) => {
 
     const handleValidate = () => {
         async function fetchData() {
-            let report = await templateRepository.validate({template: template.template});
+            let report = await repositories.template.validate({template: template.template});
             setTemplate({
                 file: template.file,
                 template: template.template,
@@ -105,7 +105,7 @@ export const CampaignCreateForm = (props) => {
             try {
                 setLoading(true);
                 values['template'] = template.template;
-                await campaignRepository.createCampaign(values);
+                await repositories.campaign.createCampaign(values);
                 toast.success('Dodano nową kampanię!');
                 router.push('/dashboard/campaigns');
             } catch (err) {

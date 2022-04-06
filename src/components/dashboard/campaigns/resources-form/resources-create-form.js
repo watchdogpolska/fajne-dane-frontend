@@ -4,12 +4,11 @@ import {useRouter} from 'next/router'
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {Box, Button, Grid} from '@mui/material';
-import {campaignRepository} from '@/api/repositories/campaign-repository';
-import {fileSourceRepository} from '@/api/repositories/file-source-repository';
 import {textToFile} from '@/utils/text-to-file';
 import {ResourceDetailsCard} from "./components/resource-details-card";
 import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
 import {ResourceFileCard} from "./components/resource-file-card";
+import {useAuth} from "@/hooks/use-auth";
 import {ResourceValidationCard} from "./components/resource-validation-card";
 
 
@@ -20,6 +19,7 @@ export const ResourcesCreateForm = (props) => {
     } = props;
 
     const router = useRouter();
+    const { repositories } = useAuth();
     const [cancelModalOpen, setCancelModalOpen ] = useState(false);
     const [campaign, setCampaign] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ export const ResourcesCreateForm = (props) => {
 
     async function fetchCampaignData() {
         if (campaignId) {
-            let campaign = await campaignRepository.getCampaign({id: campaignId});
+            let campaign = await repositories.campaign.getCampaign({id: campaignId});
             setCampaign(campaign);
             setLoading(false);
         }
@@ -60,7 +60,7 @@ export const ResourcesCreateForm = (props) => {
 
     const handleValidate = () => {
         async function fetchData() {
-            let report = await fileSourceRepository.validate({
+            let report = await repositories.fileSource.validate({
                 campaignId: campaign.id,
                 file: resource.file
             });
@@ -90,7 +90,7 @@ export const ResourcesCreateForm = (props) => {
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
-                await fileSourceRepository.create({
+                await repositories.fileSource.create({
                     campaignId: campaign.id,
                     name: values['name'],
                     description: values['description'],

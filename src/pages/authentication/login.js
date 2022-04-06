@@ -17,7 +17,7 @@ const Login = () => {
         <>
             <Head>
                 <title>
-                    Login | Material Kit Pro
+                    Logowanie | Fajne Dane
                 </title>
             </Head>
             <Box

@@ -22,20 +22,21 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {DocumentDataList} from '@/components/dashboard/campaigns/document-details/document-data-list';
 import {ArrowBack as ArrowBackIcon} from '@mui/icons-material';
 import {ArrowForward as ArrowForwardIcon} from '@mui/icons-material';
-import {documentQueryRepository} from '@/api/repositories/document-query-repository';
 import {DocQueryForm} from '@/components/dashboard/campaigns/doc-queries/doc-query-form';
 import DocQueryNavigator from '@/logic/doc-query-form/doc-query-navigator';
+import {useAuth} from "@/hooks/use-auth";
 
 
 const DocumentQueryDetails = () => {
     const router = useRouter();
     const { campaignId, documentId, docQueryId } = router.query;
+    const { repositories } = useAuth();
     const [loading, setLoading] = useState(false);
     const [docQueryStatuses, setDocQueryStatuses] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
-            let result = await documentQueryRepository.statusList({documentId: documentId});
+            let result = await repositories.documentQuery.statusList({documentId: documentId});
             setDocQueryStatuses(result);
             setLoading(false);
         }
@@ -54,7 +55,7 @@ const DocumentQueryDetails = () => {
         <>
             <Head>
                 <title>
-                    Fajne Dane - Edycja wpisów
+                    Wpis | Fajne Dane
                 </title>
             </Head>
             <Box component="main"

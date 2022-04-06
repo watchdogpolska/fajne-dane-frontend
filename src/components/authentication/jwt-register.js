@@ -37,27 +37,6 @@ export const JWTRegister = (props) => {
         .oneOf([true], 'This field must be checked')
     }),
     onSubmit: async (values, helpers) => {
-      try {
-        await register(values.email, values.name, values.password);
-
-        if (isMounted()) {
-          const returnUrl = router.query.returnUrl || '/dashboard';
-          router.push(returnUrl);
-        }
-      } catch (err) {
-        console.error(err);
-      } catch (err) {
-          console.error(err);
-          helpers.setErrors({
-              submit: `Wystąpił błąd: "${err.response.data['detail']}"`
-          });
-      }
-
-        if (isMounted()) {
-          helpers.setStatus({ success: false });
-          helpers.setErrors({ submit: err.message });
-          helpers.setSubmitting(false);
-      }
     }
   });
 

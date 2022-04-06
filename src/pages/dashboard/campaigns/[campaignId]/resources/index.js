@@ -5,18 +5,19 @@ import {Box, Container, Card, Link, Grid, Typography} from '@mui/material';
 import {FileSourcesListTable} from '@/components/dashboard/campaigns/resources-list/file-sources-list-table';
 import {withAuthGuard} from '@/hocs/with-auth-guard';
 import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
-import {fileSourceRepository} from '@/api/repositories/file-source-repository';
 import NextLink from 'next/link';
+import {useAuth} from "@/hooks/use-auth";
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 
 
 const FileResourcesList = () => {
     const router = useRouter();
     const { campaignId } = router.query;
+    const { repositories } = useAuth();
     const [sources, setSources] = useState([]);
 
     async function fetchData() {
-        let results = await fileSourceRepository.list({campaignId: campaignId});
+        let results = await repositories.fileSource.list({campaignId: campaignId});
         setSources(results);
     }
 
@@ -28,7 +29,7 @@ const FileResourcesList = () => {
         <>
             <Head>
                 <title>
-                    Dashboard: Customer List | Material Kit Pro
+                    Lista źródeł danych | Fajne Dane
                 </title>
             </Head>
             <Box

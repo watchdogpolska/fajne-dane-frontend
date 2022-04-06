@@ -1,20 +1,17 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import {useRouter} from 'next/router';
 import {useFormik} from 'formik';
-import {useRouter} from 'next/router'
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {Box, Button, Grid} from '@mui/material';
-import {ResourceDetailsCard} from "./components/resource-details-card";
-import {ResourceFileDownloadCard} from "./components/resource-file-download-card";
 import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
+import {DocumentDetailsCard} from './components/document-details-card';
 import {useAuth} from "@/hooks/use-auth";
 
 
-export const ResourceEditForm = (props) => {
+export const AddDocumentForm = (props) => {
     const {
-        resourceId,
-        resource,
-        campaignId,
+        campaign,
         ...other
     } = props;
 
@@ -23,32 +20,27 @@ export const ResourceEditForm = (props) => {
     const [cancelModalOpen, setCancelModalOpen ] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    let initialValues = {};
+    let validationSchema = {};
+    for (let field of campaign.documentFields) {
+        initialValues[field.name] = "";
+        validationSchema[field.name] = Yup.string().max(255);
+    }
+
     const formik = useFormik({
-        initialValues: {
-            name: resource.name,
-            sourceLink: resource.sourceLink,
-            sourceDate: resource.sourceDate,
-            description: resource.description
-        },
-        validationSchema: Yup.object({
-            name: Yup.string().max(255),
-            sourceLink: Yup.string().max(255),
-            sourceDate: Yup.date().nullable(),
-            description: Yup.string().max(1000),
-        }),
+        initialValues: initialValues,
+        validationSchema: Yup.object(validationSchema),
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
-                await repositories.fileSource.patchFileSource({
-                    campaignId: campaignId,
-                    id: resourceId,
-                    name: values['name'],
-                    description: values['description'],
-                    sourceLink: values['sourceLink'],
-                    sourceDate: values['sourceDate'],
+                let document = await repositories.document.createDocument({
+                    campaignId: campaign.id,
+                    data: formik.values
                 });
-                toast.success('Zmiany zostały zapisane');
-                router.push(`/dashboard/campaigns/${campaignId}/resources`);
+
+                console.log(document);
+                toast.success('Dokument zostały dodany');
+                router.push(`/dashboard/campaigns/${campaign.id}/documents/${document.id}`);
             } catch (err) {
                 console.error(err);
             }
@@ -59,8 +51,15 @@ export const ResourceEditForm = (props) => {
     const handleCloseCancel = () => {setCancelModalOpen(false)};
     const handleAcceptCancel = (e) => {
         e.preventDefault();
-        router.push(`/dashboard/campaigns/${campaignId}/resources`);
+        router.push(`/dashboard/campaigns/${campaign.id}/documents`);
     };
+
+    let disabled = false;
+    for (let field of campaign.documentFields)
+        if (formik.values[field.name] == "") {
+            disabled = true;
+            break;
+        }
 
     if (loading)
         return <div>Loading</div>;
@@ -73,10 +72,8 @@ export const ResourceEditForm = (props) => {
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <ResourceDetailsCard formik={formik}/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <ResourceFileDownloadCard file={resource.file}/>
+                        <DocumentDetailsCard documentFields={campaign.documentFields}
+                                             formik={formik}/>
                     </Grid>
                     <Grid item xs={12}>
                         <Box
@@ -96,10 +93,7 @@ export const ResourceEditForm = (props) => {
                             </Button>
                             <Button sx={{ m: 1 }}
                                     type="submit"
-                                    disabled={
-                                        formik.values.name == "" ||
-                                        formik.values.source == ""
-                                    }
+                                    disabled={disabled}
                                     variant="contained">
                                 Zapisz zmiany
                             </Button>
@@ -111,5 +105,5 @@ export const ResourceEditForm = (props) => {
     );
 };
 
-ResourceEditForm.propTypes = {
+AddDocumentForm.propTypes = {
 };

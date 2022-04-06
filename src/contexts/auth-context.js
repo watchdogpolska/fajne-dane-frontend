@@ -1,12 +1,17 @@
 import { createContext, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
-import { authRepository } from '../api/repositories/auth-repository';
+import { backendConfig } from "../config";
+import { Session } from "../api/session";
+import { Repositories } from '../api/repositories';
+import { BaseEvents } from '../api/repositories/repository';
+
 
 const initialState = {
     isAuthenticated: false,
     isInitialized: false,
     user: null
 };
+
 
 const handlers = {
     INITIALIZE: (state, action) => {
@@ -41,28 +46,38 @@ const handlers = {
             isAuthenticated: true,
             user
         };
-    }
+    },
 };
+
 
 const reducer = (state, action) => (handlers[action.type]
     ? handlers[action.type](state, action)
     : state);
 
+
 export const AuthContext = createContext({
     ...initialState,
-    platform: 'JWT',
     login: () => Promise.resolve(),
     logout: () => Promise.resolve(),
-    register: () => Promise.resolve()
+    repositories: null
 });
 
 export const AuthProvider = (props) => {
     const { children } = props;
     const [state, dispatch] = useReducer(reducer, initialState);
 
+    const session = new Session(state.user);
+    const repositories = new Repositories(backendConfig.url, session);
+    repositories.auth.em.on(BaseEvents.ERROR, (error) => {
+        if (error.response && error.response.status == 401) {
+            repositories.auth.logout();
+            dispatch({ type: 'LOGOUT' });
+        }
+    })
+
     useEffect(() => {
         const interval = setInterval(() => {
-            authRepository.refresh();
+            repositories.auth.refresh();
         }, 10 * 60 * 1000);
         return () => clearInterval(interval);
     });
@@ -70,8 +85,8 @@ export const AuthProvider = (props) => {
     useEffect(() => {
         const initialize = async () => {
             try {
-                if (authRepository.session.accessToken) {
-                    const user = await authRepository.details();
+                if (repositories.session.accessToken) {
+                    const user = await repositories.auth.details();
 
                     dispatch({
                         type: 'INITIALIZE',
@@ -105,8 +120,8 @@ export const AuthProvider = (props) => {
     }, []);
 
     const login = async (email, password) => {
-        await authRepository.login({ email, password });
-        const user = await authRepository.details();
+        await repositories.auth.login({ email, password });
+        const user = await repositories.auth.details();
 
         dispatch({
             type: 'LOGIN',
@@ -117,30 +132,17 @@ export const AuthProvider = (props) => {
     };
 
     const logout = async () => {
-        authRepository.logout();
+        repositories.auth.logout();
         dispatch({ type: 'LOGOUT' });
-    };
-
-    const register = async (email, name, password) => {
-        const accessToken = await authRepository.register({ email, name, password });
-        console.log("U NAS TO INACZEJ BEDZIE DZIAŁAĆ");
-
-
-        dispatch({
-            type: 'REGISTER',
-            payload: {
-            }
-        });
     };
 
     return (
         <AuthContext.Provider
             value={{
                 ...state,
-                platform: 'JWT',
                 login,
                 logout,
-                register
+                repositories
             }}
         >
             {children}

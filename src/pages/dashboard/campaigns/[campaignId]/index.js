@@ -8,11 +8,11 @@ import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import { Plus as PlusIcon } from '@/icons/plus';
 import {Search as SearchIcon} from '@/icons/search';
-import {applyFilters, applySort, applyPagination} from '../../../../utils/filter-utils';
-import {documentRepository} from '@/api/repositories/document-repository';
+import {applySort, applyPagination} from '../../../../utils/filter-utils';
 import {DocumentsListTable} from '@/components/dashboard/campaigns/documents-list-table';
 import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
 import {DocumentText as DocumentTextIcon} from '@/icons/document-text';
+import {useAuth} from "@/hooks/use-auth";
 
 
 const tabs = [
@@ -28,20 +28,46 @@ const tabs = [
 
 const sortOptions = [
     {
-        label: 'Ostatni po ID',
-        value: 'id|desc'
+        label: 'Najnowsze u góry',
+        value: 'created|desc'
     },
     {
-        label: 'Pierwszy po ID',
-        value: 'id|asc'
+        label: 'Najstarsze u góry',
+        value: 'created|asc'
     }
 ];
+
+
+const applyFilters = (data, filters) => data.filter((element) => {
+    if (filters['tab'] == "PENDING") {
+        if (["CREATED", "INITIALIZED", "VALIDATING"].indexOf(element.status) < 0)
+            return false;
+    }
+
+    if (filters['query']) {
+        let queryTokens = filters['query'].toLowerCase().split(' ');
+
+        let matchedTokens = 0;
+        for (let token of queryTokens) {
+            if (element.institution.toString().includes(token) ||
+                element.status.toLowerCase() === token.toLowerCase() ||
+                element.source.name.toLowerCase().includes(token) ||
+                element.createdDate.includes(token))
+                matchedTokens+=1;
+        }
+        if (queryTokens.length != matchedTokens)
+            return false;
+    }
+    return true;
+});
+
 
 const CampaignDocumentsList = () => {
     const rootRef = useRef(null);
     const queryRef = useRef(null);
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
+    const { repositories } = useAuth();
+    const [loading, setLoading] = useState(true);
     const [documents, setDocuments] = useState([]);
     const [currentTab, setCurrentTab] = useState('ALL');
     const [page, setPage] = useState(0);
@@ -49,35 +75,36 @@ const CampaignDocumentsList = () => {
     const [sort, setSort] = useState(sortOptions[0].value);
     const [filters, setFilters] = useState({
         query: '',
-        hasAcceptedMarketing: null,
-        isProspect: null,
-        isReturning: null
+        tab: 'ALL',
     });
 
     const { campaignId } = router.query;
 
     async function fetchCampaignData() {
-        let documents = await documentRepository.list({campaignId: campaignId});
-        console.log(documents);
+        let documents = await repositories.document.list({campaignId: campaignId});
         setDocuments(documents);
+        setLoading(false);
     }
 
     useEffect(() => {
         fetchCampaignData();
     }, []);
+    
+    async function deleteDocuments(documentIds) {
+        await repositories.document.bulkDelete({campaignId: campaignId, ids: documentIds});
+        fetchCampaignData();
+    }
+
+    const handleDocumentsDeleted = (documentsIds) => {
+        setLoading(true);
+        deleteDocuments(documentsIds);
+    }
 
     const handleTabsChange = (event, value) => {
         const updatedFilters = {
             ...filters,
-            hasAcceptedMarketing: null,
-            isProspect: null,
-            isReturning: null
         };
-
-        if (value !== 'all') {
-            updatedFilters[value] = true;
-        }
-
+        updatedFilters['tab'] = value;
         setFilters(updatedFilters);
         setCurrentTab(value);
     };
@@ -102,11 +129,6 @@ const CampaignDocumentsList = () => {
         setRowsPerPage(parseInt(event.target.value, 10));
     };
 
-    const [deleteModalOpen, setDeleteModalOpen ] = useState(false);
-
-    const handleOpenDelete = () => {setDeleteModalOpen(true)};
-    const handleCloseDelete = () => {setDeleteModalOpen(false)};
-
     // Usually query is done on backend with indexing solutions
     const filteredDocuments = applyFilters(documents, filters);
     const sortedDocuments = applySort(filteredDocuments, sort);
@@ -119,7 +141,7 @@ const CampaignDocumentsList = () => {
         <>
             <Head>
                 <title>
-                    Fajne Dane - Dokumenty kampanii
+                    Dokumenty kampanii | Fajne Dane
                 </title>
             </Head>
             <Box component="main"
@@ -254,7 +276,7 @@ const CampaignDocumentsList = () => {
                                                 </InputAdornment>
                                             )
                                         }}
-                                        placeholder="Search customers"
+                                        placeholder="Wyszukaj po nazwie"
                                     />
                                 </Box>
                                 <TextField label="Sort By"
@@ -273,6 +295,7 @@ const CampaignDocumentsList = () => {
                                 </TextField>
                             </Box>
                             <DocumentsListTable campaignId={campaignId}
+                                                onDocumentsDeleted={handleDocumentsDeleted}
                                                 documents={paginatedDocuments}
                                                 documentsCount={filteredDocuments.length}
                                                 onPageChange={handlePageChange}

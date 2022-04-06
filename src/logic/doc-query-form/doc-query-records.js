@@ -21,7 +21,18 @@ export default class DocQueryRecords {
             if (answer.probability !== null)
                 return true;
         }
+        if (this.otherProbability > 0)
+            return true;
         return false;
+    }
+    
+    get otherProbability() {
+        let probability = 0;
+        for (let answer of this.otherAnswers) {
+            if (answer.probability !== null)
+                probability += answer.probability;
+        }
+        return probability;
     }
     
 
@@ -35,14 +46,31 @@ export default class DocQueryRecords {
         for (let record of docQuery.records) {
             if (record.source.type !== "FILE")
                 continue;
-
+            
+            let answer = record.value;
             if (Object.keys(answersMap).indexOf(record.value) < 0) {
-                answersMap[answer] = answers.length;
+                // answer not found in predefined answers
                 this.otherAnswers.push(new Answer(answer, record.probability));
             } else {
                 let index = answersMap[answer];
                 this.answers[index].probability = record.probability;
             }
         }
+    }
+
+    valueInAnswers(value) {
+        for (let answer of this.answers) {
+            if (answer.value == value)
+                return true;
+        }
+        return false;
+    }
+
+    valueInOtherAnswers(value) {
+        for (let answer of this.otherAnswers) {
+            if (answer.value == value)
+                return true;
+        }
+        return false;
     }
 }

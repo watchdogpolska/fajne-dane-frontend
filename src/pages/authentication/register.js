@@ -4,9 +4,6 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Card, Container, Divider, Link, Typography } from '@mui/material';
 import { AuthBanner } from '../../components/authentication/auth-banner';
-import { AmplifyRegister } from '../../components/authentication/amplify-register';
-import { Auth0Register } from '../../components/authentication/auth0-register';
-import { FirebaseRegister } from '../../components/authentication/firebase-register';
 import { JWTRegister } from '../../components/authentication/jwt-register';
 import { Logo } from '../../components/logo';
 import { withGuestGuard } from '../../hocs/with-guest-guard';
@@ -33,7 +30,7 @@ const Register = () => {
     <>
       <Head>
         <title>
-          Register | Material Kit Pro
+            Rejestracja | Fajne Dane
         </title>
       </Head>
       <Box

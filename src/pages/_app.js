@@ -12,7 +12,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { SettingsButton } from '../components/settings-button';
 import { SplashScreen } from '../components/splash-screen';
 import { SettingsConsumer, SettingsProvider } from '../contexts/settings-context';
-import { AuthConsumer, AuthProvider } from '../contexts/jwt-context';
+import { AuthConsumer, AuthProvider } from '../contexts/auth-context';
 import { createEmotionCache } from '../utils/create-emotion-cache';
 import { gtmConfig } from '../config';
 import { gtm } from '../lib/gtm';
@@ -41,7 +41,7 @@ const App = (props) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <title>
-          Material Kit Pro
+          Fajne Dane
         </title>
         <meta
           name="viewport"

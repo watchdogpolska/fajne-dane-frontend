@@ -7,13 +7,13 @@ import {Box, Card, Button, Divider, Grid, InputAdornment, Tab, Tabs, TextField, 
 import {withAuthGuard} from '@/hocs/with-auth-guard';
 import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
 import {Search as SearchIcon} from '@/icons/search';
-import {campaignRepository} from '@/api/repositories/campaign-repository';
 import {CampaignsListTable} from '@/components/dashboard/campaigns/campaigns-list/campaigns-list-table';
 import {CampaignDrawer} from '@/components/dashboard/campaigns/campaigns-list/components/campaign-drawer';
 import {DeleteConfirmModal} from '@/components/dashboard/common/delete-confirm-modal';
 import { Plus as PlusIcon } from '@/icons/plus';
 import {CampaignsListInner} from '@/components/dashboard/campaigns/campaigns-list/components/campaigns-list-inner';
 import {applySort, applyPagination} from '@/utils/filter-utils';
+import {useAuth} from "@/hooks/use-auth";
 
 
 const tabs = [
@@ -47,11 +47,11 @@ const applyFilters = (data, filters) => data.filter((element) => {
     }
 
     if (filters['query']) {
-        let queryTokens = filters['query'].split(' ');
+        let queryTokens = filters['query'].toLowerCase().split(' ');
 
         let matchedTokens = 0;
         for (let token of queryTokens) {
-            if (element.name.includes(token) ||
+            if (element.name.toLowerCase().includes(token) ||
                 element.status.toLowerCase() === token.toLowerCase() ||
                 element.createdDate.includes(token))
                 matchedTokens+=1;
@@ -71,6 +71,7 @@ const Campaigns = () => {
 
     const rootRef = useRef(null);
     const queryRef = useRef(null);
+    const { repositories } = useAuth();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [campaigns, setCampaigns] = useState([]);
@@ -84,7 +85,7 @@ const Campaigns = () => {
     });
 
     async function fetchCampaignData() {
-        let campaigns = await campaignRepository.list();
+        let campaigns = await repositories.campaign.list();
         setCampaigns(campaigns);
     }
 
@@ -144,7 +145,7 @@ const Campaigns = () => {
 
         async function deleteCampaign() {
             setLoading(true);
-            await campaignRepository.deleteCampaign({id: drawer.campaignId});
+            await repositories.campaign.deleteCampaign({id: drawer.campaignId});
             await fetchCampaignData();
             handleCloseDrawer();
             setDeleteModalOpen(false);
@@ -174,7 +175,7 @@ const Campaigns = () => {
         <>
             <Head>
                 <title>
-                    Dashboard: Overview | Material Kit Pro
+                    Lista kampanii | Fajne Dane
                 </title>
             </Head>
             <Box component="main"

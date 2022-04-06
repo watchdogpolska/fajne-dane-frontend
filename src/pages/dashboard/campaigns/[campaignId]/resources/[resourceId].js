@@ -5,8 +5,8 @@ import {Box, Container, Grid, Link, Typography} from '@mui/material';
 import {withAuthGuard} from '@/hocs/with-auth-guard';
 import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
 import {ResourceEditForm} from '@/components/dashboard/campaigns/resources-form/resources-edit-form';
-import {fileSourceRepository} from '@/api/repositories/file-source-repository';
 import NextLink from 'next/link';
+import {useAuth} from "@/hooks/use-auth";
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 
 
@@ -15,9 +15,10 @@ const FileResourceDetails = () => {
     const { campaignId, resourceId } = router.query;
     const [resource, setResource] = useState(null);
     const [loading, setLoading] = useState(true);
+    const { repositories } = useAuth();
 
     async function fetchResourceData() {
-        let result = await fileSourceRepository.getFileSource({campaignId: campaignId, id: resourceId});
+        let result = await repositories.fileSource.getFileSource({campaignId: campaignId, id: resourceId});
         setResource(result);
         setLoading(false);
     }
@@ -33,7 +34,7 @@ const FileResourceDetails = () => {
         <>
             <Head>
                 <title>
-                    Fajne Dane - Utwórz zbiór danych
+                    Źródło danych | Fajne Dane
                 </title>
             </Head>
             <Box component="main"

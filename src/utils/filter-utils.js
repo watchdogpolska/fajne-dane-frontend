@@ -1,7 +1,5 @@
 
 export const applyFilters = (data, filters) => data.filter((element) => {
-    console.log(element)
-    console.log(filters);
     return true;
 });
 

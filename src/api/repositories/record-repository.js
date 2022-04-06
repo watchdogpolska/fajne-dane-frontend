@@ -1,8 +1,8 @@
 import Repository from "./repository";
-import {backendConfig} from "../../config";
+import Document from '../models/document';
 
 
-class RecordsRepository extends Repository {
+export class RecordRepository extends Repository {
     async create({docQueryId, payload}) {
         let response = await this.post(
             `/campaigns/doc-queries/${docQueryId}/records/create/`,
@@ -16,5 +16,3 @@ class RecordsRepository extends Repository {
         return response.data.map((document_data) => Document.fromJson(document_data));
     }
 }
-
-export const recordsRepository = new RecordsRepository(backendConfig.url);

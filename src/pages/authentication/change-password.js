@@ -60,7 +60,7 @@ const ChangePassword = () => {
         <>
             <Head>
                 <title>
-                    Password Recovery | Material Kit Pro
+                    Odzyskaj hasło | Fajne Dane
                 </title>
             </Head>
             <Box component="main"

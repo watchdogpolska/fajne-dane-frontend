@@ -4,8 +4,7 @@ import {useRouter} from 'next/router'
 import * as Yup from 'yup';
 import {useTheme} from '@mui/material/styles';
 import {Box, Button, Divider, Grid, Typography} from '@mui/material';
-import {documentQueryRepository} from '@/api/repositories/document-query-repository';
-import {recordsRepository} from '@/api/repositories/records-repository';
+import {useAuth} from "@/hooks/use-auth";
 import {OutputFieldForm} from "./output-field-form";
 import DocQueryRecords from '@/logic/doc-query-form/doc-query-records';
 import {DocumentQueryStatus} from '@/components/dashboard/common/statuses/document-query-status';
@@ -25,6 +24,7 @@ export const DocQueryForm = (props) => {
 
     const theme = useTheme();
     const router = useRouter();
+    const { repositories } = useAuth();
     const [showConflicts, setShowConflicts] = useState(false);
     const [loading, setLoading] = useState(true);
     const [enableEdit, setEnableEdit] = useState(true);
@@ -33,14 +33,20 @@ export const DocQueryForm = (props) => {
 
     async function fetchData() {
         setLoading(true);
-        let documentQuery = await documentQueryRepository.details({docQueryId: docQueryId});
+        let documentQuery = await repositories.documentQuery.details({docQueryId: docQueryId});
+
+        let fetchedAnswerValue = null;
         if (documentQuery.acceptedRecord) {
-            setAnswerValue(documentQuery.acceptedRecord.value);
+            fetchedAnswerValue = documentQuery.acceptedRecord.value;
             setEnableEdit(false);
         }
 
+        setAnswerValue(fetchedAnswerValue);
         setDocumentQuery(documentQuery);
         setLoading(false);
+
+        if (documentQuery.status !== "CLOSED")
+            setEnableEdit(true);
     }
 
     useEffect(() => {
@@ -61,7 +67,7 @@ export const DocQueryForm = (props) => {
         }),
         onSubmit: async (values, helpers) => {
             try {
-                let response = await recordsRepository.create({
+                let response = await repositories.record.create({
                     docQueryId: docQueryId,
                     payload: {
                         "value": answerValue,
@@ -95,7 +101,6 @@ export const DocQueryForm = (props) => {
                                    onSaveClick={() => {formik.handleSubmit()}}
                                    toggle={enableEdit}/>
     } else {
-        console.log(docQueryRecords);
         if (docQueryRecords.hasConflicts)
             editButtons = <EyeButton text={showConflicts ? "Ukryj konflikt" : "Zobacz konflikt"}
                                      onToggleClick={() => {setShowConflicts(!showConflicts)}}

@@ -3,9 +3,8 @@ import * as Yup from 'yup';
 import NextLink from 'next/link';
 import {useFormik} from 'formik';
 import {Alert, Box, Button, Grid, FormHelperText, TextField} from '@mui/material';
-import {useAuth} from '../../hooks/use-auth';
 import {useMounted} from '../../hooks/use-mounted';
-import { authRepository } from '@/api/repositories/auth-repository';
+import {useAuth} from "@/hooks/use-auth";
 
 
 export const ResetPasswordForm = (props) => {
@@ -15,6 +14,7 @@ export const ResetPasswordForm = (props) => {
     } = props;
     
     const router = useRouter();
+    const { repositories } = useAuth();
     const formik = useFormik({
         validateOnBlur: false,
         initialValues: {
@@ -30,7 +30,7 @@ export const ResetPasswordForm = (props) => {
         }),
         onSubmit: async (values, helpers) => {
             try {
-                let response = await authRepository.requestResetPassword({email: values.email});
+                let response = await repositories.auth.requestResetPassword({email: values.email});
                 onMessageSent(values.email);
             } catch (err) {
                 console.error(err);

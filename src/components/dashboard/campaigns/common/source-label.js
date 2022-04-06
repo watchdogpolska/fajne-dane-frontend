@@ -8,6 +8,8 @@ export const SourceLabel = (props) => {
     
     let type = "Użytkownik";
     let icon = <UserIcon sx={{color: 'text.secondary'}}/>;
+    let value = source.name;
+
     if (source.hasOwnProperty("file")) {
         type = "Plik";
         icon = <DocumentTextIcon sx={{color: 'text.secondary'}}/>;
@@ -22,7 +24,7 @@ export const SourceLabel = (props) => {
                 </Typography>
             </Box>
             <Box>
-                { source.name }
+                { value }
             </Box>
         </Box>
     );

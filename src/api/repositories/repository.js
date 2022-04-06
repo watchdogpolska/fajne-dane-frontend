@@ -1,15 +1,21 @@
 import axios from "axios";
-import { session } from "../session";
 import { useAuth } from '../../hooks/use-auth';
+import { EventEmitter } from 'events';
+
+
+export const BaseEvents = Object.freeze({
+    ERROR: Symbol("ERROR"),
+});
 
 
 export default class Repository {
-    constructor(api_url) {
+    constructor(api_url, session) {
         this._session = session;
         this._client = axios.create({
             baseURL: api_url,
             timeout: 5000,
         });
+        this.em = new EventEmitter();
     }
 
     get session() {
@@ -24,11 +30,15 @@ export default class Repository {
     }
 
     get(url) {
-        return this._client.get(url, this._config);
+        return this._client.get(url, this._config).catch((error) => {
+            this.em.emit(BaseEvents.ERROR, error);
+        });
     }
 
     post(url, payload) {
-        return this._client.post(url, payload, this._config);
+        return this._client.post(url, payload, this._config).catch((error) => {
+            this.em.emit(BaseEvents.ERROR, error);
+        });
     }
 
     postFile(url, payload) {

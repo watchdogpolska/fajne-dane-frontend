@@ -1,7 +1,7 @@
 
-class Session {
-    constructor() {
-        this.user = null;
+export class Session {
+    constructor(user) {
+        this.user = user;
     }
 
     get accessToken() {
@@ -32,5 +32,3 @@ class Session {
         localStorage.removeItem("refreshToken");
     }
 }
-
-export const session = new Session();

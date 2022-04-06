@@ -6,7 +6,7 @@ import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
 import {Scrollbar} from '../../scrollbar';
 import {SourceLabel} from './common/source-label';
 import {DocumentStatus} from '@/components/dashboard/common/statuses/document-status';
-
+import {DeleteConfirmModal} from '@/components/dashboard/common/delete-confirm-modal';
 
 const buttonNameMapping = {
     "CLOSED": "Edytuj",
@@ -20,6 +20,8 @@ export const DocumentsListTable = (props) => {
     const {
         campaignId,
         documents,
+        onDocumentsDeleted,
+        onDelete,
         documentsCount,
         onPageChange,
         onRowsPerPageChange,
@@ -28,6 +30,7 @@ export const DocumentsListTable = (props) => {
         ...other
     } = props;
     const [selectedDocuments, setSelectedDocuments] = useState([]);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
     useEffect(() => {
             if (selectedDocuments.length) {
@@ -56,8 +59,19 @@ export const DocumentsListTable = (props) => {
         && selectedDocuments.length < documents.length;
     const selectedAllDocuments = selectedDocuments.length === documents.length;
 
+    const openDelete = () => {setDeleteModalOpen(true)};
+    const closeDelete = () => {setDeleteModalOpen(false)};
+
+    const deleteSelectedDocuments = () => {
+        onDocumentsDeleted(selectedDocuments);
+        closeDelete();
+    }
+
     return (
         <div {...other}>
+            <DeleteConfirmModal open={deleteModalOpen} 
+                                onClose={closeDelete}
+                                onAccept={deleteSelectedDocuments}/>
             <Box sx={{
                 backgroundColor: 'neutral.100',
                 display: !enableBulkActions && 'none',
@@ -68,6 +82,7 @@ export const DocumentsListTable = (props) => {
                           indeterminate={selectedSomeDocuments}
                           onChange={handleSelectAllDocuments}/>
                 <Button size="small"
+                        onClick={openDelete}
                         sx={{ ml: 2 }}>
                     Delete
                 </Button>

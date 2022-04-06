@@ -1,10 +1,9 @@
 import Repository from "./repository";
-import {backendConfig} from "../../config";
 import FileSource from "../models/sources/file-source";
 import {ParsingReport} from "../models/validation/parsing";
 
 
-class FileSourceRepository extends Repository {
+export class FileSourceRepository extends Repository {
     async list({campaignId}) {
         let response = await this.get(`campaigns/${campaignId}/sources/`);
         return response.data.map((source_data) => FileSource.fromJson(source_data));
@@ -51,5 +50,3 @@ class FileSourceRepository extends Repository {
         return FileSource.fromJson(response.data);
     }
 }
-
-export const fileSourceRepository = new FileSourceRepository(backendConfig.url);
