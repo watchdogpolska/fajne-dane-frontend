@@ -50,7 +50,6 @@ const DocumentQueryDetails = () => {
     let docQueryPrevId = docQueryNavigator.getPrevId();
     let docQueryNextId = docQueryNavigator.getNextId();
 
-
     return (
         <>
             <Head>
@@ -85,7 +84,7 @@ const DocumentQueryDetails = () => {
 
                             <Grid item md={6}>
                                 <Box sx={{height: 600}}>
-                                    <PdfViewer/>
+                                    <PdfViewer documentUrl={document.data['document_url']}/>
                                 </Box>
                             </Grid>
                             <Grid item md={6}>

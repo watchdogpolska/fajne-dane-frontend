@@ -51,7 +51,7 @@ export const AddDocumentForm = (props) => {
     const handleCloseCancel = () => {setCancelModalOpen(false)};
     const handleAcceptCancel = (e) => {
         e.preventDefault();
-        router.push(`/dashboard/campaigns/${campaign.id}/documents`);
+        router.push(`/dashboard/campaigns/${campaign.id}`);
     };
 
     let disabled = false;

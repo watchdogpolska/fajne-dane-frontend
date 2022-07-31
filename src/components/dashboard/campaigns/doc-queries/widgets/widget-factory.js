@@ -5,7 +5,8 @@ import {OtherRadioGroupWidget} from './other-radio-group';
 
 let Components = {
     "radio": RadioGroupWidget,
-    "multi_radio": OtherRadioGroupWidget,
+    "OtherChoiceField": OtherRadioGroupWidget,
+    'ChoiceField': RadioGroupWidget
 };
 
 export default class WidgetFactory {

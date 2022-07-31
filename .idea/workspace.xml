@@ -5,64 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1ffc2cd-6236-4fb0-9a5e-8027a540e296" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/api/models/document-field.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/repositories.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/repositories/query-repository.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/components/probability-bar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/components/radio-field.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/components/text-radio-field.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/other-radio-group.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/radio-group.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/widget-factory.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-form/add-document-form.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/documents/add.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/campaign.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/campaign.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/repositories/auth-repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/auth-repository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/repositories/campaign-repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/campaign-repository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/repositories/document-query-repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/document-query-repository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/repositories/document-repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/document-repository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/repositories/file-source-repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/file-source-repository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/repositories/records-repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/record-repository.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/repositories/repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/repository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/repositories/template-repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/template-repository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/session.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/session.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/authentication/change-password-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/authentication/change-password-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/authentication/jwt-register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/authentication/jwt-register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/authentication/reset-password-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/authentication/reset-password-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-details-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-details-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-drawer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-drawer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/common/source-label.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/common/source-label.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/campaigns-create-from.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/campaigns-create-from.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/doc-query-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/doc-query-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/output-field-form-field.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/output-field-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/output-field-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/documents-list-table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/documents-list-table.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/widget-factory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/widget-factory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-details/document-data-list.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-details/document-data-list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-form/add-document-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-form/add-document-form.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-create-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-create-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-edit-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-edit-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/contexts/amplify-context.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/contexts/auth0-context.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/contexts/firebase-auth-context.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/contexts/jwt-context.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/contexts/auth-context.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/use-auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/use-auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logic/doc-query-form/doc-query-records.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/logic/doc-query-form/doc-query-records.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/authentication/change-password.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/change-password.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/authentication/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/authentication/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/authentication/reset-password.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/reset-password.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/pdf-viewer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/pdf-viewer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/documents/[documentId]/doc-queries/[docQueryId].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/documents/[documentId]/doc-queries/[docQueryId].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/documents/[documentId]/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/documents/[documentId]/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/[resourceId].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/[resourceId].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/add.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/add.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/create.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/create.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/filter-utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/filter-utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,31 +42,31 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/api/models/query.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/api/models/user.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/api/models/document.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/api/repositories/template-repository.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/[resourceId].js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/api/repositories/file-source-repository.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/pages/dashboard/index.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/api/repositories/document-repository.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-create-form.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-edit-form.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/common/source-label.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/documents-list-table.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/resources-list/file-sources-list-table.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/document-details/document-data-field.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/document-details/document-data-list.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/api/models/sources/source.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-template-download.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/[resourceId].js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-drawer.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-edit-form.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/api/models/query.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-create-form.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaigns-list-inner.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/pages/dashboard/index.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/campaigns-list-table.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/api/repositories/file-source-repository.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/common/source-label.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/api/repositories/document-repository.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-details-preview.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-details-form.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/common/template-dropzone.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/documents-list-table.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-template-download.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-drawer.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaigns-list-inner.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/common/link-label.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/common/file-link-label.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/api/models/user.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/components/dashboard/campaigns/resources-list/file-sources-list-table.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/api/models/document.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/api/repositories/template-repository.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/api/models/sources/file-source.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/api/models/sources/user-source.js" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -236,7 +187,14 @@
       <workItem from="1648542720172" duration="61000" />
       <workItem from="1648593704205" duration="8000" />
       <workItem from="1648594806947" duration="829000" />
-      <workItem from="1649273652297" duration="6214000" />
+      <workItem from="1649273652297" duration="6845000" />
+      <workItem from="1649367153411" duration="81000" />
+      <workItem from="1656978836985" duration="335000" />
+      <workItem from="1657116228726" duration="3738000" />
+      <workItem from="1657144482848" duration="1271000" />
+      <workItem from="1657195157099" duration="11000" />
+      <workItem from="1657195212464" duration="11000" />
+      <workItem from="1659300496068" duration="2838000" />
     </task>
     <servers />
   </component>

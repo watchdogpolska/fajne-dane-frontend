@@ -13,7 +13,7 @@ export default class Repository {
         this._session = session;
         this._client = axios.create({
             baseURL: api_url,
-            timeout: 5000,
+            timeout: 6000000,
         });
         this.em = new EventEmitter();
     }

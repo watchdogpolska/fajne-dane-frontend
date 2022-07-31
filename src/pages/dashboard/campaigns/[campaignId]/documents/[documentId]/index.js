@@ -92,7 +92,7 @@ const DocumentDetails = () => {
 
                             <Grid item md={6}>
                                 <Box sx={{height: 600}}>
-                                    <PdfViewer/>
+                                    <PdfViewer documentUrl={document.data['document_url']}/>
                                 </Box>
                             </Grid>
                             <Grid item md={6}>

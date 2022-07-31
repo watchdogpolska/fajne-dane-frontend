@@ -9,9 +9,9 @@ export const DocumentDataList = (props) => {
     } = props;
 
     let data = [
-        {name: "Instytucja", value: "Urząd Miejski W Paczkowie"},
-        {name: "Region", value: "Województwo opolskie, powiat nyski"},
-        {name: "Data odpowiedzi", value: "12/05/2021"}
+        {name: "Instytucja", value: "Work in progress"},
+        {name: "Region", value: "Województwo"},
+        {name: "Data odpowiedzi", value: "99/99/9999"}
     ]
 
     let fields = [];

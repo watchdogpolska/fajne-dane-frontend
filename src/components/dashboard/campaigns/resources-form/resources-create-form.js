@@ -25,7 +25,8 @@ export const ResourcesCreateForm = (props) => {
     const [loading, setLoading] = useState(true);
     const [resource, setResource] = useState({
         file: null,
-        report: null
+        report: null,
+        isValidating: false
     })
 
     async function fetchCampaignData() {
@@ -43,14 +44,16 @@ export const ResourcesCreateForm = (props) => {
     const handleDrop = (newFiles) => {
         setResource({
             file: newFiles[0],
-            report: null
+            report: null,
+            isValidating: false
         });
     };
 
     const handleRemove = (file) => {
         setResource({
             file: null,
-            report: null
+            report: null,
+            isValidating: false
         });
     };
 
@@ -60,6 +63,12 @@ export const ResourcesCreateForm = (props) => {
 
     const handleValidate = () => {
         async function fetchData() {
+            setResource({
+                file: resource.file,
+                report: null,
+                isValidating: true,
+            });
+
             let report = await repositories.fileSource.validate({
                 campaignId: campaign.id,
                 file: resource.file
@@ -67,7 +76,8 @@ export const ResourcesCreateForm = (props) => {
 
             setResource({
                 file: resource.file,
-                report: report
+                report: report,
+                isValidating: false,
             });
         }
         
@@ -170,7 +180,7 @@ export const ResourcesCreateForm = (props) => {
                                     disabled={
                                         formik.values.name == "" ||
                                         formik.values.source == "" ||
-                                        resource.file === null
+                                        resource.report === null
                                     }
                                     variant="contained">
                                 Dodaj zbiór danych
