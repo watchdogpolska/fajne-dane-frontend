@@ -31,21 +31,32 @@ const DocumentQueryDetails = () => {
     const router = useRouter();
     const { campaignId, documentId, docQueryId } = router.query;
     const { repositories } = useAuth();
-    const [loading, setLoading] = useState(false);
+    const [document, setDocument] = useState(null);
+    const [loadingDocQueries, setLoadingDocQueries] = useState(true);
+    const [loadingDocument, setLoadingDocument] = useState(true);
     const [docQueryStatuses, setDocQueryStatuses] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
             let result = await repositories.documentQuery.statusList({documentId: documentId});
             setDocQueryStatuses(result);
-            setLoading(false);
+            setLoadingDocQueries(false);
         }
         fetchData();
     }, []);
 
-    if (loading)
-        return <div>Loading</div>;
+    useEffect(() => {
+        async function fetchData() {
+            let result = await repositories.document.details({id: documentId});
+            setDocument(result);
+            setLoadingDocument(false);
+        }
+        fetchData();
+    }, []);
 
+    if (loadingDocQueries || loadingDocument)
+        return <div>Loading</div>;
+    
     let docQueryNavigator = new DocQueryNavigator(docQueryStatuses, docQueryId)
     let docQueryPrevId = docQueryNavigator.getPrevId();
     let docQueryNextId = docQueryNavigator.getNextId();
@@ -104,7 +115,7 @@ const DocumentQueryDetails = () => {
                                         </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails sx={{py: 0}}>
-                                        <DocumentDataList dataFields={document.data}/>
+                                        <DocumentDataList document={document}/>
                                     </AccordionDetails>
                                 </Accordion>
                                 <Paper sx={{
