@@ -37,6 +37,12 @@ const buttonNameMapping = {
     "CREATED": "Oznacz",
 }
 
+function compareDocumentQueries( a, b ) {
+  if ( a.query.order < b.query.order ) return -1;
+  if ( a.query.order > b.query.order ) return 1;
+  return 0;
+}
+
 
 const DocumentDetails = () => {
     const router = useRouter();
@@ -57,6 +63,8 @@ const DocumentDetails = () => {
 
     if (loading)
         return <div>Loading</div>;
+    
+    let documentQueries = document.documentQueries.sort(compareDocumentQueries);
 
     return (
         <>
@@ -109,7 +117,7 @@ const DocumentDetails = () => {
                                         </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails sx={{py: 0}}>
-                                        <DocumentDataList dataFields={document.data}/>
+                                        <DocumentDataList document={document}/>
                                     </AccordionDetails>
                                 </Accordion>
                                 <Paper sx={{
@@ -131,7 +139,7 @@ const DocumentDetails = () => {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {document.documentQueries.map((dq) => {
+                                            {documentQueries.map((dq) => {
                                                 return (
                                                     <TableRow hover
                                                               key={dq.id}>

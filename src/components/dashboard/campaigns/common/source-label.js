@@ -5,12 +5,12 @@ import {User as UserIcon} from '@/icons/user';
 
 export const SourceLabel = (props) => {
     const { source, ...other } = props;
-    
+
     let type = "Użytkownik";
     let icon = <UserIcon sx={{color: 'text.secondary'}}/>;
     let value = source.name;
 
-    if (source.hasOwnProperty("file")) {
+    if (source.type === "FILE") {
         type = "Plik";
         icon = <DocumentTextIcon sx={{color: 'text.secondary'}}/>;
     }

@@ -4,14 +4,13 @@ import {Grid, Divider, List} from '@mui/material';
 
 export const DocumentDataList = (props) => {
     const {
-        dataFields,
+        document,
         ...other
     } = props;
 
     let data = [
-        {name: "Instytucja", value: "Work in progress"},
-        {name: "Region", value: "Województwo"},
-        {name: "Data odpowiedzi", value: "99/99/9999"}
+        {name: "Instytucja", value: document.institution.name},
+        {name: "TERYT", value: document.institution.key},
     ]
 
     let fields = [];

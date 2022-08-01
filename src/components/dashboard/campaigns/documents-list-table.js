@@ -131,7 +131,7 @@ export const DocumentsListTable = (props) => {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        {document.institution}
+                                        {document.institution.name} ({document.institution.key})
                                     </TableCell>
                                     <TableCell>
                                         <SourceLabel source={document.source}/>
