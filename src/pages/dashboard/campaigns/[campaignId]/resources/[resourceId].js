@@ -8,6 +8,7 @@ import {ResourceEditForm} from '@/components/dashboard/campaigns/resources-form/
 import NextLink from 'next/link';
 import {useAuth} from "@/hooks/use-auth";
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
+import {Loading} from '@/components/dashboard/common/loading';
 
 
 const FileResourceDetails = () => {
@@ -28,7 +29,7 @@ const FileResourceDetails = () => {
     }, []);
     
     if (loading)
-        return <div>Loading</div>;
+        return <Loading/>;
 
     return (
         <>

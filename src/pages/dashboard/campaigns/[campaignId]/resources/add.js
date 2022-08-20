@@ -41,7 +41,7 @@ const AddDataResourceCampaign = () => {
                                         <ArrowBackIcon fontSize="small"
                                                        sx={{ mr: 1 }}/>
                                         <Typography variant="subtitle2">
-                                            Documenty kampanii
+                                            Dokumenty kampanii
                                         </Typography>
                                     </Link>
                                 </NextLink>

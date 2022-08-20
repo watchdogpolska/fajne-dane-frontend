@@ -9,6 +9,7 @@ export default class FileSource extends Source {
         this.sourceDate = sourceDate;
         this.created = created;
         this.file = file;
+        this.type = "FILE";
     }
 
     static fromJson(data) {

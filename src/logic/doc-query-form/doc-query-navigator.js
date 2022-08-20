@@ -1,46 +1,47 @@
+function compareDocumentQueries( a, b ) {
+    if ( a.query.order < b.query.order ) return -1;
+    if ( a.query.order > b.query.order ) return 1;
+    return 0;
+}
+
+
+function _getIndexOfElementId(elementId, elements) {
+    let index = -1;
+    for (let element of elements) {
+        index += 1;
+        if (elementId == element.id)
+            return index;
+    }
+    return -1;
+}
+
 
 export default class DocQueryNavigator {
-    constructor(docQueries, docQueryId, status) {
-        this.docQueries = docQueries;
-        this.docQueryId = docQueryId;
-        this.status = status;
+    constructor(docQueries) {
+        this.openedDocQueries = [];
+        this.closedDocQueries = [];
+        for (let docQuery of docQueries.sort(compareDocumentQueries)) {
+            if (docQuery.status == 'CLOSED') {
+                this.closedDocQueries.push(docQuery);
+            } else {
+                this.openedDocQueries.push(docQuery);
+            }
+        }
 
-        this.currentIndex = this._getIndexOf(docQueryId);
+        this.docQueries = this.openedDocQueries.concat(this.closedDocQueries);
     }
     
-    _getIndexOf(docQueryId) {
-        let index = -1;
-        for (let docQuery of this.docQueries) {
-            index += 1;
-            if (docQueryId == docQuery.id)
-                return index;
-        }
-        return -1;
+    getNext(id) {
+        let index = _getIndexOfElementId(id, this.docQueries);
+        if (index == this.docQueries.length - 1)
+            return null;
+        return this.docQueries[index+1];
     }
 
-    getNextId() {
-        let initial = Math.max(this.currentIndex+1, 0);
-        for (let i = initial; i < this.docQueries.length; i++) {
-            let docQuery = this.docQueries[i];
-
-            if (this.status && docQuery.status != status)
-                continue
-
-            return docQuery.id;
-        }
-        return null;
-    }
-
-    getPrevId() {
-        let initial = this.currentIndex >= 0 ? this.currentIndex - 1 : this.docQueries.length - 1;
-        for (let i = initial; i >= 0; i--) {
-            let docQuery = this.docQueries[i];
-
-            if (this.status && docQuery.status != status)
-                continue
-
-            return docQuery.id;
-        }
-        return null;
+    getPrev(id) {
+        let index = _getIndexOfElementId(id, this.docQueries);
+        if (index <= 0)
+            return null;
+        return this.docQueries[index-1];
     }
 }

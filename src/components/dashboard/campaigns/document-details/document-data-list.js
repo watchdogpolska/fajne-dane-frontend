@@ -21,7 +21,7 @@ export const DocumentDataList = (props) => {
     }
 
     return (
-        <List container sx={{py: 0}}>
+        <List sx={{py: 0}}>
             {fields}
         </List>
     );

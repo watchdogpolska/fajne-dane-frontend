@@ -1,12 +1,14 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState, useReducer} from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import NextLink from 'next/link';
 import {Box, Link, Card, Divider, Grid, InputAdornment, Tab, Tabs, TextField, Typography, Button} from '@mui/material';
 import {withAuthGuard} from '@/hocs/with-auth-guard';
 import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
-import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
+import {ArrowBack} from '@/components/dashboard/common/arrow-back';
+import {CleanButton} from '@/components/dashboard/common/clean-button';
 import { Plus as PlusIcon } from '@/icons/plus';
+import {Loading} from '@/components/dashboard/common/loading';
 import {Search as SearchIcon} from '@/icons/search';
 import {applySort, applyPagination} from '../../../../utils/filter-utils';
 import {DocumentsListTable} from '@/components/dashboard/campaigns/documents-list-table';
@@ -22,44 +24,20 @@ const tabs = [
     },
     {
         label: 'Tylko oczekujące',
-        value: 'PENDING'
+        value: 'VALIDATING'
     }
 ];
 
 const sortOptions = [
     {
         label: 'Najnowsze u góry',
-        value: 'created|desc'
+        value: 'created'
     },
     {
         label: 'Najstarsze u góry',
-        value: 'created|asc'
+        value: '-created'
     }
 ];
-
-
-const applyFilters = (data, filters) => data.filter((element) => {
-    if (filters['tab'] == "PENDING") {
-        if (["CREATED", "INITIALIZED", "VALIDATING"].indexOf(element.status) < 0)
-            return false;
-    }
-
-    if (filters['query']) {
-        let queryTokens = filters['query'].toLowerCase().split(' ');
-
-        let matchedTokens = 0;
-        for (let token of queryTokens) {
-            if (element.institution.toString().includes(token) ||
-                element.status.toLowerCase() === token.toLowerCase() ||
-                element.source.name.toLowerCase().includes(token) ||
-                element.createdDate.includes(token))
-                matchedTokens+=1;
-        }
-        if (queryTokens.length != matchedTokens)
-            return false;
-    }
-    return true;
-});
 
 
 const CampaignDocumentsList = () => {
@@ -67,75 +45,164 @@ const CampaignDocumentsList = () => {
     const queryRef = useRef(null);
     const router = useRouter();
     const { repositories } = useAuth();
-    const [loading, setLoading] = useState(true);
-    const [documents, setDocuments] = useState([]);
-    const [currentTab, setCurrentTab] = useState('ALL');
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [sort, setSort] = useState(sortOptions[0].value);
-    const [filters, setFilters] = useState({
-        query: '',
-        tab: 'ALL',
-    });
-
     const { campaignId } = router.query;
 
+    const [state, setState] = useReducer(
+        (state, newState) => ({...state, ...newState}),
+        {
+            documents: {
+                loading: true,
+                data: []
+            },
+            campaign: {
+                loading: true,
+                data: null
+            },
+            statuses: {
+                loading: true,
+                data: null
+            }
+        }
+    );
+    const [filters, setFilters] = useReducer(
+        (state, newState) => ({...state, ...newState}),
+        {
+            query: localStorage.getItem('campaign-documents-query') || '',
+            tab:  localStorage.getItem('campaign-documents-tabs') || 'ALL',
+            page: 0,
+            rowsPerPage: 10,
+            sort: sortOptions[0].value
+        }
+    );
+    const [currentQuery, setCurrentQuery] = useState(filters.query);
+
+    const isLoading = () => {
+        return state.documents.loading || state.campaign.loading || state.statuses.loading;
+    }
+
+    const getCurrentFilters = () => {
+        let filter = {
+            query: filters.query,
+            order: filters.sort,
+            offset: filters.page * filters.rowsPerPage,
+            limit: filters.rowsPerPage,
+        }
+        if (filters.tab !== "ALL")
+            filter['status'] = filters.tab;
+        return filter;
+    };
+    
+    async function fetchStatusesData() {
+        let statuses = await repositories.document.statuses({
+            campaignId: campaignId,
+            params: {
+                query: filters.query
+            }
+        });
+        setState({
+            statuses: {
+                loading: false,
+                data: statuses
+            }
+        });
+    }
+
+    async function fetchDocumentsData() {
+        let documents = await repositories.document.list({
+            campaignId: campaignId,
+            params: getCurrentFilters()
+        });
+        setState({
+            documents: {
+                loading: false,
+                data: documents
+            }
+        });
+    }
+
     async function fetchCampaignData() {
-        let documents = await repositories.document.list({campaignId: campaignId});
-        setDocuments(documents);
-        setLoading(false);
+        let campaign = await repositories.campaign.getCampaign({id: campaignId});
+        setState({
+            campaign: {
+                loading: false,
+                data: campaign
+            }
+        });
+    }
+
+    async function fetchData() {
+        await fetchCampaignData();
+        await fetchDocumentsData();
+        await fetchStatusesData();
     }
 
     useEffect(() => {
-        fetchCampaignData();
+        fetchData();
     }, []);
-    
+
+    useEffect(() => {
+        if (!isLoading()) fetchData();
+    }, [filters]);
+
     async function deleteDocuments(documentIds) {
         await repositories.document.bulkDelete({campaignId: campaignId, ids: documentIds});
-        fetchCampaignData();
+        fetchDocumentsData();
     }
 
     const handleDocumentsDeleted = (documentsIds) => {
-        setLoading(true);
+        setState({
+            documents: {
+                loading: true
+            }
+        });
         deleteDocuments(documentsIds);
     }
 
     const handleTabsChange = (event, value) => {
-        const updatedFilters = {
-            ...filters,
-        };
-        updatedFilters['tab'] = value;
-        setFilters(updatedFilters);
-        setCurrentTab(value);
+        localStorage.setItem('campaign-documents-tabs', value);
+        setFilters({tab: value, page: 0});
     };
 
     const handleQueryChange = (event) => {
         event.preventDefault();
-        setFilters((prevState) => ({
-            ...prevState,
-            query: queryRef.current?.value
-        }));
+        let value = queryRef.current?.value;
+        localStorage.setItem('campaign-documents-query', value);
+        setFilters({query: value, page: 0});
     };
 
     const handleSortChange = (event) => {
-        setSort(event.target.value);
+        setFilters({sort: event.target.value});
     };
 
-    const handlePageChange = (event, newPage) => {
-        setPage(newPage);
+    const handlePageChange = (event, page) => {
+        setFilters({page: page});
     };
 
     const handleRowsPerPageChange = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
+        setFilters({rowsPerPage: parseInt(event.target.value, 10)});
     };
 
-    // Usually query is done on backend with indexing solutions
-    const filteredDocuments = applyFilters(documents, filters);
-    const sortedDocuments = applySort(filteredDocuments, sort);
-    const paginatedDocuments = applyPagination(sortedDocuments, page, rowsPerPage);
+    const handleCurrentQueryChange = (event) => {
+        setCurrentQuery(event.target.value);
+    };
 
-    if (loading)
-        return <div>LOADING</div>
+    const getStatuesFrequency = (status) => {
+        if (status === 'ALL') {
+            return Object.values(state.statuses.data).reduce((a, b) => a + b, 0)
+        }
+        return state.statuses.data[status] || 0;
+    };
+
+    let cleanButton = null;
+    if (filters.query.length > 0 || currentQuery.length > 0)
+        cleanButton = <CleanButton text={"wyczyść"} onClick={() => {
+            setFilters({query: ""});
+            setCurrentQuery("");
+            localStorage.setItem('campaign-documents-query', "");
+        }}/>
+
+    if (isLoading())
+        return <Loading/>;
 
     return (
         <>
@@ -155,29 +222,18 @@ const CampaignDocumentsList = () => {
                           justifyContent="space-between"
                           spacing={3}>
                         <Grid item md={12}>
-                            <NextLink href="/dashboard/campaigns" passHref>
-                                <Link color="textPrimary"
-                                      component="a"
-                                      sx={{
-                                          alignItems: 'center',
-                                          display: 'flex'
-                                      }}>
-                                    <ArrowBackIcon fontSize="small"
-                                                   sx={{ mr: 1 }}/>
-                                    <Typography variant="subtitle2">
-                                        Lista zbiorów danych
-                                    </Typography>
-                                </Link>
-                            </NextLink>
+
+                            <ArrowBack link="/dashboard/campaigns/"
+                                       text="List zbiorów danych"/>
                         </Grid>
                         <Grid item md={8} xs={12}>
                             <Typography variant="h4">
-                                Lista zbiorów danych
+                                {state.campaign.data.name}
                             </Typography>
                             <Typography color="textSecondary"
                                         variant="body2"
                                         sx={{ mt: 1 }}>
-                                Kampanie Sprawdzamy Jak Jest lub inne, zewnętrze zbiory danych. W tym miejscu dodasz lub usuniesz zbiór danych.
+                                W tym miejscu dodasz dane z pliku, pojedyńcze wpisy oraz rozstrzygniesz konflikty danych.
                             </Typography>
                         </Grid>
                         <Grid item md={4} xs={12}>
@@ -237,12 +293,12 @@ const CampaignDocumentsList = () => {
                                   scrollButtons="auto"
                                   sx={{ px: 3 }}
                                   textColor="primary"
-                                  value={currentTab}
+                                  value={filters.tab}
                                   variant="scrollable"  >
                                 {tabs.map((tab) => (
                                     <Tab
                                         key={tab.value}
-                                        label={tab.label}
+                                        label={`${tab.label} (${getStatuesFrequency(tab.value)})`}
                                         value={tab.value}
                                     />
                                 ))}
@@ -266,17 +322,19 @@ const CampaignDocumentsList = () => {
                                     }}
                                 >
                                     <TextField
-                                        defaultValue=""
                                         fullWidth
+                                        value={currentQuery}
                                         inputProps={{ ref: queryRef }}
+                                        onChange={handleCurrentQueryChange}
                                         InputProps={{
                                             startAdornment: (
                                                 <InputAdornment position="start">
                                                     <SearchIcon fontSize="small" />
                                                 </InputAdornment>
-                                            )
+                                            ),
+                                            endAdornment: cleanButton
                                         }}
-                                        placeholder="Wyszukaj po nazwie"
+                                        placeholder="Wyszukaj po nazwie i naciśnij enter"
                                     />
                                 </Box>
                                 <TextField label="Sort By"
@@ -285,7 +343,7 @@ const CampaignDocumentsList = () => {
                                            select
                                            SelectProps={{ native: true }}
                                            sx={{ m: 1.5 }}
-                                           value={sort}>
+                                           value={state.sort}>
                                     {sortOptions.map((option) => (
                                         <option key={option.value}
                                                 value={option.value}>
@@ -296,12 +354,12 @@ const CampaignDocumentsList = () => {
                             </Box>
                             <DocumentsListTable campaignId={campaignId}
                                                 onDocumentsDeleted={handleDocumentsDeleted}
-                                                documents={paginatedDocuments}
-                                                documentsCount={filteredDocuments.length}
+                                                documents={state.documents.data.results}
+                                                documentsCount={state.documents.data.count}
                                                 onPageChange={handlePageChange}
                                                 onRowsPerPageChange={handleRowsPerPageChange}
-                                                rowsPerPage={rowsPerPage}
-                                                page={page}/>
+                                                rowsPerPage={filters.rowsPerPage}
+                                                page={filters.page}/>
                         </Card>
                     </Grid>
                 </Grid>

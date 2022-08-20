@@ -11,9 +11,9 @@ import WidgetFactory from './widgets/widget-factory';
 
 export const OutputFieldForm = (props) => {
     const {
-        value,
+        values,
         enableEdit,
-        setAnswerValue,
+        setAnswerValues,
         showConflicts,
         docQueryRecords,
         ...other
@@ -24,7 +24,7 @@ export const OutputFieldForm = (props) => {
     let outputField = query.outputField;
 
     let widgetForm = new WidgetFactory().create(
-        outputField, value, docQueryRecords, enableEdit, setAnswerValue, showConflicts);
+        outputField, values, docQueryRecords, enableEdit, setAnswerValues, showConflicts);
 
     return (
         <>

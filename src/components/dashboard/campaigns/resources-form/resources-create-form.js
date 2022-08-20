@@ -10,6 +10,7 @@ import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal
 import {ResourceFileCard} from "./components/resource-file-card";
 import {useAuth} from "@/hooks/use-auth";
 import {ResourceValidationCard} from "./components/resource-validation-card";
+import {Loading} from '@/components/dashboard/common/loading';
 
 
 export const ResourcesCreateForm = (props) => {
@@ -124,7 +125,7 @@ export const ResourcesCreateForm = (props) => {
     };
 
     if (loading)
-        return <div>Loading</div>;
+        return <Loading/>;
 
     return (
         <>

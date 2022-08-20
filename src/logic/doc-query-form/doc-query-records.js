@@ -46,7 +46,7 @@ export default class DocQueryRecords {
         for (let record of docQuery.records) {
             if (record.source.type !== "FILE")
                 continue;
-            
+
             let answer = record.value;
             if (Object.keys(answersMap).indexOf(record.value) < 0) {
                 // answer not found in predefined answers

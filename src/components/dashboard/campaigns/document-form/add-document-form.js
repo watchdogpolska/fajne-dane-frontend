@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {Box, Button, Grid} from '@mui/material';
 import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
+import {Loading} from '@/components/dashboard/common/loading';
 import {DocumentDetailsCard} from './components/document-details-card';
 import {useAuth} from "@/hooks/use-auth";
 
@@ -62,7 +63,7 @@ export const AddDocumentForm = (props) => {
         }
 
     if (loading)
-        return <div>Loading</div>;
+        return <Loading/>;
 
     return (
         <>

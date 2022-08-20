@@ -9,6 +9,7 @@ import {CampaignDetailsCard} from "./components/campaign-details-card";
 import {CampaignTemplateCard} from "./components/campagin-template-card";
 import {CampaignValidationCard} from "./components/campaign-validation-card";
 import {useHasChanged} from "@/hooks/use-has-changed";
+import {Loading} from '@/components/dashboard/common/loading';
 import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
 import {useAuth} from "@/hooks/use-auth";
 
@@ -121,11 +122,8 @@ export const CampaignCreateForm = (props) => {
         router.push('/dashboard/campaigns');
     };
 
-    if (loading)
-        return <div>Loading</div>;
-
-    if (metaTemplate === null)
-        return <div>Loading</div>;
+    if (loading || metaTemplate === null)
+        return <Loading/>;
 
     return (
         <>

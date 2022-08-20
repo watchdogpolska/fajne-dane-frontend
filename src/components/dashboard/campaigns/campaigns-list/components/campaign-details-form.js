@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import {Box, Button, Divider, Drawer, TextField, Typography} from '@mui/material';
 import {useAuth} from "@/hooks/use-auth";
 import {CampaignTemplateDownload} from "./campaign-template-download";
+import {Loading} from '@/components/dashboard/common/loading';
 
 
 export const CampaignDetailsForm = (props) => {
@@ -34,7 +35,7 @@ export const CampaignDetailsForm = (props) => {
     });
 
     if (loading)
-        return <div>LOADING</div>;
+        return <Loading/>;
 
     return (
         <form onSubmit={formik.handleSubmit}>

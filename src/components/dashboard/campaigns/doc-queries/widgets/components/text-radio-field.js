@@ -20,12 +20,11 @@ export const TextRadioField = (props) => {
         ...other
     } = props;
 
-
     let hasPredefinedAnswers = docQueryRecords.otherAnswers.length > 0;
     let initialSwitchValue = hasPredefinedAnswers;
-    
+
     let widgetInitialValue = hasPredefinedAnswers ? docQueryRecords.otherAnswers[0].value : "";
-    if (!docQueryRecords.valueInAnswers(value)) {
+    if (value && !docQueryRecords.valueInAnswers(value)) {
         if (docQueryRecords.valueInOtherAnswers(value)) {
             // predefined value
             widgetInitialValue = value;
@@ -35,7 +34,7 @@ export const TextRadioField = (props) => {
             widgetInitialValue = value;
         }
     }
-    
+
     let [widgetValue, setWidgetValue] = useState(widgetInitialValue);
     let [usePredefined, setUsePredefined] = useState(initialSwitchValue);
 
@@ -59,7 +58,7 @@ export const TextRadioField = (props) => {
             </Typography>
             {
                 hasPredefinedAnswers &&
-                <FormControlLabel control={<Switch defaultChecked />}
+                <FormControlLabel control={<Switch />}
                                   disabled={!enableEdit}
                                   checked={usePredefined}
                                   onChange={handleSwitchChange}
@@ -80,7 +79,9 @@ export const TextRadioField = (props) => {
     if (usePredefined) {
         let options = docQueryRecords.otherAnswers.map(
             (answer) =>
-                <MenuItem index={answer.value} value={answer.value}>
+                <MenuItem key={`menu-answer-${answer.value}`}
+                          index={answer.value}
+                          value={answer.value}>
                     {answer.value}
                 </MenuItem>
         );
@@ -89,6 +90,7 @@ export const TextRadioField = (props) => {
             <Select disabled={!enableEdit}
                     value={widgetValue}
                     sx={{
+                        maxWidth: "500px",
                         marginLeft: "30px",
                         marginRight: "10px"
                     }}
@@ -102,6 +104,7 @@ export const TextRadioField = (props) => {
                        value={widgetValue}
                        placeholder={"Wpisz Tutaj"}
                        sx={{
+                           maxWidth: "500px",
                            marginLeft: "30px",
                            marginRight: "10px"
                        }}

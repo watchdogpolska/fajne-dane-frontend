@@ -5,15 +5,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1ffc2cd-6236-4fb0-9a5e-8027a540e296" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/api/models/sources/factory.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/models/utils/pagination.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/components/accepted-records-souce.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/components/checkbox-field.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/components/other-text-select.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-details/doc-queries-list.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/common/clean-button.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/common/loading.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/array.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/document-query.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/document-query.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/record.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/record.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/sources/file-source.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/sources/file-source.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/sources/source.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/sources/source.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/sources/user-source.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/sources/user-source.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/repositories/document-repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/document-repository.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/repositories/repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/repository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-details-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/components/campaign-details-form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/campaigns-create-from.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/create-form/campaigns-create-from.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/doc-query-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/doc-query-form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/output-field-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/output-field-form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/components/text-radio-field.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/components/text-radio-field.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/other-radio-group.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/checkbox-group.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/radio-group.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/radio-group.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/widget-factory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/widget-factory.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-details/document-data-list.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-details/document-data-list.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-form/add-document-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-form/add-document-form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/documents-list-table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/documents-list-table.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-create-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-create-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/pdf-viewer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/pdf-viewer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-edit-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-form/resources-edit-form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/common/arrow-back.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/common/arrow-back.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/common/statuses/document-query-status.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/common/statuses/document-query-status.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logic/doc-query-form/doc-query-navigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/logic/doc-query-form/doc-query-navigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logic/doc-query-form/doc-query-records.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/logic/doc-query-form/doc-query-records.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/documents/[documentId]/doc-queries/[docQueryId].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/documents/[documentId]/doc-queries/[docQueryId].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/documents/[documentId]/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/documents/[documentId]/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/documents/add.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/documents/add.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/[resourceId].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/[resourceId].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/add.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/add.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/[campaignId]/resources/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +62,7 @@
         <option value="SCSS File" />
         <option value="Python Script" />
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -79,21 +115,22 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/components" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets/components" />
       <recent name="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/widgets" />
       <recent name="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/components" />
       <recent name="$PROJECT_DIR$/src/components/dashboard/common/statuses" />
       <recent name="$PROJECT_DIR$/src/components/authentication" />
-      <recent name="$PROJECT_DIR$/src/pages/authentication" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/components/dashboard/campaigns/doc-queries/components" />
@@ -194,7 +231,20 @@
       <workItem from="1657144482848" duration="1271000" />
       <workItem from="1657195157099" duration="11000" />
       <workItem from="1657195212464" duration="11000" />
-      <workItem from="1659300496068" duration="2838000" />
+      <workItem from="1659300496068" duration="5206000" />
+      <workItem from="1659351557622" duration="2423000" />
+      <workItem from="1659358164660" duration="465000" />
+      <workItem from="1660166830873" duration="5835000" />
+      <workItem from="1660231630296" duration="9794000" />
+      <workItem from="1660345851255" duration="7164000" />
+      <workItem from="1660485096012" duration="5457000" />
+      <workItem from="1660571870428" duration="6485000" />
+      <workItem from="1660683499400" duration="8589000" />
+      <workItem from="1660776053834" duration="3004000" />
+      <workItem from="1660810680679" duration="16000" />
+      <workItem from="1660859068158" duration="695000" />
+      <workItem from="1660861506660" duration="4533000" />
+      <workItem from="1660999133973" duration="14160000" />
     </task>
     <servers />
   </component>

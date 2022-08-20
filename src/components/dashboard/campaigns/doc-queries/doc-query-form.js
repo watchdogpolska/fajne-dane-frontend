@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useReducer, useRef} from 'react';
 import {useFormik} from 'formik';
 import {useRouter} from 'next/router'
 import * as Yup from 'yup';
@@ -12,6 +12,9 @@ import NextLink from 'next/link';
 import {ArrowBack as ArrowBackIcon} from '@mui/icons-material';
 import {EyeButton} from '@/components/dashboard/campaigns/doc-queries/components/eye-button';
 import {EditButtons} from '@/components/dashboard/campaigns/doc-queries/components/edit-buttons';
+import {AcceptedRecordsSource} from './components/accepted-records-souce';
+import {compareArrays} from '@/utils/array';
+import {Loading} from '@/components/dashboard/common/loading';
 
 
 export const DocQueryForm = (props) => {
@@ -22,31 +25,46 @@ export const DocQueryForm = (props) => {
         ...other
     } = props;
 
+    const prevDocQueryIdRef = useRef();
     const theme = useTheme();
     const router = useRouter();
     const { repositories } = useAuth();
-    const [showConflicts, setShowConflicts] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [enableEdit, setEnableEdit] = useState(true);
-    const [documentQuery, setDocumentQuery] = useState(null);
-    const [answerValue, setAnswerValue] = useState(null);
+
+    const [state, setState] = useReducer(
+        (state, newState) => ({...state, ...newState}),
+        {
+            showConflics: false,
+            loading: true,
+            enableEdit: true,
+            documentQuery: null,
+            answerValues: []
+        }
+    );
+
+    const setAnswerValues = function (values) {
+        setState({answerValues: values});
+    }
 
     async function fetchData() {
-        setLoading(true);
+        setState({loading: true});
+
         let documentQuery = await repositories.documentQuery.details({docQueryId: docQueryId});
 
-        let fetchedAnswerValue = null;
-        if (documentQuery.acceptedRecord) {
-            fetchedAnswerValue = documentQuery.acceptedRecord.value;
-            setEnableEdit(false);
+        let _state = {};
+        let fetchedAnswerValues = [];
+        if (documentQuery.acceptedRecords) {
+            fetchedAnswerValues = documentQuery.acceptedRecords.map((r) => (r.value));
+            _state['enableEdit'] = false;
+            _state['showConflicts'] = false;
         }
-
-        setAnswerValue(fetchedAnswerValue);
-        setDocumentQuery(documentQuery);
-        setLoading(false);
+        _state['answerValues'] = fetchedAnswerValues;
+        _state['documentQuery'] = documentQuery;
 
         if (documentQuery.status !== "CLOSED")
-            setEnableEdit(true);
+            _state['enableEdit'] = true;
+
+        _state['loading'] = false;
+        setState(_state);
     }
 
     useEffect(() => {
@@ -54,9 +72,10 @@ export const DocQueryForm = (props) => {
     }, []);
 
     useEffect(() => {
-        fetchData();
+        if (prevDocQueryIdRef.current)
+            fetchData();
+        prevDocQueryIdRef.current = docQueryId;
     }, [docQueryId]);
-
 
     const formik = useFormik({
         initialValues: {
@@ -69,11 +88,13 @@ export const DocQueryForm = (props) => {
             try {
                 let response = await repositories.record.create({
                     docQueryId: docQueryId,
-                    payload: {
-                        "value": answerValue,
-                        "probability": 1.0,
-                        "parent": docQueryId
-                    }
+                    payload: state.answerValues.map(
+                        (value) => ({
+                            "value": value,
+                            "probability": 1.0,
+                            "parent": docQueryId
+                        })
+                    )
                 })
                 fetchData();
             } catch (err) {
@@ -82,33 +103,36 @@ export const DocQueryForm = (props) => {
         }
     });
 
-    if (loading)
-        return <div>Loading</div>;
-    
-    let docQueryRecords = new DocQueryRecords(documentQuery);
+    if (state.loading)
+        return <Loading/>;
+
+    let docQueryRecords = new DocQueryRecords(state.documentQuery);
 
     let editButtons = null;
     let saveButton = null;
-    if (documentQuery.status === "CLOSED") {
-        let selectedAnswer = documentQuery.acceptedRecord.value;
-        let disableSave = selectedAnswer === answerValue;
+
+    if (state.documentQuery.status === "CLOSED") {
+        let selectedAnswers = state.documentQuery.acceptedRecords.map((r) => r.value);
+        let disableSave = compareArrays(selectedAnswers, state.answerValues);
 
         editButtons = <EditButtons onToggleClick={() => {
-                                        setEnableEdit(!enableEdit)
-                                        setAnswerValue(selectedAnswer)
+                                        setState({
+                                            enableEdit: !state.enableEdit,
+                                            answerValues: selectedAnswers
+                                        })
                                    }}
                                    disableSave={disableSave}
                                    onSaveClick={() => {formik.handleSubmit()}}
-                                   toggle={enableEdit}/>
+                                   toggle={state.enableEdit}/>
     } else {
         if (docQueryRecords.hasConflicts)
-            editButtons = <EyeButton text={showConflicts ? "Ukryj konflikt" : "Zobacz konflikt"}
-                                     onToggleClick={() => {setShowConflicts(!showConflicts)}}
-                                     toggle={showConflicts}/>
+            editButtons = <EyeButton text={state.showConflicts ? "Ukryj konflikt" : "Zobacz konflikt"}
+                                     onToggleClick={() => setState({showConflicts: !state.showConflicts})}
+                                     toggle={state.showConflicts}/>
         saveButton = (
             <>
                 <Divider/>
-                <Button disabled={formik.isSubmitting || answerValue == null}
+                <Button disabled={formik.isSubmitting || state.answerValues == []}
                         sx={{
                             marginTop: "24px"
                         }}
@@ -138,11 +162,11 @@ export const DocQueryForm = (props) => {
                       borderBottomStyle: "solid"
                   }}>
                 <Grid container>
-                    <Grid item xs={6}>
+                    <Grid item xs={5}>
                         <NextLink href={`/dashboard/campaigns/${campaignId}/documents/${documentId}`}
                                   passHref>
                             <Button component="a"
-                                    endIcon={(
+                                    startIcon={(
                                         <ArrowBackIcon fontSize="small" />
                                     )}
                                     size="small"
@@ -151,15 +175,26 @@ export const DocQueryForm = (props) => {
                             </Button>
                         </NextLink>
                     </Grid>
-                    <Grid item xs={6}
-                          sx={{
-                              textAlign: "right",
-                              paddingRight: "12px",
-                              display: "flex",
-                              color: 'primary.main',
-                              justifyContent: "flex-end"
-                          }}>
-                        {editButtons}
+                    <Grid item xs={7}>
+                        <Box component="div"
+                             sx={{
+                                 textAlign: "right",
+                                 paddingRight: "12px",
+                                 display: "flex",
+                                 justifyContent: "flex-end",
+                                 color: 'primary.main',
+                             }}>
+                            {editButtons}
+                        </Box>
+                        <Box component="div"
+                             sx={{
+                                 textAlign: "right",
+                                 paddingRight: "12px",
+                                 display: "flex",
+                                 justifyContent: "flex-end",
+                             }}>
+                            <AcceptedRecordsSource acceptedRecords={state.documentQuery.acceptedRecords}/>
+                        </Box>
                     </Grid>
                 </Grid>
             </Grid>
@@ -178,7 +213,7 @@ export const DocQueryForm = (props) => {
                                      display: "inline-block"
                                  }}>
                                 <Typography variant="subtitle2">
-                                    Pytanie 7
+                                    Pytanie {state.documentQuery.query.order + 1}
                                 </Typography>
                             </Box>
 
@@ -189,15 +224,15 @@ export const DocQueryForm = (props) => {
                                 <Typography variant="body2">
                                     status:
                                     <Box component="span" sx={{ml: 1}}/>
-                                    <DocumentQueryStatus status={documentQuery.status}/>
+                                    <DocumentQueryStatus status={state.documentQuery.status}/>
                                 </Typography>
                             </Box>
 
                             <OutputFieldForm docQueryRecords={docQueryRecords}
-                                             enableEdit={enableEdit}
-                                             value={answerValue}
-                                             setAnswerValue={setAnswerValue}
-                                             showConflicts={showConflicts}/>
+                                             enableEdit={state.enableEdit}
+                                             values={state.answerValues}
+                                             setAnswerValues={setAnswerValues}
+                                             showConflicts={state.showConflicts}/>
 
                         </Grid>
                         <Grid item xs={12}

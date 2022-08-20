@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useReducer} from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {
@@ -7,7 +7,6 @@ import {
     AccordionSummary,
     Box,
     Button,
-    Chip,
     Container,
     Grid,
     Paper,
@@ -23,48 +22,72 @@ import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
 import {useAuth} from "@/hooks/use-auth";
 import PdfViewer from '@/components/form/pdf-viewer';
 import {ArrowBack} from '@/components/dashboard/common/arrow-back';
+import {Loading} from '@/components/dashboard/common/loading';
 import NextLink from 'next/link';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
 import {DocumentDataList} from '@/components/dashboard/campaigns/document-details/document-data-list';
-import {DocumentQueryStatus} from '@/components/dashboard/common/statuses/document-query-status';
-
-
-const buttonNameMapping = {
-    "CLOSED": "Edytuj",
-    "INITIALIZED": "Rozwiąż",
-    "VALIDATING": "Rozwiąż",
-    "CREATED": "Oznacz",
-}
-
-function compareDocumentQueries( a, b ) {
-  if ( a.query.order < b.query.order ) return -1;
-  if ( a.query.order > b.query.order ) return 1;
-  return 0;
-}
+import {DocQueriesList} from '@/components/dashboard/campaigns/document-details/doc-queries-list';
+import DocQueryNavigator from '@/logic/doc-query-form/doc-query-navigator';
 
 
 const DocumentDetails = () => {
     const router = useRouter();
     const { campaignId, documentId } = router.query;
-    const [document, setDocument] = useState(null);
     const { repositories } = useAuth();
-    const [loading, setLoading] = useState(true);
+
+    const [state, setState] = useReducer(
+        (state, newState) => ({...state, ...newState}),
+        {
+            document: {
+                loading: true,
+                data: null
+            },
+            campaign: {
+                loading: true,
+                data: null
+            }
+        }
+    );
 
     async function fetchDocumentData() {
-        let result = await repositories.document.details({id: documentId});
-        setDocument(result);
-        setLoading(false);
+        let document = await repositories.document.details({id: documentId});
+        setState({
+            document: {
+                loading: false,
+                data: document
+            }
+        })
     }
 
+    async function fetchCampaignData() {
+        let campaign = await repositories.campaign.getCampaign({id: campaignId});
+        setState({
+            campaign: {
+                loading: false,
+                data: campaign
+            }
+        })
+    }
+
+    async function fetchData() {
+        await fetchDocumentData();
+        await fetchCampaignData();
+    }
+
+
     useEffect(() => {
-        fetchDocumentData();
+        fetchData();
     }, []);
 
-    if (loading)
-        return <div>Loading</div>;
-    
-    let documentQueries = document.documentQueries.sort(compareDocumentQueries);
+    const isLoading = () => {
+        return state.campaign.loading || state.document.loading
+    }
+
+    if (isLoading())
+        return <Loading/>
+
+    let docQueryNavigator = new DocQueryNavigator(state.document.data.documentQueries);
 
     return (
         <>
@@ -85,7 +108,7 @@ const DocumentDetails = () => {
                               spacing={3}>
                             <Grid item md={12}>
                                 <ArrowBack link={`/dashboard/campaigns/${campaignId}`}
-                                           text={"Dokumenty kampanii"}/>
+                                           text={state.campaign.data.name}/>
                             </Grid>
                             <Grid item md={12}>
                                 <Typography variant="h4">
@@ -100,7 +123,7 @@ const DocumentDetails = () => {
 
                             <Grid item md={6}>
                                 <Box sx={{height: 600}}>
-                                    <PdfViewer documentUrl={document.data['document_url']}/>
+                                    <PdfViewer documentUrl={state.document.data.data['document_url']}/>
                                 </Box>
                             </Grid>
                             <Grid item md={6}>
@@ -112,69 +135,31 @@ const DocumentDetails = () => {
                                     >
                                         <Typography>
                                             <Box component="span" fontWeight='fontWeightMedium'>
-                                                Zbiór danych:
+                                                Zbiór danych: {state.campaign.data.name}
                                             </Box>
                                         </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails sx={{py: 0}}>
-                                        <DocumentDataList document={document}/>
+                                        <DocumentDataList document={state.document.data}/>
                                     </AccordionDetails>
                                 </Accordion>
                                 <Paper sx={{
                                     borderTopLeftRadius: 0,
                                     borderTopRightRadius: 0
                                 }}>
-                                    <Table sx={{ }}>
-                                        <TableHead sx={{ visibility: 'visible' }}>
-                                            <TableRow>
-                                                <TableCell align="left">
-                                                    Pytanie
-                                                </TableCell>
-                                                <TableCell>
-                                                    Status
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    Akcje
-                                                </TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {documentQueries.map((dq) => {
-                                                return (
-                                                    <TableRow hover
-                                                              key={dq.id}>
-                                                        <TableCell>
-                                                            <Typography fontWeight='fontWeightMedium'
-                                                                        variant="body2">
-                                                                Pytanie {dq.query.order+1}
-                                                            </Typography>
-
-                                                            <Typography color="textSecondary"
-                                                                        variant="body2">
-                                                                {dq.query.data[0]['value']}
-                                                            </Typography>
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            <DocumentQueryStatus status={dq.status}/>
-                                                        </TableCell>
-                                                        <TableCell align="right">
-                                                            <NextLink href={`/dashboard/campaigns/${campaignId}/documents/${documentId}/doc-queries/${dq.id}`}
-                                                                      passHref>
-                                                                <Button component="a"
-                                                                        endIcon={(
-                                                                            <PencilAltIcon fontSize="small" />
-                                                                        )}
-                                                                        variant={dq.status === "CLOSED" ? "outlined" : "contained"}
-                                                                        size="small">
-                                                                    {buttonNameMapping[dq.status]}
-                                                                </Button>
-                                                            </NextLink>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                );
-                                            })}
-                                        </TableBody>
-                                    </Table>
+                                    <DocQueriesList documentQueries={docQueryNavigator.openedDocQueries}
+                                                    campaignId={campaignId}
+                                                    documentId={documentId}
+                                                    questionHeader="Pytanie oczekujące na zamkniecie"/>
+                                </Paper>
+                                <Paper sx={{
+                                    borderTopLeftRadius: 0,
+                                    borderTopRightRadius: 0
+                                }}>
+                                    <DocQueriesList documentQueries={docQueryNavigator.closedDocQueries}
+                                                    campaignId={campaignId}
+                                                    documentId={documentId}
+                                                    questionHeader="Pytanie"/>
                                 </Paper>
                             </Grid>
                         </Grid>

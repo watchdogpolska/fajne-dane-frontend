@@ -176,7 +176,6 @@ export const DocumentsListTable = (props) => {
 
 DocumentsListTable.propTypes = {
     documents: PropTypes.array.isRequired,
-    documentsCount: PropTypes.number.isRequired,
     onPageChange: PropTypes.func,
     onRowsPerPageChange: PropTypes.func,
     page: PropTypes.number.isRequired,

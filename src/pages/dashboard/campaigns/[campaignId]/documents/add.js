@@ -8,6 +8,7 @@ import {ResourcesCreateForm} from '@/components/dashboard/campaigns/resources-fo
 import {AddDocumentForm} from '@/components/dashboard/campaigns/document-form/add-document-form';
 import NextLink from 'next/link';
 import {ArrowBack as ArrowBackIcon} from '@mui/icons-material';
+import {Loading} from '@/components/dashboard/common/loading';
 import {useAuth} from "@/hooks/use-auth";
 
 
@@ -20,7 +21,6 @@ const AddDocument = () => {
 
     async function fetchCampaignData() {
         let campaign = await repositories.campaign.getCampaign({id: campaignId});
-        console.log(campaign);
         setCampaign(campaign);
         setLoading(false);
     }
@@ -30,7 +30,7 @@ const AddDocument = () => {
     }, []);
 
     if (loading)
-        return <div>Loading</div>;
+        return <Loading/>;
 
     return (
         <>
@@ -60,7 +60,7 @@ const AddDocument = () => {
                                         <ArrowBackIcon fontSize="small"
                                                        sx={{ mr: 1 }}/>
                                         <Typography variant="subtitle2">
-                                            Documenty kampanii
+                                            Dokumenty kampanii
                                         </Typography>
                                     </Link>
                                 </NextLink>

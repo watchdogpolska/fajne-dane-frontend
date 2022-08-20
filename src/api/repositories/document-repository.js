@@ -1,11 +1,17 @@
 import Repository from "./repository";
 import Document from "../models/document";
+import Pagination from "../models/utils/pagination";
 
 
 export class DocumentRepository extends Repository {
-    async list({campaignId}) {
-        let response = await this.get(`campaigns/${campaignId}/documents/`);
-        return response.data.map((document_data) => Document.fromJson(document_data));
+    async list({campaignId, params}) {
+        let response = await this.get(`campaigns/${campaignId}/documents/`, params);
+        return Pagination.fromJson(Document, response.data)
+    }
+    
+    async statuses({campaignId, params}) {
+        let response = await this.get(`campaigns/${campaignId}/documents/status/`, params);
+        return response.data
     }
     
     async details({id}) {
@@ -27,5 +33,10 @@ export class DocumentRepository extends Repository {
             { ids: ids }
         )
         return response;
+    }
+    
+    async getNext({campaignId}) {
+        let response = await this.get(`campaigns/${campaignId}/documents/next/`);
+        return Document.fromJson(response.data);
     }
 }

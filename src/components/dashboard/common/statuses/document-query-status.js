@@ -22,7 +22,8 @@ export const DocumentQueryStatus = (props) => {
     } = props;
 
     return (
-        <Chip label={namesMapping[status]}
+        <Chip component="span"
+              label={namesMapping[status]}
               color={colorsMapping[status]}
               size="small"
               sx={{ ml: 0 }}/>

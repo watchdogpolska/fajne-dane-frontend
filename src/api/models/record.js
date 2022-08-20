@@ -1,3 +1,5 @@
+import {createSource} from "./sources/factory";
+
 
 export default class Record {
     constructor(id, value, probability, source, status) {
@@ -9,11 +11,15 @@ export default class Record {
     }
     
     static fromJson(data) {
+        let source = null;
+        if ('source' in data)
+            source = createSource(data['source'])
+        
         return new Record(
             data['id'],
             data['value'],
             data['probability'],
-            data['source'],
+            source,
             data['status']
         )
     }

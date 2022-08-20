@@ -29,8 +29,8 @@ export default class Repository {
         return config;
     }
 
-    get(url) {
-        return this._client.get(url, this._config).catch((error) => {
+    get(url, params={}) {
+        return this._client.get(url, {...this._config, params: params}).catch((error) => {
             this.em.emit(BaseEvents.ERROR, error);
         });
     }

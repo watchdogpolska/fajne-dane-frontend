@@ -7,6 +7,7 @@ import {Box, Button, Grid} from '@mui/material';
 import {ResourceDetailsCard} from "./components/resource-details-card";
 import {ResourceFileDownloadCard} from "./components/resource-file-download-card";
 import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
+import {Loading} from '@/components/dashboard/common/loading';
 import {useAuth} from "@/hooks/use-auth";
 
 
@@ -63,7 +64,7 @@ export const ResourceEditForm = (props) => {
     };
 
     if (loading)
-        return <div>Loading</div>;
+        return <Loading/>;
 
     return (
         <>

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useReducer} from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {
@@ -14,6 +14,7 @@ import {
     Typography
 } from '@mui/material';
 import {withAuthGuard} from '@/hocs/with-auth-guard';
+import {Loading} from '@/components/dashboard/common/loading';
 import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
 import PdfViewer from '@/components/form/pdf-viewer';
 import {ArrowBack} from '@/components/dashboard/common/arrow-back';
@@ -31,35 +32,75 @@ const DocumentQueryDetails = () => {
     const router = useRouter();
     const { campaignId, documentId, docQueryId } = router.query;
     const { repositories } = useAuth();
-    const [document, setDocument] = useState(null);
-    const [loadingDocQueries, setLoadingDocQueries] = useState(true);
-    const [loadingDocument, setLoadingDocument] = useState(true);
-    const [docQueryStatuses, setDocQueryStatuses] = useState([]);
+
+    const [state, setState] = useReducer(
+        (state, newState) => ({...state, ...newState}),
+        {
+            campaign: {
+                loading: true,
+                data: null
+            },
+            document: {
+                loading: true,
+                data: null
+            },
+            docQueries: {
+                loading: true,
+                data: null
+            }
+        }
+    );
+
+    async function fetchDocQueriesData() {
+        let docQueries = await repositories.documentQuery.statusList({documentId: documentId});
+        setState({
+            docQueries: {
+                loading: false,
+                data: docQueries
+            }
+        });
+    }
+
+    async function fetchDocumentData() {
+        let document = await repositories.document.details({id: documentId});
+        setState({
+            document: {
+                loading: false,
+                data: document
+            }
+        });
+    }
+
+    async function fetchCampaignData() {
+        let campaign = await repositories.campaign.getCampaign({id: campaignId});
+        setState({
+            campaign: {
+                loading: false,
+                data: campaign
+            }
+        });
+    }
 
     useEffect(() => {
-        async function fetchData() {
-            let result = await repositories.documentQuery.statusList({documentId: documentId});
-            setDocQueryStatuses(result);
-            setLoadingDocQueries(false);
-        }
-        fetchData();
+        fetchDocumentData();
+        fetchDocQueriesData();
+        fetchCampaignData();
     }, []);
 
-    useEffect(() => {
-        async function fetchData() {
-            let result = await repositories.document.details({id: documentId});
-            setDocument(result);
-            setLoadingDocument(false);
-        }
-        fetchData();
-    }, []);
+    const isLoading = () => {
+        return state.campaign.loading || state.document.loading || state.docQueries.loading
+    }
 
-    if (loadingDocQueries || loadingDocument)
-        return <div>Loading</div>;
-    
-    let docQueryNavigator = new DocQueryNavigator(docQueryStatuses, docQueryId)
-    let docQueryPrevId = docQueryNavigator.getPrevId();
-    let docQueryNextId = docQueryNavigator.getNextId();
+    console.log(state);
+
+    if (isLoading())
+        return <Loading/>
+
+    let docQueryNavigator = new DocQueryNavigator(state.docQueries.data)
+    let docQueryPrev = docQueryNavigator.getPrev(docQueryId);
+    let docQueryNext = docQueryNavigator.getNext(docQueryId);
+    let docQueryNextId = docQueryNext ? docQueryNext.id : null;
+    let docQueryPrevId = docQueryPrev ? docQueryPrev.id : null;
 
     return (
         <>
@@ -80,7 +121,7 @@ const DocumentQueryDetails = () => {
                               spacing={3}>
                             <Grid item md={12}>
                                 <ArrowBack link={`/dashboard/campaigns/${campaignId}`}
-                                           text={"Dokumenty kampanii"}/>
+                                           text={state.campaign.data.name}/>
                             </Grid>
                             <Grid item md={12}>
                                 <Typography variant="h4">
@@ -95,7 +136,7 @@ const DocumentQueryDetails = () => {
 
                             <Grid item md={6}>
                                 <Box sx={{height: 600}}>
-                                    <PdfViewer documentUrl={document.data['document_url']}/>
+                                    <PdfViewer documentUrl={state.document.data.data['document_url']}/>
                                 </Box>
                             </Grid>
                             <Grid item md={6}>
@@ -110,12 +151,12 @@ const DocumentQueryDetails = () => {
                                     >
                                         <Typography>
                                             <Box component="span" fontWeight='fontWeightMedium'>
-                                                Zbiór danych:
+                                                Zbiór danych: {state.campaign.data.name}
                                             </Box>
                                         </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails sx={{py: 0}}>
-                                        <DocumentDataList document={document}/>
+                                        <DocumentDataList document={state.document.data}/>
                                     </AccordionDetails>
                                 </Accordion>
                                 <Paper sx={{

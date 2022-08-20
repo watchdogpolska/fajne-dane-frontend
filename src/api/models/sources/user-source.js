@@ -5,7 +5,8 @@ import User from "../user";
 export default class UserSource extends Source {
     constructor(id, name, user) {
         super(id, name);
-        this.user = user
+        this.user = user;
+        this.type = "USER";
     }
 
     static fromJson(data) {

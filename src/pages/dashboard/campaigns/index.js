@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
+import {Loading} from '@/components/dashboard/common/loading';
 import {styled} from '@mui/material/styles';
 import {useRouter} from 'next/router'
 import {Box, Card, Button, Divider, Grid, InputAdornment, Tab, Tabs, TextField, Typography} from '@mui/material';
@@ -169,7 +170,7 @@ const Campaigns = () => {
     const paginatedCampaigns = applyPagination(sortedCampaigns, page, rowsPerPage);
     
     if (loading)
-        return <div>LOADING</div>
+        return <Loading/>;
 
     return (
         <>

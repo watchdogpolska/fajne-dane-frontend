@@ -10,6 +10,7 @@ export const ArrowBack = (props) => {
         ...other
     } = props;
 
+
     return (
         <NextLink href={link} passHref>
             <Link color="textPrimary"
@@ -18,13 +19,11 @@ export const ArrowBack = (props) => {
                       alignItems: 'center',
                       display: 'flex'
                   }}>
-                <ArrowBackIcon fontSize="small"
-                               sx={{ mr: 1 }}/>
+                <ArrowBackIcon fontSize="small" sx={{ mr: 1 }}/>
                 <Typography variant="subtitle2">
                     {text}
                 </Typography>
             </Link>
         </NextLink>
     );
-
 };
