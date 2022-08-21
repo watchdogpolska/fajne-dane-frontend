@@ -1,4 +1,4 @@
-import {useEffect, useState, useReducer} from 'react';
+import {useEffect, useRef, useReducer} from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {
@@ -26,12 +26,14 @@ import {ArrowForward as ArrowForwardIcon} from '@mui/icons-material';
 import {DocQueryForm} from '@/components/dashboard/campaigns/doc-queries/doc-query-form';
 import DocQueryNavigator from '@/logic/doc-query-form/doc-query-navigator';
 import {useAuth} from "@/hooks/use-auth";
+import {NextDocumentModal} from "@/components/dashboard/campaigns/doc-queries/next-document-modal";
 
 
 const DocumentQueryDetails = () => {
     const router = useRouter();
     const { campaignId, documentId, docQueryId } = router.query;
     const { repositories } = useAuth();
+    let docStatusRef = useRef();
 
     const [state, setState] = useReducer(
         (state, newState) => ({...state, ...newState}),
@@ -47,51 +49,69 @@ const DocumentQueryDetails = () => {
             docQueries: {
                 loading: true,
                 data: null
-            }
+            },
+            nextDocumentId: null,
+            finished: false
         }
     );
 
-    async function fetchDocQueriesData() {
+    async function checkNextDocument(document) {
+        let nextDocumentId = null;
+        let finished = false;
+        if (document.status !== docStatusRef.current && document.status === "CLOSED") {
+            nextDocumentId = await repositories.document.next({campaignId: campaignId}).id;
+            finished = true;
+        }
+        docStatusRef.current = document.status;
+        return [finished, nextDocumentId];
+    }
+
+    async function fetchData() {
         let docQueries = await repositories.documentQuery.statusList({documentId: documentId});
+        let document = await repositories.document.details({id: documentId});
+        let campaign = await repositories.campaign.getCampaign({id: campaignId});
+
         setState({
             docQueries: {
                 loading: false,
                 data: docQueries
-            }
+            },
+            document: {
+                loading: false,
+                data: document
+            },
+            campaign: {
+                loading: false,
+                data: campaign
+            },
         });
     }
 
-    async function fetchDocumentData() {
+    async function fetchSaveData() {
         let document = await repositories.document.details({id: documentId});
+        let [finished, nextDocumentId] = await checkNextDocument(document);
+
         setState({
             document: {
                 loading: false,
                 data: document
-            }
+            },
+            nextDocumentId: nextDocumentId,
+            finished: finished
         });
     }
 
-    async function fetchCampaignData() {
-        let campaign = await repositories.campaign.getCampaign({id: campaignId});
-        setState({
-            campaign: {
-                loading: false,
-                data: campaign
-            }
-        });
-    }
+    const handleSave = () => {
+        fetchSaveData();
+    };
 
     useEffect(() => {
-        fetchDocumentData();
-        fetchDocQueriesData();
-        fetchCampaignData();
+        fetchData();
     }, []);
 
     const isLoading = () => {
         return state.campaign.loading || state.document.loading || state.docQueries.loading
     }
-
-    console.log(state);
 
     if (isLoading())
         return <Loading/>
@@ -109,6 +129,9 @@ const DocumentQueryDetails = () => {
                     Wpis | Fajne Dane
                 </title>
             </Head>
+            <NextDocumentModal open={state.finished}
+                               nextDocumentId={state.nextDocumentId}
+                               campaignId={campaignId}/>
             <Box component="main"
                  sx={{
                      flexGrow: 1,
@@ -165,7 +188,8 @@ const DocumentQueryDetails = () => {
                                 }}>
                                     <DocQueryForm campaignId={campaignId}
                                                   documentId={documentId}
-                                                  docQueryId={docQueryId}/>
+                                                  docQueryId={docQueryId}
+                                                  onSave={handleSave}/>
                                 </Paper>
                                 <Grid container>
                                     <Grid item xs={6}

@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material';
-import { ConfirmModal } from "./confirm-modal";
+import {Typography} from '@mui/material';
+import {ConfirmModal} from "./confirm-modal";
 
 
 export const DeleteConfirmModal = (props) => {

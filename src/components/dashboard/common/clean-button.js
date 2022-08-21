@@ -1,7 +1,5 @@
 import {Button, Typography} from '@mui/material';
-import NextLink from 'next/link';
 import {useTheme} from '@mui/material/styles';
-import {TextButton} from "./text-button";
 import CancelIcon from '@mui/icons-material/Cancel';
 
 export const CleanButton = (props) => {

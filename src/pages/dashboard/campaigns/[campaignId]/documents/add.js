@@ -1,10 +1,9 @@
 import Head from 'next/head';
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import {Box, Container, Grid, Link, Typography} from '@mui/material';
 import {withAuthGuard} from '@/hocs/with-auth-guard';
 import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
-import {ResourcesCreateForm} from '@/components/dashboard/campaigns/resources-form/resources-create-form';
 import {AddDocumentForm} from '@/components/dashboard/campaigns/document-form/add-document-form';
 import NextLink from 'next/link';
 import {ArrowBack as ArrowBackIcon} from '@mui/icons-material';

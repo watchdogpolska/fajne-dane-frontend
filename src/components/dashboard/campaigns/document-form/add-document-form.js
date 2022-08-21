@@ -39,7 +39,6 @@ export const AddDocumentForm = (props) => {
                     data: formik.values
                 });
 
-                console.log(document);
                 toast.success('Dokument zostały dodany');
                 router.push(`/dashboard/campaigns/${campaign.id}/documents/${document.id}`);
             } catch (err) {

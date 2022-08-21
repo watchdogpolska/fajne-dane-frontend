@@ -35,7 +35,7 @@ export class DocumentRepository extends Repository {
         return response;
     }
     
-    async getNext({campaignId}) {
+    async next({campaignId}) {
         let response = await this.get(`campaigns/${campaignId}/documents/next/`);
         return Document.fromJson(response.data);
     }

@@ -15,6 +15,7 @@ import {EditButtons} from '@/components/dashboard/campaigns/doc-queries/componen
 import {AcceptedRecordsSource} from './components/accepted-records-souce';
 import {compareArrays} from '@/utils/array';
 import {Loading} from '@/components/dashboard/common/loading';
+import toast from 'react-hot-toast';
 
 
 export const DocQueryForm = (props) => {
@@ -22,6 +23,7 @@ export const DocQueryForm = (props) => {
         campaignId,
         documentId,
         docQueryId,
+        onSave,
         ...other
     } = props;
 
@@ -86,7 +88,7 @@ export const DocQueryForm = (props) => {
         }),
         onSubmit: async (values, helpers) => {
             try {
-                let response = await repositories.record.create({
+                await repositories.record.create({
                     docQueryId: docQueryId,
                     payload: state.answerValues.map(
                         (value) => ({
@@ -96,7 +98,12 @@ export const DocQueryForm = (props) => {
                         })
                     )
                 })
-                fetchData();
+                await fetchData();
+                onSave();
+                if (state.enableEdit)
+                    toast.success('Dokument zostały zaktualizowany');
+                else
+                    toast.success('Dokument zostały oznaczony');
             } catch (err) {
                 console.error(err);
             }
@@ -137,7 +144,7 @@ export const DocQueryForm = (props) => {
         saveButton = (
             <>
                 <Divider/>
-                <Button disabled={formik.isSubmitting || state.answerValues == []}
+                <Button disabled={formik.isSubmitting || state.answerValues.length === 0}
                         sx={{
                             marginTop: "24px"
                         }}
