@@ -1,12 +1,12 @@
-import {Box, Typography} from '@mui/material';
+import {Typography} from '@mui/material';
 import * as React from 'react';
+import {forwardRef, useState} from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import LinearProgress from '@mui/material/LinearProgress';
 import {ProbabilityBar} from './probability-bar';
 
 
-export const CheckboxField = (props) => {
+export const CheckboxField = forwardRef((props, ref) => {
     const {
         showConflicts,
         enableEdit,
@@ -17,6 +17,16 @@ export const CheckboxField = (props) => {
         ...other
     } = props;
 
+    let [checked, setChecked] = useState(isSelected);
+
+    const handleChange = (event) => {
+        setChecked(event.target.checked);
+        ref.current = {
+            value: answer.value,
+            checked: event.target.checked
+        };
+        onChange();
+    };
 
     let letter = String.fromCharCode(97 + index);
     let label = (
@@ -36,7 +46,7 @@ export const CheckboxField = (props) => {
         <>
             <FormControlLabel value={answer.value}
                               disabled={!enableEdit}
-                              control={<Checkbox checked={isSelected} onChange={onChange}/>}
+                              control={<Checkbox checked={checked} onChange={handleChange}/>}
                               sx={{
                                   paddingTop: "32px",
                               }}
@@ -44,4 +54,4 @@ export const CheckboxField = (props) => {
             {probabilityBar}
         </>
     );
-};
+});

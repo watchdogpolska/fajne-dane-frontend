@@ -114,6 +114,11 @@ export const DocQueryForm = (props) => {
     if (state.documentQuery.status === "CLOSED") {
         let selectedAnswers = state.documentQuery.acceptedRecords.map((r) => r.value);
         let disableSave = compareArrays(selectedAnswers, state.answerValues);
+        if (state.answerValues === "" ||
+            state.answerValues === null ||
+            state.answerValues === undefined ||
+            state.answerValues.length === 0)
+            disableSave = true;
 
         editButtons = <EditButtons onToggleClick={() => {
                                         setState({

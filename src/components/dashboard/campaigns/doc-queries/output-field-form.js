@@ -1,11 +1,6 @@
-import {Typography, Grid, Box, Divider} from '@mui/material';
+import {Divider, Typography} from '@mui/material';
 import * as React from 'react';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import LinearProgress from '@mui/material/LinearProgress';
 import WidgetFactory from './widgets/widget-factory';
 
 

@@ -60,7 +60,7 @@ export default class DocQueryRecords {
 
     valueInAnswers(value) {
         for (let answer of this.answers) {
-            if (answer.value == value)
+            if (answer.value === value)
                 return true;
         }
         return false;
@@ -68,7 +68,7 @@ export default class DocQueryRecords {
 
     valueInOtherAnswers(value) {
         for (let answer of this.otherAnswers) {
-            if (answer.value == value)
+            if (answer.value === value)
                 return true;
         }
         return false;

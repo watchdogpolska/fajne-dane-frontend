@@ -1,7 +1,7 @@
 import * as React from 'react';
 import RadioGroup from '@mui/material/RadioGroup';
 import {RadioField} from './components/radio-field';
-import {TextRadioField} from './components/text-radio-field';
+import {OtherTextRadio} from './components/other-text-field/other-text-radio';
 
 
 export const RadioGroupWidget = (props) => {
@@ -16,13 +16,17 @@ export const RadioGroupWidget = (props) => {
     } = props;
 
     let value = values[0] || null;
+    //let answerIndexes = setState([]);
 
     const handleChange = (event) => {
         setAnswerValues([event.target.value]);
     };
 
+    let otherField = outputField.metadata['other_field']
     let answers = [];
     for (let [index, answer] of docQueryRecords.answers.entries()) {
+        if (otherField && index >= otherField.position)
+            index += 1;
         answers.push(
             <RadioField key={`answer-${index}`}
                         index={index}
@@ -33,15 +37,12 @@ export const RadioGroupWidget = (props) => {
         );
     }
 
-    if ('other_field' in outputField.metadata) {
-        let otherField = outputField.metadata['other_field']
-        let isOtherSelected = docQueryRecords.valueInOtherAnswers(value);
+    if (otherField) {
         answers.splice(
             otherField.position,
             0,
-            <TextRadioField key={'answer-text'}
-                            index={answers.length}
-                            isSelected={isOtherSelected}
+            <OtherTextRadio key={'answer-text'}
+                            index={otherField.position}
                             enableEdit={enableEdit}
                             showConflicts={showConflicts}
                             label={otherField.label}
