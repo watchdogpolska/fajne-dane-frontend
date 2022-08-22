@@ -3,14 +3,14 @@ import {Link, Chip, Typography} from '@mui/material';
 const namesMapping = {
     "CREATED": "BRAK DANYCH",
     "INITIALIZED": "OCZEKUJĄCY",
-    "VALIDATING": "W TOKU",
+    "VALIDATING": "OCZEKUJĄCY",
     "CLOSED": "ZAKOŃCZONY"
 }
 
 const colorsMapping = {
     "CREATED": "error",
     "INITIALIZED": "warning",
-    "VALIDATING": "primary",
+    "VALIDATING": "warning",
     "CLOSED": "secondary"
 }
 
