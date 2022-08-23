@@ -69,7 +69,7 @@ const CampaignDocumentsList = () => {
         {
             query: localStorage.getItem('campaign-documents-query') || '',
             tab:  localStorage.getItem('campaign-documents-tabs') || 'ALL',
-            page: 0,
+            page: localStorage.getItem('campaign-documents-page') || 0,
             rowsPerPage: 10,
             sort: sortOptions[0].value
         }
@@ -160,6 +160,7 @@ const CampaignDocumentsList = () => {
 
     const handleTabsChange = (event, value) => {
         localStorage.setItem('campaign-documents-tabs', value);
+        localStorage.setItem('campaign-documents-page', 0);
         setFilters({tab: value, page: 0});
     };
 
@@ -167,6 +168,7 @@ const CampaignDocumentsList = () => {
         event.preventDefault();
         let value = queryRef.current?.value;
         localStorage.setItem('campaign-documents-query', value);
+        localStorage.setItem('campaign-documents-page', 0);
         setFilters({query: value, page: 0});
     };
 
@@ -175,6 +177,7 @@ const CampaignDocumentsList = () => {
     };
 
     const handlePageChange = (event, page) => {
+        localStorage.setItem('campaign-documents-page', page);
         setFilters({page: page});
     };
 
@@ -196,9 +199,10 @@ const CampaignDocumentsList = () => {
     let cleanButton = null;
     if (filters.query.length > 0 || currentQuery.length > 0)
         cleanButton = <CleanButton text={"wyczyść"} onClick={() => {
-            setFilters({query: ""});
-            setCurrentQuery("");
             localStorage.setItem('campaign-documents-query', "");
+            localStorage.setItem('campaign-documents-page', 0);
+            setFilters({query: "", page: 0});
+            setCurrentQuery("");
         }}/>
 
     if (isLoading())
