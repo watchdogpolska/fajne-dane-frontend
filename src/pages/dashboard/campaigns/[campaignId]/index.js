@@ -36,6 +36,14 @@ const sortOptions = [
     {
         label: 'Najstarsze u góry',
         value: 'created'
+    },
+    {
+        label: 'Nazwa instytucji (A→Z)',
+        value: 'institution__name'
+    },
+    {
+        label: 'Nazwa instytucji (Z→A)',
+        value: '-institution__name'
     }
 ];
 
