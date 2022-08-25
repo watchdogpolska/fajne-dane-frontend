@@ -31,11 +31,11 @@ const tabs = [
 const sortOptions = [
     {
         label: 'Najnowsze u góry',
-        value: 'created'
+        value: '-created'
     },
     {
         label: 'Najstarsze u góry',
-        value: '-created'
+        value: 'created'
     }
 ];
 
