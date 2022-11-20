@@ -57,14 +57,14 @@ export const CampaignCreateForm = (props) => {
 
     useEffect(() => {
         if (hasTemplateChanged && prevTemplate) {
-            if (template.file && template.file !== prevTemplate.file)
+            if (template.file && template.file !== prevTemplate.file) {
                 loadFile(template.file);
+            }
         }
     }, [template]);
     
     const loadFile = (file) => {
         const fileReader = new FileReader();
-        fileReader.readAsText(file, "UTF-8");
         fileReader.onload = e => {
             let parsedData = JSON.parse(e.target.result);
             setTemplate({
@@ -73,6 +73,7 @@ export const CampaignCreateForm = (props) => {
                 report: null
             });
         };
+        fileReader.readAsText(file, "UTF-8");
     };
 
     const handleValidate = () => {

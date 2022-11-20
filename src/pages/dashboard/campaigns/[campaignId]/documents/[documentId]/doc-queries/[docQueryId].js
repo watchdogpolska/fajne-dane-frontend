@@ -16,7 +16,7 @@ import {
 import {withAuthGuard} from '@/hocs/with-auth-guard';
 import {Loading} from '@/components/dashboard/common/loading';
 import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
-import PdfViewer from '@/components/form/pdf-viewer';
+import {DocumentDataComponent} from '@/components/dashboard/campaigns/document-details/document-data-component';
 import {ArrowBack} from '@/components/dashboard/common/arrow-back';
 import NextLink from 'next/link';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -159,7 +159,7 @@ const DocumentQueryDetails = () => {
 
                             <Grid item md={6}>
                                 <Box sx={{height: 600}}>
-                                    <PdfViewer documentUrl={state.document.data.data['document_url']}/>
+                                    <DocumentDataComponent document={state.document.data}/>
                                 </Box>
                             </Grid>
                             <Grid item md={6}>

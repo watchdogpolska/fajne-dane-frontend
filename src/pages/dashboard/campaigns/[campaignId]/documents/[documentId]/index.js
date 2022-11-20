@@ -20,7 +20,6 @@ import {
 import {withAuthGuard} from '@/hocs/with-auth-guard';
 import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
 import {useAuth} from "@/hooks/use-auth";
-import PdfViewer from '@/components/form/pdf-viewer';
 import {ArrowBack} from '@/components/dashboard/common/arrow-back';
 import {Loading} from '@/components/dashboard/common/loading';
 import NextLink from 'next/link';
@@ -28,6 +27,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
 import {DocumentDataList} from '@/components/dashboard/campaigns/document-details/document-data-list';
 import {DocQueriesList} from '@/components/dashboard/campaigns/document-details/doc-queries-list';
+import {DocumentDataComponent} from '@/components/dashboard/campaigns/document-details/document-data-component';
 import DocQueryNavigator from '@/logic/doc-query-form/doc-query-navigator';
 
 
@@ -123,7 +123,7 @@ const DocumentDetails = () => {
 
                             <Grid item md={6}>
                                 <Box sx={{height: 600}}>
-                                    <PdfViewer documentUrl={state.document.data.data['document_url']}/>
+                                    <DocumentDataComponent document={state.document.data}/>
                                 </Box>
                             </Grid>
                             <Grid item md={6}>
