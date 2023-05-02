@@ -1,5 +1,5 @@
 import Repository from "./repository";
-import {Query} from '../models/query';
+import Query from '../models/query';
 
 
 export class QueryRepository extends Repository {

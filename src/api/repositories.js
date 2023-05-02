@@ -5,6 +5,8 @@ import { DocumentRepository } from './repositories/document-repository';
 import { FileSourceRepository } from './repositories/file-source-repository';
 import { RecordRepository } from './repositories/record-repository';
 import { TemplateRepository } from './repositories/template-repository';
+import { InstitutionGroupRepository } from "@/api/repositories/institution-group-repository";
+import { InstitutionRepository } from "@/api/repositories/institution-repository";
 
 
 export class Repositories {
@@ -18,5 +20,7 @@ export class Repositories {
         this.fileSource = new FileSourceRepository(api_url, session);
         this.record = new RecordRepository(api_url, session);
         this.template = new TemplateRepository(api_url, session);
+        this.institutionGroup = new InstitutionGroupRepository(api_url, session);
+        this.institution = new InstitutionRepository(api_url, session);
     }
 }

@@ -1,46 +1,43 @@
-import {useState, useEffect} from 'react';
-import {useRouter} from 'next/router';
+import {useState} from 'react';
 import {useFormik} from 'formik';
+import {useRouter} from 'next/router'
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {Box, Button, Grid} from '@mui/material';
-import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
 import {Loading} from '@/components/dashboard/common/loading';
-import {DocumentDetailsCard} from './components/document-details-card';
+import {RedirectBackConfirmModal} from "../../../common/redirect-back-confirm-modal";
 import {useAuth} from "@/hooks/use-auth";
+import {InstitutionDetailsCard} from "./components/institution-details-card";
 
 
-export const AddDocumentForm = (props) => {
+export const InstitutionCreateForm = (props) => {
     const {
-        campaign,
+        group,
         ...other
     } = props;
 
     const router = useRouter();
-    const { repositories } = useAuth();
     const [cancelModalOpen, setCancelModalOpen ] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { repositories } = useAuth();
 
-    let initialValues = {};
-    let validationSchema = {};
-    for (let field of campaign.documentFields) {
-        initialValues[field.name] = "";
-        validationSchema[field.name] = Yup.string().max(255);
-    }
+    console.log(group);
 
     const formik = useFormik({
-        initialValues: initialValues,
-        validationSchema: Yup.object(validationSchema),
+        initialValues: {
+            name: '',
+            key: ''
+        },
+        validationSchema: Yup.object({
+            name: Yup.string().max(255),
+            key: Yup.string().max(255),
+        }),
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
-                let document = await repositories.document.createDocument({
-                    campaignId: campaign.id,
-                    data: formik.values
-                });
-
-                toast.success('Dokument zostały dodany');
-                router.push(`/dashboard/campaigns/${campaign.id}/documents/${document.id}`);
+                await repositories.institutions.create(values);
+                toast.success('Dodano nową instytucje!');
+                router.push(`/dashboard/institutions/${group.id}`);
             } catch (err) {
                 console.error(err);
             }
@@ -51,15 +48,8 @@ export const AddDocumentForm = (props) => {
     const handleCloseCancel = () => {setCancelModalOpen(false)};
     const handleAcceptCancel = (e) => {
         e.preventDefault();
-        router.push(`/dashboard/campaigns/${campaign.id}`);
+        router.push(`/dashboard/institutions/${group.id}`);
     };
-
-    let disabled = false;
-    for (let field of campaign.documentFields)
-        if (formik.values[field.name] === "") {
-            disabled = true;
-            break;
-        }
 
     if (loading)
         return <Loading/>;
@@ -72,10 +62,7 @@ export const AddDocumentForm = (props) => {
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <DocumentDetailsCard documentFields={campaign.documentFields}
-                                             formik={formik}/>
-                    </Grid>
-                    <Grid item xs={12}>
+                        <InstitutionDetailsCard formik={formik} />
                         <Box
                             sx={{
                                 display: 'flex',
@@ -93,9 +80,9 @@ export const AddDocumentForm = (props) => {
                             </Button>
                             <Button sx={{ m: 1 }}
                                     type="submit"
-                                    disabled={disabled}
+                                    disabled={true}
                                     variant="contained">
-                                Zapisz zmiany
+                                Dodaj instytucje
                             </Button>
                         </Box>
                     </Grid>
@@ -105,5 +92,5 @@ export const AddDocumentForm = (props) => {
     );
 };
 
-AddDocumentForm.propTypes = {
+InstitutionCreateForm.propTypes = {
 };

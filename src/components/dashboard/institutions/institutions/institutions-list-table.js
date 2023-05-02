@@ -4,66 +4,57 @@ import PropTypes from 'prop-types';
 import {Box, Button, Checkbox, Table, TableBody, TableCell, TableHead, TablePagination, TableRow} from '@mui/material';
 import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
 import {Scrollbar} from '@/components/scrollbar';
-import {SourceLabel} from './common/source-label';
-import {DocumentStatus} from '@/components/dashboard/common/statuses/document-status';
 import {DeleteConfirmModal} from '@/components/dashboard/common/delete-confirm-modal';
 
-const buttonNameMapping = {
-    "CLOSED": "Edytuj",
-    "INITIALIZED": "Rozwiąż",
-    "VALIDATING": "Rozwiąż",
-    "CREATED": "Oznacz",
-}
 
-
-export const DocumentsListTable = (props) => {
+export const InstitutionsListTable = (props) => {
     const {
-        campaignId,
-        documents,
-        onDocumentsDeleted,
+        groupId,
+        institutions,
+        onInstitutionsDeleted,
         onDelete,
-        documentsCount,
+        institutionsCount,
         onPageChange,
         onRowsPerPageChange,
         page,
         rowsPerPage,
         ...other
     } = props;
-    const [selectedDocuments, setSelectedDocuments] = useState([]);
+    const [selectedInstitutions, setSelectedInstitutions] = useState([]);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
     useEffect(() => {
-            if (selectedDocuments.length) {
-                setSelectedDocuments([]);
+            if (selectedInstitutions.length) {
+                setSelectedInstitutions([]);
             }
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [documents]);
+        [institutions]);
 
     const handleSelectAllDocuments = (event) => {
-        setSelectedDocuments(event.target.checked
-            ? documents.map((document) => document.id)
+        setSelectedInstitutions(event.target.checked
+            ? institutions.map((institution) => institution.id)
             : []);
     };
 
-    const handleSelectOneDocument = (event, documentId) => {
-        if (!selectedDocuments.includes(documentId)) {
-            setSelectedDocuments((prevSelected) => [...prevSelected, documentId]);
+    const handleSelectOneInstitution = (event, institutionId) => {
+        if (!selectedInstitutions.includes(institutionId)) {
+            setSelectedInstitutions((prevSelected) => [...prevSelected, institutionId]);
         } else {
-            setSelectedDocuments((prevSelected) => prevSelected.filter((id) => id !== documentId));
+            setSelectedInstitutions((prevSelected) => prevSelected.filter((id) => id !== institutionId));
         }
     };
 
-    const enableBulkActions = selectedDocuments.length > 0;
-    const selectedSomeDocuments = selectedDocuments.length > 0
-        && selectedDocuments.length < documents.length;
-    const selectedAllDocuments = selectedDocuments.length === documents.length;
+    const enableBulkActions = selectedInstitutions.length > 0;
+    const selectedSomeInstitutions = selectedInstitutions.length > 0
+        && selectedInstitutions.length < institutions.length;
+    const selectedAllInstitutions = selectedInstitutions.length === institutions.length;
 
     const openDelete = () => {setDeleteModalOpen(true)};
     const closeDelete = () => {setDeleteModalOpen(false)};
 
-    const deleteSelectedDocuments = () => {
-        onDocumentsDeleted(selectedDocuments);
+    const deleteSelectedInstitutions = () => {
+        onInstitutionsDeleted(selectedInstitutions);
         closeDelete();
     }
 
@@ -71,15 +62,15 @@ export const DocumentsListTable = (props) => {
         <div {...other}>
             <DeleteConfirmModal open={deleteModalOpen} 
                                 onClose={closeDelete}
-                                onAccept={deleteSelectedDocuments}/>
+                                onAccept={deleteSelectedInstitutions}/>
             <Box sx={{
                 backgroundColor: 'neutral.100',
                 display: !enableBulkActions && 'none',
                 px: 2,
                 py: 0.5
             }}>
-                <Checkbox checked={selectedAllDocuments}
-                          indeterminate={selectedSomeDocuments}
+                <Checkbox checked={selectedAllInstitutions}
+                          indeterminate={selectedSomeInstitutions}
                           onChange={handleSelectAllDocuments}/>
                 <Button size="small"
                         onClick={openDelete}
@@ -93,22 +84,22 @@ export const DocumentsListTable = (props) => {
                         <TableRow>
                             <TableCell padding="checkbox">
                                 <Checkbox
-                                    checked={selectedAllDocuments}
-                                    indeterminate={selectedSomeDocuments}
+                                    checked={selectedAllInstitutions}
+                                    indeterminate={selectedSomeInstitutions}
                                     onChange={handleSelectAllDocuments}
                                 />
                             </TableCell>
                             <TableCell>
-                                Nazwa instytucji
+                                Nazwa
                             </TableCell>
                             <TableCell>
-                                Źródło danych
+                                Adres
                             </TableCell>
                             <TableCell>
-                                Status
+                                Link
                             </TableCell>
                             <TableCell>
-                                Data dodania
+                                Identyfikator
                             </TableCell>
                             <TableCell align="right">
                                 Akcje
@@ -116,42 +107,42 @@ export const DocumentsListTable = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {documents.map((document) => {
-                            const isDocumentSelected = selectedDocuments.includes(document.id);
+                        {institutions.map((institution) => {
+                            const isInstitutionSelected = selectedInstitutions.includes(institution.id);
 
                             return (
                                 <TableRow hover
-                                          key={document.id}
-                                          selected={isDocumentSelected}>
+                                          key={institution.id}
+                                          selected={isInstitutionSelected}>
                                     <TableCell padding="checkbox">
                                         <Checkbox
-                                            checked={isDocumentSelected}
-                                            onChange={(event) => handleSelectOneDocument(event, document.id)}
-                                            value={isDocumentSelected}
+                                            checked={isInstitutionSelected}
+                                            onChange={(event) => handleSelectOneInstitution(event, institution.id)}
+                                            value={isInstitutionSelected}
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        {document.institution.name} ({document.institution.key})
+                                        {institution.name}
                                     </TableCell>
                                     <TableCell>
-                                        <SourceLabel source={document.source}/>
+                                        ul. Robotnicza 12, 49-300 Brzeg
                                     </TableCell>
                                     <TableCell>
-                                        <DocumentStatus status={document.status}/>
+                                        Link
                                     </TableCell>
                                     <TableCell>
-                                        {document.createdDate}
+                                        {institution.key}
                                     </TableCell>
                                     <TableCell align="right">
-                                        <NextLink href={`/dashboard/campaigns/${campaignId}/documents/${document.id}`} 
+                                        <NextLink href={`/dashboard/institutions/${groupId}/children/${institution.id}`}
                                                   passHref>
                                             <Button component="a"
-                                                    size="small"
-                                                    variant={document.status === "CLOSED" ? "outlined" : "contained"}
                                                     endIcon={(
                                                         <PencilAltIcon fontSize="small" />
-                                                    )}>
-                                                {buttonNameMapping[document.status]}
+                                                    )}
+                                                    size="small"
+                                                    variant="outlined">
+                                                Edytuj
                                             </Button>
                                         </NextLink>
                                     </TableCell>
@@ -163,7 +154,7 @@ export const DocumentsListTable = (props) => {
             </Scrollbar>
             <TablePagination
                 component="div"
-                count={documentsCount}
+                count={institutionsCount}
                 onPageChange={onPageChange}
                 onRowsPerPageChange={onRowsPerPageChange}
                 page={page}
@@ -174,8 +165,8 @@ export const DocumentsListTable = (props) => {
     );
 };
 
-DocumentsListTable.propTypes = {
-    documents: PropTypes.array.isRequired,
+InstitutionsListTable.propTypes = {
+    institutions: PropTypes.array.isRequired,
     onPageChange: PropTypes.func,
     onRowsPerPageChange: PropTypes.func,
     page: PropTypes.number.isRequired,

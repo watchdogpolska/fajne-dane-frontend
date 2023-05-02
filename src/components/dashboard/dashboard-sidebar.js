@@ -52,6 +52,21 @@ const getSections = (t) => [
           },
         ]
       },
+      {
+        title: t('Instytucje'),
+        path: '/dashboard/institutions',
+        icon: <OfficeBuildingIcon fontSize="small" />,
+        children: [
+          {
+            title: t('Typy instytucji'),
+            path: '/dashboard/institutions'
+          },
+          {
+            title: t('Dodaj typ instytucji ręcznie'),
+            path: '/dashboard/institutions/create'
+          },
+        ]
+      },
     ]
   },
   {

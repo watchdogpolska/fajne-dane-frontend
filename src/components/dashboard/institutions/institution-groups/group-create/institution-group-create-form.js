@@ -1,46 +1,57 @@
-import {useState, useEffect} from 'react';
-import {useRouter} from 'next/router';
+import {useEffect, useState} from 'react';
 import {useFormik} from 'formik';
+import {useRouter} from 'next/router'
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {Box, Button, Grid} from '@mui/material';
-import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
 import {Loading} from '@/components/dashboard/common/loading';
-import {DocumentDetailsCard} from './components/document-details-card';
+import {RedirectBackConfirmModal} from "../../../common/redirect-back-confirm-modal";
 import {useAuth} from "@/hooks/use-auth";
+import {InstitutionGroupNameCard} from "./components/institution-group-name-card";
+import {InstitutionGroupParentCard} from "./components/institution-group-parent-card";
+import {InstitutionGroupFieldsCard} from "./components/institution-group-fields-card";
 
 
-export const AddDocumentForm = (props) => {
+export const InstitutionGroupCreateForm = (props) => {
     const {
-        campaign,
         ...other
     } = props;
 
     const router = useRouter();
-    const { repositories } = useAuth();
     const [cancelModalOpen, setCancelModalOpen ] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const { repositories } = useAuth();
+    const [institutionGroups, setInstitutionGroups] = useState([]);
 
-    let initialValues = {};
-    let validationSchema = {};
-    for (let field of campaign.documentFields) {
-        initialValues[field.name] = "";
-        validationSchema[field.name] = Yup.string().max(255);
+    async function fetchInstitutionGroupsData() {
+        let _institutionGroups = await repositories.institutionGroup.list();
+        setLoading(false);
+        setInstitutionGroups(_institutionGroups);
     }
 
+    useEffect(() => {
+        fetchInstitutionGroupsData();
+    }, []);
+
     const formik = useFormik({
-        initialValues: initialValues,
-        validationSchema: Yup.object(validationSchema),
+        initialValues: {
+            name: '',
+            parent: 'null',
+            fields: []
+        },
+        validationSchema: Yup.object({
+            name: Yup.string().max(255),
+            parent: Yup.string().max(255),
+            fields: Yup.array(Yup.string().required())
+        }),
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
-                let document = await repositories.document.createDocument({
-                    campaignId: campaign.id,
-                    data: formik.values
-                });
-
-                toast.success('Dokument zostały dodany');
-                router.push(`/dashboard/campaigns/${campaign.id}/documents/${document.id}`);
+                if (values['parent'] === "null")
+                    values['parent'] = null;
+                await repositories.institutionGroup.create(values);
+                toast.success('Dodano nowy typ instytucji!');
+                router.push('/dashboard/institutions');
             } catch (err) {
                 console.error(err);
             }
@@ -51,15 +62,8 @@ export const AddDocumentForm = (props) => {
     const handleCloseCancel = () => {setCancelModalOpen(false)};
     const handleAcceptCancel = (e) => {
         e.preventDefault();
-        router.push(`/dashboard/campaigns/${campaign.id}`);
+        router.push('/dashboard/institutions');
     };
-
-    let disabled = false;
-    for (let field of campaign.documentFields)
-        if (formik.values[field.name] === "") {
-            disabled = true;
-            break;
-        }
 
     if (loading)
         return <Loading/>;
@@ -72,10 +76,16 @@ export const AddDocumentForm = (props) => {
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <DocumentDetailsCard documentFields={campaign.documentFields}
-                                             formik={formik}/>
+                        <InstitutionGroupNameCard formik={formik}/>
                     </Grid>
                     <Grid item xs={12}>
+                        <InstitutionGroupParentCard institutionGroups={institutionGroups}
+                                                    disabled={formik.values.name === ""}
+                                                    formik={formik}/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <InstitutionGroupFieldsCard formik={formik}
+                                                    disabled={formik.values.name === ""}/>
                         <Box
                             sx={{
                                 display: 'flex',
@@ -93,9 +103,9 @@ export const AddDocumentForm = (props) => {
                             </Button>
                             <Button sx={{ m: 1 }}
                                     type="submit"
-                                    disabled={disabled}
+                                    disabled={!(formik.values.name !== "")}
                                     variant="contained">
-                                Zapisz zmiany
+                                Dodaj typ instytucji
                             </Button>
                         </Box>
                     </Grid>
@@ -105,5 +115,5 @@ export const AddDocumentForm = (props) => {
     );
 };
 
-AddDocumentForm.propTypes = {
+InstitutionGroupCreateForm.propTypes = {
 };

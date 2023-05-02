@@ -42,7 +42,7 @@ const sortOptions = [
 
 const applyFilters = (data, filters) => data.filter((element) => {
 
-    if (filters['tab'] == "PENDING") {
+    if (filters['tab'] === "PENDING") {
         if (["CREATED", "INITIALIZED", "VALIDATING"].indexOf(element.status) < 0)
             return false;
     }
@@ -57,7 +57,7 @@ const applyFilters = (data, filters) => data.filter((element) => {
                 element.createdDate.includes(token))
                 matchedTokens+=1;
         }
-        if (queryTokens.length != matchedTokens)
+        if (queryTokens.length !== matchedTokens)
             return false;
     }
     return true;
