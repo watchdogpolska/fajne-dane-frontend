@@ -19,11 +19,11 @@ import {useAuth} from "@/hooks/use-auth";
 const sortOptions = [
     {
         label: 'Nazwa instytucji (A→Z)',
-        value: 'institution__name'
+        value: 'name'
     },
     {
         label: 'Nazwa instytucji (Z→A)',
-        value: '-institution__name'
+        value: '-name'
     }
 ];
 
@@ -117,6 +117,7 @@ const InstitutionsList = () => {
     const handleSortChange = (event) => {
         setFilters({sort: event.target.value});
     };
+    console.log(filters);
 
     const handlePageChange = (event, page) => {
         setFilters({page: page});
@@ -128,9 +129,7 @@ const InstitutionsList = () => {
 
     const handleQueryChange = (event) => {
         event.preventDefault();
-        setFilters({
-            query: queryRef.current?.value
-        });
+        setFilters({query: queryRef.current?.value, page: 0});
     };
 
     if (isLoading())
@@ -239,11 +238,25 @@ const InstitutionsList = () => {
                                     placeholder="Wyszukaj po nazwie"
                                 />
                             </Box>
+                            <TextField label="Sortowanie"
+                                       name="sort"
+                                       onChange={handleSortChange}
+                                       select
+                                       SelectProps={{ native: true }}
+                                       sx={{ m: 1.5 }}
+                                       value={state.sort}>
+                                {sortOptions.map((option) => (
+                                    <option key={option.value}
+                                            value={option.value}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </TextField>
                         </Box>
                         <InstitutionsListTable groupId={groupId}
-                                               onDocumentsDeleted={handleInstitutionsDeleted}
+                                               onInstitutionsDeleted={handleInstitutionsDeleted}
                                                institutions={state.institutions.data}
-                                               instiutionsCount={100} //state.documents.data.count}
+                                               institutionsCount={state.institutions.data.count}
                                                onPageChange={handlePageChange}
                                                onRowsPerPageChange={handleRowsPerPageChange}
                                                rowsPerPage={filters.rowsPerPage}

@@ -47,11 +47,10 @@ export const InstitutionGroupParentCard = (props) => {
                             <InputLabel id="select-label">Instytucja nadrzędna</InputLabel>
                             <Select fullWidth
                                     label="Instytucja nadrzędna"
-                                    labelId="select-label"
+                                    labelId="institution-parent"
                                     name="parent"
                                     value={formik.values.parent}
                                     error={Boolean(formik.touched.name && formik.errors.name)}
-                                    helperText={formik.touched.name && formik.errors.name}
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}>
                                 {options}

@@ -349,7 +349,7 @@ const CampaignDocumentsList = () => {
                                         placeholder="Wyszukaj po nazwie i naciśnij enter"
                                     />
                                 </Box>
-                                <TextField label="Sort By"
+                                <TextField label="Sortowanie"
                                            name="sort"
                                            onChange={handleSortChange}
                                            select

@@ -29,11 +29,11 @@ export const InstitutionsListTable = (props) => {
             }
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [institutions]);
+        [institutions.results]);
 
     const handleSelectAllDocuments = (event) => {
         setSelectedInstitutions(event.target.checked
-            ? institutions.map((institution) => institution.id)
+            ? institutions.results.map((institution) => institution.id)
             : []);
     };
 
@@ -47,8 +47,8 @@ export const InstitutionsListTable = (props) => {
 
     const enableBulkActions = selectedInstitutions.length > 0;
     const selectedSomeInstitutions = selectedInstitutions.length > 0
-        && selectedInstitutions.length < institutions.length;
-    const selectedAllInstitutions = selectedInstitutions.length === institutions.length;
+        && selectedInstitutions.length < institutions.results.length;
+    const selectedAllInstitutions = selectedInstitutions.length === institutions.results.length;
 
     const openDelete = () => {setDeleteModalOpen(true)};
     const closeDelete = () => {setDeleteModalOpen(false)};
@@ -107,7 +107,7 @@ export const InstitutionsListTable = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {institutions.map((institution) => {
+                        {institutions.results.map((institution) => {
                             const isInstitutionSelected = selectedInstitutions.includes(institution.id);
 
                             return (
@@ -166,7 +166,7 @@ export const InstitutionsListTable = (props) => {
 };
 
 InstitutionsListTable.propTypes = {
-    institutions: PropTypes.array.isRequired,
+    institutions: PropTypes.object.isRequired,
     onPageChange: PropTypes.func,
     onRowsPerPageChange: PropTypes.func,
     page: PropTypes.number.isRequired,

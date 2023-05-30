@@ -56,7 +56,7 @@ export const AddDocumentForm = (props) => {
 
     let disabled = false;
     for (let field of campaign.documentFields)
-        if (formik.values[field.name] === "") {
+        if (formik.values[field.name] === "" || formik.values[field.name] == null) {
             disabled = true;
             break;
         }

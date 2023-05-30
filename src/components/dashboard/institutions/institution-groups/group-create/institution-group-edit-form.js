@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useFormik} from 'formik';
 import {useRouter} from 'next/router'
 import toast from 'react-hot-toast';
@@ -7,36 +7,51 @@ import {Box, Button, Grid} from '@mui/material';
 import {Loading} from '@/components/dashboard/common/loading';
 import {RedirectBackConfirmModal} from "../../../common/redirect-back-confirm-modal";
 import {useAuth} from "@/hooks/use-auth";
-import {InstitutionDetailsCard} from "./components/institution-details-card";
+import {InstitutionGroupNameCard} from "./components/institution-group-name-card";
+import {InstitutionGroupParentCard} from "./components/institution-group-parent-card";
+import {InstitutionGroupFieldsCard} from "./components/institution-group-fields-card";
 
 
-export const InstitutionCreateForm = (props) => {
+export const InstitutionGroupEditForm = (props) => {
     const {
-        group,
+        institutionGroup,
         ...other
     } = props;
 
     const router = useRouter();
     const [cancelModalOpen, setCancelModalOpen ] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const { repositories } = useAuth();
+    const [institutionGroups, setInstitutionGroups] = useState([]);
+
+    async function fetchInstitutionGroupsData() {
+        let _institutionGroups = await repositories.institutionGroup.list();
+        setLoading(false);
+        setInstitutionGroups(_institutionGroups);
+    }
+
+    useEffect(() => {
+        fetchInstitutionGroupsData();
+    }, []);
 
     const formik = useFormik({
         initialValues: {
-            name: '',
-            key: ''
+            name: institutionGroup.name,
+            parent: institutionGroup.parent ? institutionGroup.parent.id : 'null',
+            fields: institutionGroup.fields
         },
         validationSchema: Yup.object({
             name: Yup.string().max(255),
-            key: Yup.string().max(255),
+            parent: Yup.string().max(255),
+            fields: Yup.array(Yup.string().required())
         }),
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
-                console.log(values);
-                await repositories.institution.create({groupId: group.id, ...values});
-                toast.success('Dodano nową instytucje!');
-                router.push(`/dashboard/institutions/${group.id}`);
+                values['groupId'] = institutionGroup.id;
+                await repositories.institutionGroup.update(values);
+                toast.success('Zaktualizowano typ instytucji!');
+                router.push('/dashboard/institutions');
             } catch (err) {
                 console.error(err);
             }
@@ -47,19 +62,11 @@ export const InstitutionCreateForm = (props) => {
     const handleCloseCancel = () => {setCancelModalOpen(false)};
     const handleAcceptCancel = (e) => {
         e.preventDefault();
-        router.push(`/dashboard/institutions/${group.id}`);
+        router.push('/dashboard/institutions');
     };
 
     if (loading)
         return <Loading/>;
-
-    let disabled = false;
-    for (let field of ["name", "key", ...group.fields]) {
-        if (formik.values[field] === "" || formik.values[field] == null) {
-            disabled = true;
-            break;
-        }
-    }
 
     return (
         <>
@@ -69,8 +76,16 @@ export const InstitutionCreateForm = (props) => {
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <InstitutionDetailsCard formik={formik}
-                                                institutionGroup={group}/>
+                        <InstitutionGroupNameCard formik={formik}/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <InstitutionGroupParentCard institutionGroups={institutionGroups}
+                                                    disabled={true}
+                                                    formik={formik}/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <InstitutionGroupFieldsCard formik={formik}
+                                                    disabled={true}/>
                         <Box
                             sx={{
                                 display: 'flex',
@@ -88,9 +103,9 @@ export const InstitutionCreateForm = (props) => {
                             </Button>
                             <Button sx={{ m: 1 }}
                                     type="submit"
-                                    disabled={disabled}
+                                    disabled={!(formik.values.name !== "")}
                                     variant="contained">
-                                Dodaj instytucje
+                                Edytuj typ instytucji
                             </Button>
                         </Box>
                     </Grid>
@@ -100,5 +115,5 @@ export const InstitutionCreateForm = (props) => {
     );
 };
 
-InstitutionCreateForm.propTypes = {
+InstitutionGroupEditForm.propTypes = {
 };

@@ -62,7 +62,7 @@ const getSections = (t) => [
             path: '/dashboard/institutions'
           },
           {
-            title: t('Dodaj typ instytucji ręcznie'),
+            title: t('Dodaj typ'),
             path: '/dashboard/institutions/create'
           },
         ]

@@ -8,11 +8,17 @@ export default class Pagination {
     }
 
     static fromJson(type, data) {
+        let results = null;
+        if (data.constructor === Array)
+            results = data;
+        else
+            results = data['results'].map((result) => type.fromJson(result));
+
         return new Pagination(
             data['count'],
             data['next'],
             data['previous'],
-            data['results'].map((result) => type.fromJson(result))
+            results
         );
     }
 }

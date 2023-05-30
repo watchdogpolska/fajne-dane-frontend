@@ -10,10 +10,6 @@ export const InstitutionsGroupListTable = (props) => {
         ...other
     } = props;
 
-    const onInstitutionGroupEdit = function(groupId) {
-        console.log("groupid: " + groupId);
-    }
-
     return (
         <div {...other}>
             <Table sx={{ minWidth: 700 }}>
@@ -42,16 +38,18 @@ export const InstitutionsGroupListTable = (props) => {
                                     {group.institutions_count}
                                 </TableCell>
                                 <TableCell align="right">
-                                    <Button component="a"
-                                            variant="outlined"
-                                            size="small"
-                                            sx={{ mr: 2 }}
-                                            endIcon={(
-                                                <PencilAltIcon fontSize="small" />
-                                            )}
-                                            onClick={() => onInstitutionGroupEdit(group.id)}>
-                                        Edytuj
-                                    </Button>
+                                    <NextLink href={`/dashboard/institutions/${group.id}/edit/`}
+                                              passHref>
+                                        <Button component="a"
+                                                variant="outlined"
+                                                size="small"
+                                                sx={{ mr: 2 }}
+                                                endIcon={(
+                                                    <PencilAltIcon fontSize="small" />
+                                                )}>
+                                            Edytuj
+                                        </Button>
+                                    </NextLink>
                                     <NextLink href={`/dashboard/institutions/${group.id}/`}
                                               passHref>
                                         <Button component="a"

@@ -20,4 +20,12 @@ export class InstitutionGroupRepository extends Repository {
         )
         return InstitutionGroup.fromJson(response.data);
     }
+
+    async update({groupId, name}) {
+        let response = await this.patch(
+            `campaigns/institution-groups/${groupId}/`,
+            { name: name }
+        )
+        return InstitutionGroup.fromJson(response.data);
+    }
 }
