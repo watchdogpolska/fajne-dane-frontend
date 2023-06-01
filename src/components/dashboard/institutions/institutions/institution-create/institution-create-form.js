@@ -33,9 +33,8 @@ export const InstitutionCreateForm = (props) => {
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
-                console.log(values);
                 await repositories.institution.create({groupId: group.id, ...values});
-                toast.success('Dodano nową instytucje!');
+                toast.success('Dodano nową instytucję!');
                 router.push(`/dashboard/institutions/${group.id}`);
             } catch (err) {
                 console.error(err);

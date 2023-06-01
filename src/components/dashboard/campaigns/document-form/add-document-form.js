@@ -8,6 +8,9 @@ import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal
 import {Loading} from '@/components/dashboard/common/loading';
 import {DocumentDetailsCard} from './components/document-details-card';
 import {useAuth} from "@/hooks/use-auth";
+import {
+    DocumentInstitutionCard
+} from "@/components/dashboard/campaigns/document-form/components/document-insitution-card";
 
 
 export const AddDocumentForm = (props) => {
@@ -17,12 +20,18 @@ export const AddDocumentForm = (props) => {
     } = props;
 
     const router = useRouter();
-    const { repositories } = useAuth();
     const [cancelModalOpen, setCancelModalOpen ] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { repositories } = useAuth();
 
-    let initialValues = {};
-    let validationSchema = {};
+    let initialValues = {
+        institutionGroupId: null,
+        institution_id: null
+    };
+    let validationSchema = {
+        institutionGroupId: Yup.number(),
+        institution_id: Yup.number()
+    };
     for (let field of campaign.documentFields) {
         initialValues[field.name] = "";
         validationSchema[field.name] = Yup.string().max(255);
@@ -34,6 +43,7 @@ export const AddDocumentForm = (props) => {
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
+                delete values["institutionGroupId"];
                 let document = await repositories.document.createDocument({
                     campaignId: campaign.id,
                     data: formik.values
@@ -71,6 +81,9 @@ export const AddDocumentForm = (props) => {
                                       onAccept={handleAcceptCancel}/>
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <DocumentInstitutionCard formik={formik}/>
+                    </Grid>
                     <Grid item xs={12}>
                         <DocumentDetailsCard documentFields={campaign.documentFields}
                                              formik={formik}/>

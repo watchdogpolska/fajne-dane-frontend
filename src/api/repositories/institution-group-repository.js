@@ -28,4 +28,9 @@ export class InstitutionGroupRepository extends Repository {
         )
         return InstitutionGroup.fromJson(response.data);
     }
+
+    async deleteGroup({groupId}) {
+        let response = await this.delete(`campaigns/institution-groups/${groupId}/`);
+        return response;
+    }
 }

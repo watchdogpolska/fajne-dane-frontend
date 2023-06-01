@@ -1,4 +1,4 @@
-import {useEffect, useReducer, useRef} from 'react';
+import {useEffect, useReducer, useRef, useState} from 'react';
 import Head from 'next/head';
 import {Loading} from '@/components/dashboard/common/loading';
 import {useRouter} from 'next/router'
@@ -11,6 +11,7 @@ import {ArrowBack as ArrowBackIcon} from '@mui/icons-material';
 import {
     InstitutionGroupEditForm
 } from "@/components/dashboard/institutions/institution-groups/group-create/institution-group-edit-form";
+import {DeleteConfirmModal} from "@/components/dashboard/common/delete-confirm-modal";
 
 
 const EditInstitutionGroups = () => {
@@ -20,6 +21,10 @@ const EditInstitutionGroups = () => {
     const { repositories } = useAuth();
     const router = useRouter();
     const { groupId } = router.query;
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
+    const openDelete = () => {setDeleteModalOpen(true)};
+    const closeDelete = () => {setDeleteModalOpen(false)};
 
     const [state, setState] = useReducer(
         (state, newState) => ({...state, ...newState}),
@@ -39,6 +44,11 @@ const EditInstitutionGroups = () => {
                 value: group
             }
         });
+    }
+
+    async function handleDelete() {
+        await repositories.institutionGroup.deleteGroup({groupId});
+        router.push('/dashboard/institutions');
     }
 
     useEffect(async () => {
@@ -97,7 +107,14 @@ const EditInstitutionGroups = () => {
                             </Grid>
                         </Grid>
                     </Box>
-                    <InstitutionGroupEditForm institutionGroup={state.group.value}/>
+                    <DeleteConfirmModal open={deleteModalOpen}
+                                        header="Usunać wybrany typ instytucji?"
+                                        message1="Czy jesteś pewien, że chcesz usunąć wybrany typ instytucji?"
+                                        message2="Uwaga, operacja usunięcia typu instytucji jest nieodwracalna."
+                                        onClose={closeDelete}
+                                        onAccept={handleDelete}/>
+                    <InstitutionGroupEditForm handleOpenDelete={openDelete}
+                                              institutionGroup={state.group.value}/>
                 </Container>
             </Box>
         </>

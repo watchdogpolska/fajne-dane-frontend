@@ -105,9 +105,8 @@ const InstitutionsList = () => {
     }, [filters]);
 
     async function deleteInstitutions(institutionsId) {
-        // support check if there no dokuments
-        //await repositories.document.bulkDelete({campaignId: campaignId, ids: documentIds});
-        //fetchDocumentsData();
+        await repositories.institution.bulkDelete({groupId: groupId, ids: institutionsId});
+        await fetchInstitutionsData();
     }
 
     const handleInstitutionsDeleted = (institutionsIds) => {

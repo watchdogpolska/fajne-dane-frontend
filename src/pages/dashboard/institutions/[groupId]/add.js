@@ -10,7 +10,7 @@ import NextLink from 'next/link';
 import {ArrowBack as ArrowBackIcon} from '@mui/icons-material';
 import {
     InstitutionCreateForm
-} from "@/components/dashboard/institutions/institution-groups/institution-create/institution-create-form";
+} from "@/components/dashboard/institutions/institutions/institution-create/institution-create-form";
 
 
 const AddInstitution = () => {

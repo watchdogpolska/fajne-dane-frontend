@@ -188,6 +188,9 @@ const Campaigns = () => {
                      overflow: 'hidden'
                  }}>
                 <DeleteConfirmModal open={deleteModalOpen}
+                                    header="Usunać wybraną kampanię?"
+                                    message1="Czy jesteś pewien, że chcesz usunąć wybraną kampanię?"
+                                    message2="Uwaga, operacja usunięcia kampanii jest nieodwracalna."
                                     onClose={handleCloseDelete}
                                     onAccept={handleAcceptDelete}/>
                 <CampaignsListInner open={drawer.isOpen}>

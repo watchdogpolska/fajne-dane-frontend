@@ -2,7 +2,7 @@ import {Typography} from '@mui/material';
 import {ConfirmModal} from "./confirm-modal";
 
 
-export const DeleteConfirmModal = (props) => {
+export const ErrorModal = (props) => {
     const {
         open,
         header,

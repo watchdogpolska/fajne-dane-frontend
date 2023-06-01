@@ -69,7 +69,10 @@ export const DocumentsListTable = (props) => {
 
     return (
         <div {...other}>
-            <DeleteConfirmModal open={deleteModalOpen} 
+            <DeleteConfirmModal open={deleteModalOpen}
+                                header="Usunać wybrane wpisy?"
+                                message1="Czy jesteś pewien, że chcesz usunąć zaznaczone wpisy?"
+                                message2="Uwaga, operacja usunięcia wpisów jest nieodwracalna."
                                 onClose={closeDelete}
                                 onAccept={deleteSelectedDocuments}/>
             <Box sx={{

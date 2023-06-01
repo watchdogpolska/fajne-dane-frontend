@@ -60,7 +60,10 @@ export const InstitutionsListTable = (props) => {
 
     return (
         <div {...other}>
-            <DeleteConfirmModal open={deleteModalOpen} 
+            <DeleteConfirmModal open={deleteModalOpen}
+                                header="Usunać wybrane instytucje?"
+                                message1="Czy jesteś pewien, że chcesz usunąć zaznaczone instytucje?"
+                                message2="Uwaga, operacja usunięcia instytucji jest nieodwracalna."
                                 onClose={closeDelete}
                                 onAccept={deleteSelectedInstitutions}/>
             <Box sx={{
@@ -125,10 +128,12 @@ export const InstitutionsListTable = (props) => {
                                         {institution.name}
                                     </TableCell>
                                     <TableCell>
-                                        ul. Robotnicza 12, 49-300 Brzeg
+                                        {institution.address}
                                     </TableCell>
                                     <TableCell>
-                                        Link
+                                        <a href={institution.link} target="_blank">
+                                            {institution.link}
+                                        </a>
                                     </TableCell>
                                     <TableCell>
                                         {institution.key}

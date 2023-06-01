@@ -5,6 +5,9 @@ import {InstitutionSelect} from "@/components/dashboard/institutions/institution
 const FIELDS = {
     link: {
         label: "Link do strony instytucji"
+    },
+    address: {
+        label: "Adres instytucji"
     }
 }
 

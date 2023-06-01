@@ -7,18 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {useAuth} from "@/hooks/use-auth";
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-
-
-function merge(a, b) {
-    let c = {};
-    for(let idx in a) {
-        c[idx] = a[idx];
-    }
-    for(let idx in b) {
-        c[idx] = b[idx];
-    }
-    return c;
-}
+import merge from "@/utils/merge";
 
 
 export const InstitutionSelect = (props) => {
@@ -26,6 +15,7 @@ export const InstitutionSelect = (props) => {
         name,
         label,
         formik,
+        disabled,
         institutionGroup,
         ...other
     } = props;
@@ -58,9 +48,10 @@ export const InstitutionSelect = (props) => {
 
     return (
         <Autocomplete
-            id="insitution-select"
+            id="institution-select"
             name={name}
             open={open}
+            disabled={disabled}
             onOpen={() => {
                 setOpen(true);
             }}
@@ -75,7 +66,7 @@ export const InstitutionSelect = (props) => {
                     setOptions({value: []});
             }}
             onChange={(e, newValue) => {
-                formik.setFieldValue(name, newValue.id);
+                if (newValue) formik.setFieldValue(name, newValue.id);
             }}
             getOptionLabel={(option) => `${option.name} (${option.key})`}
             options={options.value}

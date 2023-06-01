@@ -19,19 +19,8 @@ export const InstitutionGroupCreateForm = (props) => {
 
     const router = useRouter();
     const [cancelModalOpen, setCancelModalOpen ] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const { repositories } = useAuth();
-    const [institutionGroups, setInstitutionGroups] = useState([]);
-
-    async function fetchInstitutionGroupsData() {
-        let _institutionGroups = await repositories.institutionGroup.list();
-        setLoading(false);
-        setInstitutionGroups(_institutionGroups);
-    }
-
-    useEffect(() => {
-        fetchInstitutionGroupsData();
-    }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -79,8 +68,7 @@ export const InstitutionGroupCreateForm = (props) => {
                         <InstitutionGroupNameCard formik={formik}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <InstitutionGroupParentCard institutionGroups={institutionGroups}
-                                                    disabled={formik.values.name === ""}
+                        <InstitutionGroupParentCard disabled={formik.values.name === ""}
                                                     formik={formik}/>
                     </Grid>
                     <Grid item xs={12}>

@@ -18,8 +18,14 @@ export default class Campaign {
 
     static fromJson(data) {
         let documentFields = null;
-        if (data['document_fields_objects'])
-            documentFields = data['document_fields_objects'].map((field) => DocumentField.fromJson(field));
+        if (data['document_fields_objects']) {
+            documentFields = [];
+            // TODO: Remove institution_id from schema
+            for (let field of data['document_fields_objects']) {
+                if (field.name === "institution_id") continue;
+                documentFields.push(DocumentField.fromJson(field));
+            }
+        }
         
         return new Campaign(
             data['id'],

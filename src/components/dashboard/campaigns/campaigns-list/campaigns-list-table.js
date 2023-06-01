@@ -58,11 +58,6 @@ export const CampaignsListTable = (props) => {
                     py: 0.5
                 }}
             >
-                <Checkbox
-                    checked={selectedAllCampaigns}
-                    indeterminate={selectedSomeCampaigns}
-                    onChange={handleSelectAllCampaigns}
-                />
                 <Button
                     size="small"
                     sx={{ ml: 2 }}
@@ -80,13 +75,6 @@ export const CampaignsListTable = (props) => {
                 <Table sx={{ minWidth: 700 }}>
                     <TableHead sx={{ visibility: enableBulkActions ? 'collapse' : 'visible' }}>
                         <TableRow>
-                            <TableCell padding="checkbox">
-                                <Checkbox
-                                    checked={selectedAllCampaigns}
-                                    indeterminate={selectedSomeCampaigns}
-                                    onChange={handleSelectAllCampaigns}
-                                />
-                            </TableCell>
                             <TableCell>
                                 Nazwa zbioru danych
                             </TableCell>
@@ -111,13 +99,6 @@ export const CampaignsListTable = (props) => {
                                     key={campaign.id}
                                     selected={isCampaignSelected}
                                 >
-                                    <TableCell padding="checkbox">
-                                        <Checkbox
-                                            checked={isCampaignSelected}
-                                            onChange={(event) => handleSelectOneCampaign(event, campaign.id)}
-                                            value={isCampaignSelected}
-                                        />
-                                    </TableCell>
                                     <TableCell>
                                         {campaign.name}
                                     </TableCell>

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useFormik} from 'formik';
 import {useRouter} from 'next/router'
 import toast from 'react-hot-toast';
@@ -7,15 +7,13 @@ import {Box, Button, Grid} from '@mui/material';
 import {Loading} from '@/components/dashboard/common/loading';
 import {RedirectBackConfirmModal} from "../../../common/redirect-back-confirm-modal";
 import {useAuth} from "@/hooks/use-auth";
-import {InstitutionGroupNameCard} from "./components/institution-group-name-card";
-import {InstitutionGroupParentCard} from "./components/institution-group-parent-card";
-import {InstitutionGroupFieldsCard} from "./components/institution-group-fields-card";
+import {InstitutionDetailsCard} from "./components/institution-details-card";
 
 
-export const InstitutionGroupEditForm = (props) => {
+export const InstitutionEditForm = (props) => {
     const {
-        handleOpenDelete,
-        institutionGroup,
+        institution,
+        group,
         ...other
     } = props;
 
@@ -26,22 +24,21 @@ export const InstitutionGroupEditForm = (props) => {
 
     const formik = useFormik({
         initialValues: {
-            name: institutionGroup.name,
-            parent: institutionGroup.parent ? institutionGroup.parent.id : 'null',
-            fields: institutionGroup.fields
+            name: institution.name,
+            key: institution.key,
+            address: institution.address,
+            link: institution.link
         },
         validationSchema: Yup.object({
             name: Yup.string().max(255),
-            parent: Yup.string().max(255),
-            fields: Yup.array(Yup.string().required())
+            key: Yup.string().max(255),
         }),
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
-                values['groupId'] = institutionGroup.id;
-                await repositories.institutionGroup.update(values);
-                toast.success('Zaktualizowano typ instytucji!');
-                router.push('/dashboard/institutions');
+                await repositories.institution.update({id: institution.id, ...values});
+                toast.success('Zaktualizowano instytucję!');
+                router.push(`/dashboard/institutions/${group.id}`);
             } catch (err) {
                 console.error(err);
             }
@@ -52,11 +49,19 @@ export const InstitutionGroupEditForm = (props) => {
     const handleCloseCancel = () => {setCancelModalOpen(false)};
     const handleAcceptCancel = (e) => {
         e.preventDefault();
-        router.push('/dashboard/institutions');
+        router.push(`/dashboard/institutions/${group.id}`);
     };
 
     if (loading)
         return <Loading/>;
+
+    let disabled = false;
+    for (let field of ["name", "key", ...group.fields]) {
+        if (formik.values[field] === "" || formik.values[field] == null) {
+            disabled = true;
+            break;
+        }
+    }
 
     return (
         <>
@@ -66,15 +71,8 @@ export const InstitutionGroupEditForm = (props) => {
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <InstitutionGroupNameCard formik={formik}/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <InstitutionGroupParentCard disabled={true}
-                                                    formik={formik}/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <InstitutionGroupFieldsCard formik={formik}
-                                                    disabled={true}/>
+                        <InstitutionDetailsCard formik={formik}
+                                                institutionGroup={group}/>
                         <Box
                             sx={{
                                 display: 'flex',
@@ -85,21 +83,16 @@ export const InstitutionGroupEditForm = (props) => {
                                 mt: 3
                             }}
                         >
-                            <Button onClick={handleOpenDelete}
-                                    sx={{ m: 1 , ml: 'auto'}}
-                                    variant="outlined" color="error">
-                                Usuń typ
-                            </Button>
                             <Button onClick={handleOpenCancel}
-                                    sx={{ m: 1 }}
+                                    sx={{ m: 1 , ml: 'auto'}}
                                     variant="outlined">
                                 Anuluj
                             </Button>
                             <Button sx={{ m: 1 }}
                                     type="submit"
-                                    disabled={!(formik.values.name !== "")}
+                                    disabled={disabled}
                                     variant="contained">
-                                Edytuj typ instytucji
+                                Edytuj instytucje
                             </Button>
                         </Box>
                     </Grid>
@@ -109,5 +102,5 @@ export const InstitutionGroupEditForm = (props) => {
     );
 };
 
-InstitutionGroupEditForm.propTypes = {
+InstitutionEditForm.propTypes = {
 };
