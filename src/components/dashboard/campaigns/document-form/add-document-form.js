@@ -43,10 +43,15 @@ export const AddDocumentForm = (props) => {
         onSubmit: async (values, helpers) => {
             try {
                 setLoading(true);
+                let institutionId = values["institutionId"];
+
                 delete values["institutionGroupId"];
+                delete values["institutionId"];
+
                 let document = await repositories.document.createDocument({
                     campaignId: campaign.id,
-                    data: formik.values
+                    data: formik.values,
+                    institutionId: institutionId
                 });
 
                 toast.success('Dokument zostały dodany');

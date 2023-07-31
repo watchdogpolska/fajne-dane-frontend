@@ -5,6 +5,7 @@ import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
 import {formatDate} from "@/utils/date-utils";
 import {LinkLabel} from "../common/link-label";
 import {FileLinkLabel} from "../common/file-link-label";
+import {FileSourceStatus} from "@/components/dashboard/common/statuses/file-source-status";
 
 
 export const FileSourcesListTable = (props) => {
@@ -31,6 +32,9 @@ export const FileSourcesListTable = (props) => {
                         <TableCell>
                             Plik źródłowy
                         </TableCell>
+                        <TableCell>
+                            Status
+                        </TableCell>
                         <TableCell align="right">
                             Akcje
                         </TableCell>
@@ -52,6 +56,9 @@ export const FileSourcesListTable = (props) => {
                                 </TableCell>
                                 <TableCell>
                                     <FileLinkLabel link={fileSource.file}/>
+                                </TableCell>
+                                <TableCell>
+                                    <FileSourceStatus status={fileSource.status}/>
                                 </TableCell>
                                 <TableCell align="right">
                                     <NextLink href={`/dashboard/campaigns/${campaignId}/resources/${fileSource.id}`}

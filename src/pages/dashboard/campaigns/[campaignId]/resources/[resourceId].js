@@ -19,7 +19,7 @@ const FileResourceDetails = () => {
     const { repositories } = useAuth();
 
     async function fetchResourceData() {
-        let result = await repositories.fileSource.getFileSource({campaignId: campaignId, id: resourceId});
+        let result = await repositories.fileSource.getFileSource({id: resourceId});
         setResource(result);
         setLoading(false);
     }

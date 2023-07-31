@@ -5,37 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1ffc2cd-6236-4fb0-9a5e-8027a540e296" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-form/components/document-insitution-card.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/common/error-modal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/institutions/institutions/institution-create/institution-edit-form.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dashboard/institutions/institutions/institution-group-select.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/contexts/error-context.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/merge.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dashboard/common/statuses/file-source-status.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/campaign.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/campaign.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/institutions/institution.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/institutions/institution.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/repositories/institution-group-repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/institution-group-repository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/repositories/institution-repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/institution-repository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/campaigns-list-table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/campaigns-list/campaigns-list-table.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/sources/file-source.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/sources/file-source.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/repositories/document-repository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/repositories/document-repository.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-form/add-document-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/document-form/add-document-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/documents-list-table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/documents-list-table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/common/delete-confirm-modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/common/delete-confirm-modal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/institutions/institution-groups/group-create/components/institution-group-parent-card.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/institutions/institution-groups/group-create/components/institution-group-parent-card.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/institutions/institution-groups/group-create/institution-group-create-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/institutions/institution-groups/group-create/institution-group-create-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/institutions/institution-groups/group-create/institution-group-edit-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/institutions/institution-groups/group-create/institution-group-edit-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/institutions/institution-groups/institution-create/components/institution-details-card.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/institutions/institutions/institution-create/components/institution-details-card.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/institutions/institution-groups/institution-create/institution-create-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/institutions/institutions/institution-create/institution-create-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/institutions/institutions/institution-select.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/institutions/institutions/institution-select.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/institutions/institutions/institutions-list-table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/institutions/institutions/institutions-list-table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/campaigns/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/campaigns/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/institutions/[groupId]/add.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/institutions/[groupId]/add.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/institutions/[groupId]/batch.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/institutions/[groupId]/batch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/institutions/[groupId]/children/[institutionId].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/institutions/[groupId]/children/[institutionId].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/institutions/[groupId]/edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/institutions/[groupId]/edit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard/institutions/[groupId]/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard/institutions/[groupId]/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-list/file-sources-list-table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/campaigns/resources-list/file-sources-list-table.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,22 +86,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/wojciech/repo/fajne-dane-frontend/src/components/dashboard/institutions/institutions/institution-create",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "ts.external.directory.path": "/home/wojciech/.local/share/JetBrains/Toolbox/apps/PyCharm-P/ch-0/222.3739.56/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/wojciech/repo/fajne-dane-frontend/src/components/dashboard/institutions/institutions/institution-create&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/wojciech/.local/share/JetBrains/Toolbox/apps/PyCharm-P/ch-0/222.3739.56/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/components/dashboard/institutions/institutions/institution-create" />
@@ -281,7 +256,8 @@
       <workItem from="1685054159718" duration="3158000" />
       <workItem from="1685231351301" duration="1993000" />
       <workItem from="1685317769807" duration="11913000" />
-      <workItem from="1685477804360" duration="24063000" />
+      <workItem from="1685477804360" duration="24286000" />
+      <workItem from="1687902030089" duration="3679000" />
     </task>
     <servers />
   </component>

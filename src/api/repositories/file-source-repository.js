@@ -9,8 +9,8 @@ export class FileSourceRepository extends Repository {
         return response.data.map((source_data) => FileSource.fromJson(source_data));
     }
 
-    async getFileSource({campaignId, id}) {
-        let response = await this.get(`campaigns/${campaignId}/sources/${id}/`);
+    async getFileSource({id}) {
+        let response = await this.get(`campaigns/sources/${id}/`);
         return FileSource.fromJson(response.data);
     }
 

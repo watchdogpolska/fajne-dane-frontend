@@ -19,10 +19,10 @@ export class DocumentRepository extends Repository {
         return Document.fromJson(response.data);
     }
     
-    async createDocument({data, campaignId}) {
+    async createDocument({data, campaignId, institutionId}) {
         let response = await this.post(
             `campaigns/${campaignId}/documents/create/`,
-            { campaign: campaignId, data: data }
+            { campaign: campaignd, data: data, institution: institutionId }
         )
         return Document.fromJson(response.data);
     }
