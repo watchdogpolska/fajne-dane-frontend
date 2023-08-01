@@ -15,7 +15,7 @@ const PdfViewer = (props) => {
     });
 	
 	return (
-		<Worker workerUrl="https://unpkg.com/pdfjs-dist@2.12.313/build/pdf.worker.min.js">
+		<Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.min.js">
 			<Viewer fileUrl={documentUrl}
 					plugins={[defaultLayoutPluginInstance]}/>
 		</Worker>
