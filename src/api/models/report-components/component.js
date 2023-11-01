@@ -1,5 +1,5 @@
 
-export default class Source {
+export default class Component {
     constructor(id, name, type) {
         this.id = id;
         this.name = name;

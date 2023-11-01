@@ -3,13 +3,12 @@ import Source from "./source";
 
 export default class FileSource extends Source {
     constructor(id, name, description, sourceLink, sourceDate, created, file, status) {
-        super(id, name);
+        super(id, name, "FILE");
         this.description = description;
         this.sourceLink = sourceLink;
         this.sourceDate = sourceDate;
         this.created = created;
         this.file = file;
-        this.type = "FILE";
         this.status = status;
     }
 

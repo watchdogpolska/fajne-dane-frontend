@@ -26,10 +26,10 @@ export class CampaignRepository extends Repository {
         return response;
     }
     
-    async createCampaign({name, template}) {
+    async createCampaign({name, template, institutionGroup}) {
         let response = await this.post(
             '/campaigns/create/',
-            { name: name, template: template }
+            { name: name, template: template, institution_group: institutionGroup }
         )
         return response;
     }

@@ -33,6 +33,7 @@ export const DocumentInstitutionCard = (props) => {
                                 <InstitutionGroupSelect
                                     ref={institutionGroup} 
                                     name="institutionGroupId"
+                                    allowEmpty={false}
                                     label={`Typ instytucji`}
                                     formik={formik}/>
                             </Grid>

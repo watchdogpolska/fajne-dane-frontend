@@ -4,6 +4,7 @@ import { backendConfig } from "../config";
 import { Session } from "../api/session";
 import { Repositories } from '../api/repositories';
 import { BaseEvents } from '../api/repositories/repository';
+import {DatasetsRepository} from "@/api/datasets-repository";
 
 
 const initialState = {
@@ -68,16 +69,21 @@ export const AuthProvider = (props) => {
 
     const session = new Session(state.user);
     const repositories = new Repositories(backendConfig.url, session);
-    repositories.auth.em.on(BaseEvents.ERROR, (error) => {
+    repositories.auth.em.on(BaseEvents.ERROR, (error) =>
+    {
         if (error.response && error.response.status == 401) {
             repositories.auth.logout();
             dispatch({ type: 'LOGOUT' });
         }
     })
 
+    const datasets = new DatasetsRepository();
+
     useEffect(() => {
         const interval = setInterval(() => {
-            repositories.auth.refresh();
+            if (session.user){
+                repositories.auth.refresh();
+            }
         }, 10 * 60 * 1000);
         return () => clearInterval(interval);
     });
@@ -142,7 +148,8 @@ export const AuthProvider = (props) => {
                 ...state,
                 login,
                 logout,
-                repositories
+                repositories,
+                datasets
             }}
         >
             {children}

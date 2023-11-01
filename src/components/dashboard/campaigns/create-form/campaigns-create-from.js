@@ -8,6 +8,7 @@ import {textToFile} from '@/utils/text-to-file';
 import {CampaignDetailsCard} from "./components/campaign-details-card";
 import {CampaignTemplateCard} from "./components/campagin-template-card";
 import {CampaignValidationCard} from "./components/campaign-validation-card";
+import {CampaignInstitutionGroupCard} from "./components/campaign-institution-group-card";
 import {useHasChanged} from "@/hooks/use-has-changed";
 import {Loading} from '@/components/dashboard/common/loading';
 import {RedirectBackConfirmModal} from "../../common/redirect-back-confirm-modal";
@@ -98,10 +99,12 @@ export const CampaignCreateForm = (props) => {
 
     const formik = useFormik({
         initialValues: {
-            name: ''
+            name: '',
+            institutionGroup: ''
         },
         validationSchema: Yup.object({
             name: Yup.string().max(255),
+            institutionGroup: Yup.string().max(255),
         }),
         onSubmit: async (values, helpers) => {
             try {
@@ -126,6 +129,8 @@ export const CampaignCreateForm = (props) => {
     if (loading || metaTemplate === null)
         return <Loading/>;
 
+    console.log(formik.values);
+
     return (
         <>
             <RedirectBackConfirmModal open={cancelModalOpen}
@@ -137,8 +142,13 @@ export const CampaignCreateForm = (props) => {
                         <CampaignDetailsCard formik={formik}/>
                     </Grid>
                     <Grid item xs={12}>
+                        <CampaignInstitutionGroupCard formik={formik}
+                                                      disabled={formik.values.name == ""}
+                                                      label="Instytucja nadrzędna"/>
+                    </Grid>
+                    <Grid item xs={12}>
                         <CampaignTemplateCard downloadMetaTemplate={downloadMetaTemplate}
-                                              disabled={formik.values.name == ""}
+                                              disabled={formik.values.institutionGroup === ""}
                                               onDrop={handleDrop}
                                               file={template.file}
                                               formik={formik}/>

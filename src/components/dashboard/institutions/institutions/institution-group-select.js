@@ -10,6 +10,7 @@ export const InstitutionGroupSelect = forwardRef((props, ref) => {
         name,
         label,
         formik,
+        allowEmpty,
         disabled,
         ...other
     } = props;
@@ -40,13 +41,17 @@ export const InstitutionGroupSelect = forwardRef((props, ref) => {
     }, []);
 
 
-    let options = [
-        <MenuItem key={'menu-answer-null'}
-                  index='null'
-                  value='null'>
-            Brak
-        </MenuItem>
-    ];
+    let options = [];
+
+    if (allowEmpty) {
+        options.push(
+            <MenuItem key={'menu-answer-null'}
+                      index='null'
+                      value='null'>
+                Brak
+            </MenuItem>
+        );
+    }
     state.value.forEach(
         (group) => {
             options.push(
