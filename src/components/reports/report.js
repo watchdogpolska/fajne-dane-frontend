@@ -4,6 +4,7 @@ import {useAuth} from "@/hooks/use-auth";
 import {Grid} from '@mui/material';
 import ComponentFactory from "@/components/reports/component-factory";
 import {Loading} from '@/components/dashboard/common/loading';
+import getReportLayoutOrder from "@/utils/report-layout-utils";
 
 
 const Report = (props) => {
@@ -15,13 +16,16 @@ const Report = (props) => {
     const [loading, setLoading] = useState(true);
 
     let factory = new ComponentFactory();
-    let components = [];
+
+    let layoutOrder = getReportLayoutOrder(report);
+    let components = new Array(report.components.length).fill(null);
 
     report.components.forEach((component) => {
         if ("dataUrl" in component) {
           datasets.registerDataset(component.dataUrl);
         }
-        components.push(factory.create(component));
+        let layout = report.layout[component.name];
+        components[layoutOrder[component.name]] = factory.create(component, layout);
     });
 
     datasets.fetch(() => {

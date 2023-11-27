@@ -1,34 +1,26 @@
-import {useRef, useState} from 'react';
+import {useRef} from 'react';
 import Head from 'next/head';
-import {Loading} from '@/components/dashboard/common/loading';
 import {useRouter} from 'next/router'
-import {Box, Container, Grid, Link, Typography} from '@mui/material';
+import {Box, Card, Container, Link, Grid, Typography} from '@mui/material';
 import {withAuthGuard} from '@/hocs/with-auth-guard';
 import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
 import {useAuth} from "@/hooks/use-auth";
 import NextLink from 'next/link';
 import {ArrowBack as ArrowBackIcon} from '@mui/icons-material';
-import {
-    InstitutionGroupCreateForm
-} from "@/components/dashboard/institutions/institution-groups/group-create/institution-group-create-form";
 
 
-const AddInstitutionGroups = () => {
+const CreateReport = () => {
 
-    const rootRef = useRef(null);
     const queryRef = useRef(null);
     const { repositories } = useAuth();
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
 
-    if (loading)
-        return <Loading/>;
 
     return (
         <>
             <Head>
                 <title>
-                    Dodaj nowy typ instytucji
+                    Stwórz nowy raport | Fajne Dane
                 </title>
             </Head>
             <Box
@@ -38,15 +30,13 @@ const AddInstitutionGroups = () => {
                     py: 8
                 }}
             >
-                <Container maxWidth="md">
-                    <Box sx={{ mb: 4 }}>
-                        <Grid
-                            container
-                            justifyContent="space-between"
-                            spacing={3}
-                        >
+                <Container maxWidth="xl">
+                    <Box sx={{ mb: 4, px: 3 }}>
+                        <Grid container
+                              justifyContent="space-between"
+                              spacing={3}>
                             <Grid item md={12}>
-                                <NextLink href={`/dashboard/institutions`} passHref>
+                                <NextLink href={`/dashboard/reports`} passHref>
                                     <Link color="textPrimary"
                                           component="a"
                                           sx={{
@@ -56,24 +46,25 @@ const AddInstitutionGroups = () => {
                                         <ArrowBackIcon fontSize="small"
                                                        sx={{ mr: 1 }}/>
                                         <Typography variant="subtitle2">
-                                            Typy instytucji
+                                            Lista raportów
                                         </Typography>
                                     </Link>
                                 </NextLink>
                             </Grid>
-                            <Grid item>
+                            <Grid item md={8} xs={12}>
                                 <Typography variant="h4">
-                                    Dodaj typ instytucji
+                                   Raporty
                                 </Typography>
                                 <Typography color="textSecondary"
                                             variant="body2"
                                             sx={{ mt: 1 }}>
-                                    W tym miejscu utworzysz typ instytucji i zdecydujesz, jakie pola ją opisują
+                                    Stwórz nowy raport
                                 </Typography>
                             </Grid>
                         </Grid>
                     </Box>
-                    <InstitutionGroupCreateForm />
+                    <Card>
+                    </Card>
                 </Container>
             </Box>
         </>
@@ -81,4 +72,4 @@ const AddInstitutionGroups = () => {
 };
 
 
-export default withAuthGuard(withDashboardLayout(AddInstitutionGroups));
+export default withAuthGuard(withDashboardLayout(CreateReport));

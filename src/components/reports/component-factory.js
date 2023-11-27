@@ -16,11 +16,13 @@ let Components = {
 
 
 export default class ComponentFactory {
-    create(component) {
+
+    create(component, layout) {
         let componentType = Components[component.type];
         return React.createElement(componentType, {
             key: `component-${component.id}`,
             component: component,
+            layout: layout
         });
     }
 }

@@ -14,6 +14,7 @@ import {useAuth} from "@/hooks/use-auth";
 const TableComponent = (props) => {
     const {
         component,
+        layout,
         ...other
     } = props;
     const { datasets } = useAuth();
@@ -50,8 +51,13 @@ const TableComponent = (props) => {
        );
     }
 
+    let width = 6;
+    if (layout) {
+        width = layout.width;
+    }
+
     return (
-        <Grid item md={6} xl={6}>
+        <Grid item md={width} xl={width}>
             <Grid item md={12}>
                 <TableContainer component={Paper}>
                     <Table aria-label="simple table">

@@ -26,7 +26,7 @@ const ReportPage = () => {
     }, [reportId]);
 
     async function fetchReport() {
-        let result = await repositories.report.getReport({id: reportId});
+        let result = await repositories.report.renderReport({id: reportId});
         setReport(result);
         setLoading(false);
     }
