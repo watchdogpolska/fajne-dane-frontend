@@ -34,11 +34,15 @@ const TableComponent = (props) => {
     for (const [index, row] of data.data.entries()) {
         let cells = [];
         for (const [cellIndex, column] of data.meta.fields.entries()) {
+            let value = row[column];
+            if (parseFloat(value)) {
+                value = parseFloat(value).toFixed(2);
+            }
             if (cellIndex > 0) {
                 cells.push(<TableCell key={`table-${component.id}-row-${index}-${cellIndex}`}
-                                      align="right">{row[column]}</TableCell>);
+                                      align="right">{value}</TableCell>);
             } else {
-                cells.push(<TableCell key={`table-${component.id}-row-${index}-${cellIndex}`}>{row[column]}</TableCell>);
+                cells.push(<TableCell key={`table-${component.id}-row-${index}-${cellIndex}`}>{value}</TableCell>);
             }
         }
         rows.push(
@@ -58,20 +62,18 @@ const TableComponent = (props) => {
 
     return (
         <Grid item md={width} xl={width}>
-            <Grid item md={12}>
-                <TableContainer component={Paper}>
-                    <Table aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                {columns}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Grid>
+            <TableContainer component={Paper} sx={{maxHeight: "300px"}}>
+                <Table aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            {columns}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </Grid>
     );
 };

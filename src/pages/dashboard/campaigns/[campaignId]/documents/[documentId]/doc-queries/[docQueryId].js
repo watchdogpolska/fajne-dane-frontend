@@ -158,7 +158,7 @@ const DocumentQueryDetails = () => {
                             </Grid>
 
                             <Grid item md={6}>
-                                <Box sx={{height: 600}}>
+                                <Box sx={{height: 600, textAlign: "center"}}>
                                     <DocumentDataComponent document={state.document.data}/>
                                 </Box>
                             </Grid>
