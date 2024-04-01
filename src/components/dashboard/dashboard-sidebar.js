@@ -6,7 +6,6 @@ import {Box, Divider, Drawer, Typography, useMediaQuery} from '@mui/material';
 import {OfficeBuilding as OfficeBuildingIcon} from '../../icons/office-building';
 import {Database as DatabaseIcon} from '../../icons/database';
 import {Reports as ReportsIcon} from '../../icons/reports';
-import {ChartPie as ChartPieIcon} from '../../icons/chart-pie';
 import {Collection as CollectionIcon} from '../../icons/collection';
 import {Scrollbar} from '../scrollbar';
 import {DashboardSidebarSection} from './dashboard-sidebar-section';
@@ -56,11 +55,6 @@ const getSections = (t) => [
         title: t('Źródła danych'),
         path: '/dashboard/sources',
         icon: <CollectionIcon fontSize="small" />,
-      },
-      {
-        title: t('Widoki agregacji'),
-        path: '/dashboard/aggregations',
-        icon: <ChartPieIcon fontSize="small" />,
       },
       {
         title: t('Raporty'),

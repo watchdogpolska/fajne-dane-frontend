@@ -5,4 +5,5 @@ export default class Component {
         this.name = name;
         this.type = type;
     }
+
 }

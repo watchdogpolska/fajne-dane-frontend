@@ -5,7 +5,6 @@ import {useRouter} from 'next/router'
 import {Box, Container, Grid, Link, Typography} from '@mui/material';
 import {withAuthGuard} from '@/hocs/with-auth-guard';
 import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
-import {useAuth} from "@/hooks/use-auth";
 import NextLink from 'next/link';
 import {ArrowBack as ArrowBackIcon} from '@mui/icons-material';
 import {
@@ -14,16 +13,6 @@ import {
 
 
 const AddInstitutionGroups = () => {
-
-    const rootRef = useRef(null);
-    const queryRef = useRef(null);
-    const { repositories } = useAuth();
-    const router = useRouter();
-    const [loading, setLoading] = useState(false);
-
-    if (loading)
-        return <Loading/>;
-
     return (
         <>
             <Head>

@@ -4,12 +4,18 @@ import { ConfirmModal } from "./confirm-modal";
 
 export const RedirectBackConfirmModal = (props) => {
     const {
+        title,
+        text,
         open,
         onClose,
         onAccept,
         ...other
     } = props;
 
+    let textValue = text;
+    if (textValue == null) {
+        textValue = "Wracając na poprzednią stronę utracisz wszystkie dane, które wprowadziłeś w tym formularzu.";
+    }
 
     return (
         <ConfirmModal open={open}
@@ -22,7 +28,7 @@ export const RedirectBackConfirmModal = (props) => {
                         color="textSecondary"
                         sx={{mt: 1}}
                         variant="body2">
-                Wracając na poprzednią stronę utracisz wszystkie dane, które wprowadziłeś dodając zbiór danych.
+                {textValue}
             </Typography>
         </ConfirmModal>
     )

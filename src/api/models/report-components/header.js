@@ -1,7 +1,7 @@
-import ReportComponent from "./component";
+import Component from "./component";
 
 
-export default class HeaderComponent extends ReportComponent {
+export default class HeaderComponent extends Component {
     constructor(id, name, type, title, subtitle) {
         super(id, name, type);
         this.title = title;

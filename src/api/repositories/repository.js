@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useAuth } from '../../hooks/use-auth';
 import { EventEmitter } from 'events';
 
 

@@ -9,11 +9,29 @@ export class ReportRepository extends Repository {
     }
 
     async renderReport({id}) {
-        let response = await this.get(`/reports/${id}/render`)
+        let response = await this.get(`/reports/${id}/render/`)
         return Report.fromJson(response.data);
     }
 
-    async updateReport({id, layout}) {
+    async createReport({name}) {
+        let response = await this.post(`/reports/`, {
+            name: name
+        })
+        return Report.fromJson(response.data);
+    }
+
+    async updateReport(reportId, {name}) {
+        let response = await this.patch(`/reports/${reportId}/`, {
+            name: name
+        })
+        return Report.fromJson(response.data);
+    }
+
+    async deleteReport(reportId) {
+        await this.delete(`/reports/${reportId}/`);
+    }
+
+    async updateReportLayout({id, layout}) {
         let layoutPayload = {};
         for (let [key, value] of Object.entries(layout)) {
             layoutPayload[key] = value.toJson();

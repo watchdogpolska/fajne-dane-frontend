@@ -1,7 +1,9 @@
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
 import {Button, Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material';
+import {ArrowRight as ArrowRightIcon} from '@/icons/arrow-right';
 import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
+import {Reports as ReportsIcon} from '@/icons/reports';
 
 
 export const ReportsListTable = (props) => {
@@ -18,9 +20,6 @@ export const ReportsListTable = (props) => {
                         <TableCell>
                            Nazwa raportu
                         </TableCell>
-                        <TableCell>
-                            Status
-                        </TableCell>
                         <TableCell align="right">
                             Akcje
                         </TableCell>
@@ -33,9 +32,6 @@ export const ReportsListTable = (props) => {
                                       key={report.id}>
                                 <TableCell>
                                     {report.name}
-                                </TableCell>
-                                <TableCell>
-                                    {report.status}
                                 </TableCell>
                                 <TableCell align="right">
                                     <NextLink href={`/dashboard/reports/${report.id}/edit/`}
@@ -51,15 +47,27 @@ export const ReportsListTable = (props) => {
                                         </Button>
                                     </NextLink>
                                     <a href={`/reports/${report.id}/`} target="_blank">
-                                        <Button component="a"
+                                        <Button component="div"
                                                 endIcon={(
-                                                    <PencilAltIcon fontSize="small" />
+                                                    <ReportsIcon fontSize="small" />
                                                 )}
                                                 size="small"
-                                                variant="contained">
-                                            Przejdź
+                                                sx={{ mr: 2 }}
+                                                variant="outlined">
+                                            Wyświetl
                                         </Button>
                                     </a>
+                                    <NextLink href={`/dashboard/reports/${report.id}/details/`}
+                                              passHref>
+                                        <Button component="a"
+                                                variant="contained"
+                                                size="small"
+                                                endIcon={(
+                                                    <ArrowRightIcon fontSize="small" />
+                                                )}>
+                                            Przejdź
+                                        </Button>
+                                    </NextLink>
                                 </TableCell>
                             </TableRow>
                         );

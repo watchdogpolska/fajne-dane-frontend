@@ -1,12 +1,9 @@
 import {useEffect, useState} from 'react';
-import Papa from "papaparse";
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import {Box, Container, Grid} from '@mui/material';
+import {Box, Container} from '@mui/material';
 import {useAuth} from "@/hooks/use-auth";
 import {Loading} from '@/components/dashboard/common/loading';
-
-import dynamic from "next/dynamic";
 import Report from "@/components/reports/report";
 
 

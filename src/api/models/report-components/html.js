@@ -1,7 +1,7 @@
-import ReportComponent from "./component";
+import Component from "./component";
 
 
-export default class HTMLComponent extends ReportComponent {
+export default class HTMLComponent extends Component {
     constructor(id, name, type, text) {
         super(id, name, type);
         this.text = text;

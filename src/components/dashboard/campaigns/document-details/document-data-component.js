@@ -2,21 +2,23 @@ import PdfViewer from '@/components/form/pdf-viewer';
 import TweetViewer from '@/components/form/tweet-viewer';
 import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 import {
-    Card, Typography
+    Card, CardContent, Typography
 } from '@mui/material';
 
 
 const NoData = (props) => {
     return <Card sx={{textAlign: "center", width: "fit-content", mx: "auto", my: "30px", p: "30px"}}>
-        <AssignmentLateIcon fontSize="large" />
-        <Typography variant="h5">
-            Brak danych
-        </Typography>
-        <Typography color="textSecondary"
-                    sx={{mt: 2}}
-                    variant="body2">
-            Ten dokument nie zawiera danych.
-        </Typography>
+        <CardContent>
+            <AssignmentLateIcon fontSize="large" />
+            <Typography variant="h5">
+                Brak danych
+            </Typography>
+            <Typography color="textSecondary"
+                        sx={{mt: 2}}
+                        variant="body2">
+                Ten dokument nie zawiera danych.
+            </Typography>
+        </CardContent>
     </Card>
 };
 

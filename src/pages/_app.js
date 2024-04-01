@@ -21,6 +21,9 @@ import { createTheme } from '../theme';
 import { plPL } from '@mui/material/locale';
 import '../i18n';
 import '../../styles/main.scss';
+import '../../styles/popover.scss';
+import '../../styles/toolbar.scss';
+import '../../styles/tiptap.scss';
 
 import { pl } from 'date-fns/locale'
 

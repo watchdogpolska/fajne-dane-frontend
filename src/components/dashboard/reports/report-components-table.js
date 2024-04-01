@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import React, {useState} from "react";
+import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import NextLink from 'next/link';
-import {Button, Table, TableBody, TableCell, TableHead, TableRow, TableContainer, Paper} from '@mui/material';
+import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
 import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
 import {Selector as SelectorIcon} from '@/icons/selector';
 import getReportLayoutOrder from "@/utils/report-layout-utils";
 import ComponentLayout from "@/api/models/layout/component-layout";
+import {deepCopy} from "@/utils/deep-copy";
+import {ReportComponentSizeSelect} from "./components/report-component-size-select";
+import {ReportComponentType} from "./components/report-component-type";
 
 
 const reorder = (list, startIndex, endIndex) => {
@@ -18,7 +20,7 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 const getItemStyle = (isDragging, draggableStyle) => ({
-    background: isDragging ? "#757ce8" : "white",
+    background: isDragging ? "#f8f8f8" : "white",
     ...draggableStyle
 });
 
@@ -26,7 +28,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getNewLayout = (components) => {
     let layout = {};
     for (let [index, row] of Object.entries(components)) {
-        layout[row.name] = new ComponentLayout(parseInt(index), row.width);
+        layout[row.id] = new ComponentLayout(parseInt(index), row.width);
     }
     return layout;
 };
@@ -46,10 +48,10 @@ export const ReportComponentsTable = (props) => {
 
     report.components.forEach((c) => {
         let width = 6;
-        if (c.name in report.layout)
-            width = report.layout[c.name].width;
+        if (c.id in report.layout)
+            width = report.layout[c.id].width;
 
-        initialData[layoutOrder[c.name]] = {
+        initialData[layoutOrder[c.id]] = {
             id: c.id,
             name: c.name,
             type: c.type,
@@ -73,12 +75,21 @@ export const ReportComponentsTable = (props) => {
         onLayoutUpdated(layout);
     };
 
+    const onComponentSizeChange = (componentIndex, width) => {
+        const newQuestions = deepCopy(questions);
+        newQuestions[componentIndex].width = width;
+        setQuestions(newQuestions);
+        let layout = getNewLayout(newQuestions);
+        onLayoutUpdated(layout);
+    };
+
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <TableCell></TableCell>
+                        <TableCell>Id</TableCell>
                         <TableCell>Nazwa</TableCell>
                         <TableCell>Typ</TableCell>
                         <TableCell>Rozmiar</TableCell>
@@ -114,16 +125,21 @@ export const ReportComponentsTable = (props) => {
                                                     <SelectorIcon fontSize="small" />
                                                 </TableCell>
                                                 <TableCell>
+                                                    {component.id}
+                                                </TableCell>
+                                                <TableCell>
                                                     {component.name}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {component.type}
+                                                    <ReportComponentType type={component.type}/>
                                                 </TableCell>
                                                 <TableCell>
-                                                    {component.width}
+                                                    <ReportComponentSizeSelect index={index}
+                                                                               value={component.width}
+                                                                               onChange={onComponentSizeChange}/>
                                                 </TableCell>
                                                 <TableCell align="right">
-                                                    <NextLink href={`/dashboard/reports/edit/`}
+                                                    <NextLink href={`/dashboard/reports/${report.id}/components/${component.id}`}
                                                               passHref>
                                                         <Button component="a"
                                                                 variant="outlined"

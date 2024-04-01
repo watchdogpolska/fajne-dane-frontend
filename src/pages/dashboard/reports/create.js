@@ -7,6 +7,7 @@ import {withDashboardLayout} from '@/hocs/with-dashboard-layout';
 import {useAuth} from "@/hooks/use-auth";
 import NextLink from 'next/link';
 import {ArrowBack as ArrowBackIcon} from '@mui/icons-material';
+import {ReportCreateForm} from "@/components/dashboard/reports/report-create/report-create-form";
 
 
 const CreateReport = () => {
@@ -63,8 +64,7 @@ const CreateReport = () => {
                             </Grid>
                         </Grid>
                     </Box>
-                    <Card>
-                    </Card>
+                    <ReportCreateForm />
                 </Container>
             </Box>
         </>

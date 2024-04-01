@@ -24,9 +24,12 @@ const Report = (props) => {
         if ("dataUrl" in component) {
           datasets.registerDataset(component.dataUrl);
         }
-        let layout = report.layout[component.name];
-        components[layoutOrder[component.name]] = factory.create(component, layout);
+        let layout = report.layout[component.id];
+        components[layoutOrder[component.id]] = factory.create(component, layout);
     });
+    
+    if (loading && Object.keys(datasets.datasets).length === 0)
+        setLoading(false);
 
     datasets.fetch(() => {
         setLoading(false);

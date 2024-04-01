@@ -8,4 +8,9 @@ export class DataSourceRepository extends Repository {
         let response = await this.get(`/reports/sources/`);
         return response.data.map((source_data) => DataSource.fromJson(source_data));
     }
+
+    async getDataSource({id}) {
+        let response = await this.get(`/reports/sources/${id}/`);
+        return DataSource.fromJson(response.data);
+    }
 }

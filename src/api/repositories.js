@@ -9,6 +9,7 @@ import { InstitutionGroupRepository } from "@/api/repositories/institution-group
 import { InstitutionRepository } from "@/api/repositories/institution-repository";
 import { ReportRepository } from "@/api/repositories/report-repository";
 import { DataSourceRepository } from "@/api/repositories/data-source-repository";
+import {ReportComponentsRepository} from "@/api/repositories/report-components-repository";
 
 
 export class Repositories {
@@ -26,5 +27,6 @@ export class Repositories {
         this.institution = new InstitutionRepository(api_url, session);
         this.report = new ReportRepository(api_url, session);
         this.dataSource = new DataSourceRepository(api_url, session);
+        this.reportComponent = new ReportComponentsRepository(api_url, session);
     }
 }

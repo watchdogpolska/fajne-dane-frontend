@@ -35,6 +35,7 @@ const BarPlotComponent = (props) => {
     const { datasets } = useAuth();
     let dataset = datasets.getDataset(component.dataUrl);
 
+    let dataView = component.dataView;
     let source = dataset.data;
     let labels = source.data.map((row) => row[component.index]);
     let y = source.data.map((row) => row[component.value]);
@@ -56,7 +57,7 @@ const BarPlotComponent = (props) => {
         labels,
         datasets: [
             {
-                label: component.index,
+                label: dataView.values[component.index],
                 data: y,
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },

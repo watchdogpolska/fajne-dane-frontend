@@ -78,7 +78,7 @@ export const InstitutionsListTable = (props) => {
                 <Button size="small"
                         onClick={openDelete}
                         sx={{ ml: 2 }}>
-                    Delete
+                    Usuń
                 </Button>
             </Box>
             <Scrollbar>

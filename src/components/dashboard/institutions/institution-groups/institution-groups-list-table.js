@@ -2,6 +2,7 @@ import NextLink from 'next/link';
 import PropTypes from 'prop-types';
 import {Button, Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material';
 import {PencilAlt as PencilAltIcon} from '@/icons/pencil-alt';
+import {ArrowRight as ArrowRightIcon} from '@/icons/arrow-right';
 
 
 export const InstitutionsGroupListTable = (props) => {
@@ -54,7 +55,7 @@ export const InstitutionsGroupListTable = (props) => {
                                               passHref>
                                         <Button component="a"
                                                 endIcon={(
-                                                    <PencilAltIcon fontSize="small" />
+                                                    <ArrowRightIcon fontSize="small" />
                                                 )}
                                                 size="small"
                                                 variant="contained">

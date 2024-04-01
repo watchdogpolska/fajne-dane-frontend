@@ -4,13 +4,13 @@ export default function getReportLayoutOrder(report) {
         (a, b) => {return a[1].order - b[1].order});
 
     let layoutOrder = {};
-    Object.entries(sortedLayout).forEach(([index, [name, value]]) => {
-        layoutOrder[name] = parseInt(index);
+    Object.entries(sortedLayout).forEach(([index, [id, value]]) => {
+        layoutOrder[id] = parseInt(index);
     });
 
     report.components.forEach((component) => {
-       if (!(component.name in layoutOrder)) {
-           layoutOrder[component.name] = Object.keys(layoutOrder).length;
+       if (!(component.id in layoutOrder)) {
+           layoutOrder[component.id] = Object.keys(layoutOrder).length;
        }
     });
 

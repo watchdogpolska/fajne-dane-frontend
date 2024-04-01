@@ -60,7 +60,7 @@ const ReportsList = () => {
                                 <Typography color="textSecondary"
                                             variant="body2"
                                             sx={{ mt: 1 }}>
-                                    List raportów
+                                    List stworzonych raportów. Wybierz "Przejdź", aby dodać komponenty do istniejącego raportu.
                                 </Typography>
                             </Grid>
                             <Grid item md={4} xs={12}>

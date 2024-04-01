@@ -1,9 +1,11 @@
 
 export default class DataSource {
-    constructor(id, campaign_name, file_url) {
+    constructor(id, campaignName, fileUrl, availableKeys, queryLabels) {
         this.id = id;
-        this.campaign_name = campaign_name;
-        this.file_url = file_url;
+        this.campaignName = campaignName;
+        this.fileUrl = fileUrl;
+        this.availableKeys = availableKeys;
+        this.queryLabels = queryLabels;
     }
     static fromJson(data) {
 
@@ -11,6 +13,8 @@ export default class DataSource {
             data['id'],
             data['campaign_name'],
             data['file_url'],
+            data['available_keys'],
+            data['query_labels']
         )
     }
 }

@@ -18,11 +18,8 @@ export const DataSourcesListTable = (props) => {
                         <TableCell>
                            Nazwa kampanii
                         </TableCell>
-                        <TableCell>
-                           Plik źrodła
-                        </TableCell>
                         <TableCell align="right">
-                            Akcje
+                            Plik źrodła
                         </TableCell>
                     </TableRow>
                 </TableHead>
@@ -32,26 +29,12 @@ export const DataSourcesListTable = (props) => {
                             <TableRow hover
                                       key={source.id}>
                                 <TableCell>
-                                    {source.campaign_name}
-                                </TableCell>
-                                <TableCell>
-                                    <a href={source.file_url} target="_blank">
-                                        {source.file_url}
-                                    </a>
+                                    {source.campaignName}
                                 </TableCell>
                                 <TableCell align="right">
-                                    <NextLink href={`/dashboard/sources/${source.id}/edit/`}
-                                              passHref>
-                                        <Button component="a"
-                                                variant="outlined"
-                                                size="small"
-                                                sx={{ mr: 2 }}
-                                                endIcon={(
-                                                    <PencilAltIcon fontSize="small" />
-                                                )}>
-                                            Edytuj
-                                        </Button>
-                                    </NextLink>
+                                    <a href={source.fileUrl} target="_blank">
+                                        {source.fileUrl}
+                                    </a>
                                 </TableCell>
                             </TableRow>
                         );

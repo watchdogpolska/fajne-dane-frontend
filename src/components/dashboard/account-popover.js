@@ -88,23 +88,6 @@ export const AccountPopover = (props) => {
       <Divider />
       <Box sx={{ my: 1 }}>
         <NextLink
-          href="/dashboard/social/profile"
-          passHref
-        >
-          <MenuItem component="a">
-            <ListItemIcon>
-              <UserCircleIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={(
-                <Typography variant="body1">
-                    Profil
-                </Typography>
-              )}
-            />
-          </MenuItem>
-        </NextLink>
-        <NextLink
           href="/dashboard/account"
           passHref
         >
