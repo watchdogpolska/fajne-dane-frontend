@@ -129,8 +129,6 @@ export const CampaignCreateForm = (props) => {
     if (loading || metaTemplate === null)
         return <Loading/>;
 
-    console.log(formik.values);
-
     return (
         <>
             <RedirectBackConfirmModal open={cancelModalOpen}

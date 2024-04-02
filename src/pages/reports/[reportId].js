@@ -1,10 +1,11 @@
 import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import {Box, Container} from '@mui/material';
+import {Box, Container, Typography} from '@mui/material';
 import {useAuth} from "@/hooks/use-auth";
 import {Loading} from '@/components/dashboard/common/loading';
 import Report from "@/components/reports/report";
+import {Footer} from "@/components/footer";
 
 
 const ReportPage = () => {
@@ -51,6 +52,7 @@ const ReportPage = () => {
                     </Box>
                 </Container>
             </Box>
+            <Footer/>
         </>
     );
 };

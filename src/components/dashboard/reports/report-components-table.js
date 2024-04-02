@@ -131,7 +131,7 @@ export const ReportComponentsTable = (props) => {
                                                     {component.name}
                                                 </TableCell>
                                                 <TableCell>
-                                                    <ReportComponentType type={component.type}/>
+                                                        <ReportComponentType type={component.type}/>
                                                 </TableCell>
                                                 <TableCell>
                                                     <ReportComponentSizeSelect index={index}

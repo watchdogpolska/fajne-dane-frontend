@@ -1,22 +1,22 @@
 import Component from "./component";
 
 
-export default class HTMLComponent extends Component {
-    constructor(id, name, type, text) {
+export default class ReferencesComponent extends Component {
+    constructor(id, name, type, data) {
         super(id, name, type);
-        this.text = text;
+        this.data = data;
     }
 
     static fromJson(data) {
-        return new HTMLComponent(
+        return new ReferencesComponent(
             data['id'],
             data['name'],
             data['type'],
-            data['text']
+            data['data']
         );
     }
 
     get componentType() {
-        return "html-body";
+        return "references";
     }
 }

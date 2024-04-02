@@ -116,8 +116,6 @@ const InstitutionsList = () => {
     const handleSortChange = (event) => {
         setFilters({sort: event.target.value});
     };
-    console.log(filters);
-
     const handlePageChange = (event, page) => {
         setFilters({page: page});
     };

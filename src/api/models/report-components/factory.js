@@ -3,6 +3,7 @@ import TableComponent from './table';
 import HTMLComponent from './html';
 import HeaderComponent from './header';
 import MapFrequencyComponent from './map-frequency';
+import ReferencesComponent from "./references";
 
 
 export function createReportComponent(data) {
@@ -16,6 +17,8 @@ export function createReportComponent(data) {
         return HTMLComponent.fromJson(data)
     } else if (data['type'] === "MAP_FREQUENCY") {
         return MapFrequencyComponent.fromJson(data)
+    } else if (data['type'] === "REFERENCES") {
+        return ReferencesComponent.fromJson(data)
     }
     return null;
 }

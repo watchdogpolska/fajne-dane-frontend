@@ -18,6 +18,9 @@ export const ReportsListTable = (props) => {
                 <TableHead sx={{ visibility: 'visible' }}>
                     <TableRow>
                         <TableCell>
+                            ID
+                        </TableCell>
+                        <TableCell>
                            Nazwa raportu
                         </TableCell>
                         <TableCell align="right">
@@ -30,6 +33,9 @@ export const ReportsListTable = (props) => {
                         return (
                             <TableRow hover
                                       key={report.id}>
+                                <TableCell>
+                                    {report.id}
+                                </TableCell>
                                 <TableCell>
                                     {report.name}
                                 </TableCell>

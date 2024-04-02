@@ -11,7 +11,7 @@ const COMPONENT_TYPE_CONFIGS = {
         color: "#35b693"
     },
     "HTML": {
-        name: "SEKCJA HTML",
+        name: "BLOK TREŚCI",
         color: "#6c8cff"
     },
     "HEADER": {
@@ -19,9 +19,13 @@ const COMPONENT_TYPE_CONFIGS = {
         color: "#ff8383"
     },
     "MAP_FREQUENCY": {
-        name: "MAPA CZĘSTOŚCI",
+        name: "MAPA ODPOWIEDZI",
         color: "#cb7cff"
-    }
+    },
+    "REFERENCES": {
+        name: "Bibliografia",
+        color: "#a9a9a9"
+    },
 };
 
 export const ReportComponentType = (props) => {

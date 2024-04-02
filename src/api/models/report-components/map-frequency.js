@@ -22,4 +22,8 @@ export default class MapFrequencyComponent extends DataComponent {
             data['value']
         );
     }
+
+    get componentType() {
+        return "answers-map";
+    }
 }

@@ -21,12 +21,29 @@ const TableComponent = (props) => {
     let dataset = datasets.datasets[component.dataUrl];
     let data = dataset.data;
 
+    const mapColumnName = function (column) {
+        if (column.includes("_name_"))
+            return "Nazwa " + component.dataView.keysLabels[column.replace("_name_", "_key_")];
+        if (column === "document_id")
+            return "Odpowiedzi";
+        if (column === "count")
+            return "Liczba";
+
+        return (
+            component.dataView.keysLabels[column] ||
+            component.dataView.valuesLabels[column] ||
+            column
+        );
+    }
+
+
     let columns = [];
     for (const [index, column] of data.meta.fields.entries()) {
+        let columnName = mapColumnName(column);
         if (index > 0) {
-            columns.push(<TableCell key={`table-${component.id}-header-${index}`} align="right">{column}</TableCell>);
+            columns.push(<TableCell key={`table-${component.id}-header-${index}`} align="right">{columnName}</TableCell>);
         } else {
-            columns.push(<TableCell key={`table-${component.id}-header-${index}`}>{column}</TableCell>);
+            columns.push(<TableCell key={`table-${component.id}-header-${index}`}>{columnName}</TableCell>);
         }
     }
 

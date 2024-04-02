@@ -32,7 +32,7 @@ export const DataSourceSelector = forwardRef((props, ref) => {
     const handleChange = (event) => {
         let group = event.target.value;
         if (ref) ref.current = group;
-        formik.setFieldValue(name, group.id);
+        formik.setFieldValue(name, group);
     };
 
     useEffect(async () => {
@@ -46,7 +46,7 @@ export const DataSourceSelector = forwardRef((props, ref) => {
             options.push(
                 <MenuItem key={`menu-answer-${group.id}`}
                           index={group.id}
-                          value={group}>
+                          value={group.id}>
                     {group.campaignName}
                 </MenuItem>
             )
@@ -59,6 +59,7 @@ export const DataSourceSelector = forwardRef((props, ref) => {
             <InputLabel id="data-source-select-label">{label}</InputLabel>
             <Select fullWidth
                     label={label}
+                    value={formik.values[name]}
                     labelId="data-source-select-label"
                     name={name}
                     error={Boolean(formik.touched[name] && formik.errors[name])}

@@ -4,6 +4,7 @@ import HeaderComponent from './components/header';
 import BarPlotComponent from './components/bar-plot';
 import TableComponent from './components/table';
 import MapFrequencyComponent from "./components/map-frequency";
+import ReferencesComponent from "@/components/reports/components/references";
 
 
 let Components = {
@@ -11,7 +12,8 @@ let Components = {
     "HTML": HTMLComponent,
     "BAR_PLOT": BarPlotComponent,
     "TABLE": TableComponent,
-    "MAP_FREQUENCY": MapFrequencyComponent
+    "MAP_FREQUENCY": MapFrequencyComponent,
+    "REFERENCES": ReferencesComponent,
 };
 
 

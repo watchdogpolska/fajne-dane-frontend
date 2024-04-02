@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid} from '@mui/material';
+import {Grid, Typography} from '@mui/material';
 import {useAuth} from "@/hooks/use-auth";
 import {useEffect, useState, useRef} from 'react';
 import MapChart from "@/components/reports/components/map-chart";
@@ -52,6 +52,12 @@ const MapFrequencyComponent = (props) => {
 
     return (
         <Grid item md={width} xl={width}>
+            <Typography color="textSecondary"
+                        align={"center"}
+                        mb={2}
+                        variant="h5">
+                {component.title}
+            </Typography>
             <MapChart values={values}/>
         </Grid>
     );

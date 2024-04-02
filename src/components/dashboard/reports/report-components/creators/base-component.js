@@ -96,10 +96,6 @@ export const BaseComponentForm = (props) => {
         return <Loading/>;
     }
 
-    console.log("empezamos")
-    console.log(_initialValues);
-    console.log(formik.values);
-
     let componentForm = React.createElement(config.component, {formik: formik, isUpdating: isUpdating});
 
     return (

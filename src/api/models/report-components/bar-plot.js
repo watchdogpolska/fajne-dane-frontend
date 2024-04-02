@@ -22,4 +22,9 @@ export default class BarPlotComponent extends DataComponent {
             data['value']
         );
     }
+    
+    get componentType() {
+        if (this.dataView.type == "VALUE_COUNTS")
+            return "frequency-plot";
+    }
 }

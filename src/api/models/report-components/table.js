@@ -20,4 +20,12 @@ export default class TableComponent extends DataComponent {
             data['columns']
         );
     }
+
+    get componentType() {
+        if (this.dataView.aggregation === "NOTNAN")
+            return "answers-table"
+        else if (this.dataView.type === "VALUE_COUNTS")
+            return "frequency-table"
+        return "table";
+    }
 }

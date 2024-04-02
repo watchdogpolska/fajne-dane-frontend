@@ -17,4 +17,8 @@ export default class HeaderComponent extends Component {
             data['subtitle']
         );
     }
+
+    get componentType() {
+        return "title-block";
+    }
 }

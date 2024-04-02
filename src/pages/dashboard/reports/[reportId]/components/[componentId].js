@@ -61,30 +61,53 @@ const EditReportComponent = () => {
         return <Loading/>;
 
     let component = state.component.value;
-
-    let componentType = null;
+    let componentType = component.componentType;
     let initialValues = {};
 
-    if (component.type === "HEADER") {
-        componentType = "title-block";
+    if (componentType === "title-block") {
         initialValues = {
             name: component.name,
             title: component.title,
             subtitle: component.subtitle
         };
-    } else if (component.type === "HTML") {
-        componentType = "html-body";
+    } else if (componentType === "html-body") {
         initialValues = {
             name: component.name,
             text: component.text
         };
-    } else if (component.type === "BAR_PLOT") {
-        componentType = "frequency-plot";
+    } else if (componentType === "references") {
+        initialValues = {
+            name: component.name,
+        };
+    } else if (componentType === "frequency-plot") {
         initialValues = {
             name: component.name,
             title: component.title,
             dataSourceId: component.dataView.dataSource.id,
-            dataSourceColumn: component.dataView.values[0],
+            dataSourceColumn: component.index,
+        };
+    } else if (componentType === "frequency-table") {
+        let componentIndex = component.dataView.values[0];
+        initialValues = {
+            name: component.name,
+            title: component.title,
+            dataSourceId: component.dataView.dataSource.id,
+            dataSourceColumn: componentIndex,
+        };
+    } else if (componentType === "answers-map") {
+        initialValues = {
+            name: component.name,
+            title: component.title,
+            dataSourceId: component.dataView.dataSource.id,
+            dataSourceKey: component.index.replace("_name_", "_key_"),
+        };
+    } else if (componentType === "answers-table") {
+        let componentIndex = component.dataView.keys[0];
+        initialValues = {
+            name: component.name,
+            title: component.title,
+            dataSourceId: component.dataView.dataSource.id,
+            dataSourceKey: componentIndex.replace("_name_", "_key_"),
         };
     }
 

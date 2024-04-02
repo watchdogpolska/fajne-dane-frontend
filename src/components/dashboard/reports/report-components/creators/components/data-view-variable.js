@@ -14,6 +14,7 @@ export const DataViewVariable = (props) => {
     const {
         formik,
         disableKeys,
+        disableColumns,
         multiColumns,
         dataSourceId,
         dataSourceKeys,
@@ -110,50 +111,53 @@ export const DataViewVariable = (props) => {
                         : null
                     }
                     {
-                        multiColumns ?
-                        <>
-                            <Grid item md={4} xs={12}>
-                                <Typography variant="h6">
-                                    Kolumny
-                                </Typography>
-                                <Typography color="textSecondary"
-                                            variant="body2"
-                                            sx={{ mt: 1 }}>
-                                    Kolumny, których wartości będą użyte.
-                                </Typography>
-                            </Grid>
-                            <Grid item md={8} xs={12}>
-                                <MultiSelector formik={formik}
-                                               name={dataSourceColumns}
-                                               label="Kolumny"
-                                               values={queryLabels}
-                                               indexVar="index"
-                                               labelVar="label"
-                                               disabled={readOnly || (queryLabels.length === 0)}/>
-                            </Grid>
-                        </>
-                            :
-                        <>
-                            <Grid item md={4} xs={12}>
-                                <Typography variant="h6">
-                                    Kolumna
-                                </Typography>
-                                <Typography color="textSecondary"
-                                            variant="body2"
-                                            sx={{ mt: 1 }}>
-                                    Kolumna, której wartości będzie użyta.
-                                </Typography>
-                            </Grid>
-                            <Grid item md={8} xs={12}>
-                                <Selector formik={formik}
-                                          name={dataSourceColumns}
-                                          label="Kolumna"
-                                          values={queryLabels}
-                                          indexVar="index"
-                                          labelVar="label"
-                                          disabled={readOnly || (queryLabels.length === 0)}/>
-                            </Grid>
-                        </>
+                        disableColumns ? null :
+                        (
+                                multiColumns ?
+                            <>
+                                <Grid item md={4} xs={12}>
+                                    <Typography variant="h6">
+                                        Kolumny
+                                    </Typography>
+                                    <Typography color="textSecondary"
+                                                variant="body2"
+                                                sx={{ mt: 1 }}>
+                                        Kolumny, których wartości będą użyte.
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={8} xs={12}>
+                                    <MultiSelector formik={formik}
+                                                   name={dataSourceColumns}
+                                                   label="Kolumny"
+                                                   values={queryLabels}
+                                                   indexVar="index"
+                                                   labelVar="label"
+                                                   disabled={readOnly || (queryLabels.length === 0)}/>
+                                </Grid>
+                            </>
+                                :
+                            <>
+                                <Grid item md={4} xs={12}>
+                                    <Typography variant="h6">
+                                        Kolumna
+                                    </Typography>
+                                    <Typography color="textSecondary"
+                                                variant="body2"
+                                                sx={{ mt: 1 }}>
+                                        Kolumna, której wartości będzie użyta.
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={8} xs={12}>
+                                    <Selector formik={formik}
+                                              name={dataSourceColumns}
+                                              label="Kolumna"
+                                              values={queryLabels}
+                                              indexVar="index"
+                                              labelVar="label"
+                                              disabled={readOnly || (queryLabels.length === 0)}/>
+                                </Grid>
+                            </>
+                        )
                     }
                 </>
             }

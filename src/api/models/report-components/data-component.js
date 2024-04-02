@@ -6,7 +6,6 @@ export default class DataComponent extends Component {
         super(id, name, type);
         this.dataView = dataView;
     }
-
     get dataUrl() {
         return this.dataView.fileUrl;
     }
