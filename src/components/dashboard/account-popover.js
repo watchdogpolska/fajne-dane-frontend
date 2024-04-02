@@ -25,7 +25,7 @@ export const AccountPopover = (props) => {
   // To get the user from the authContext, you can use
   // `const { user } = useAuth();`
   user = {
-    avatar: '/static/mock-images/avatars/avatar-anika_visser.png',
+    avatar: '',
     name: user ? user.email: ''
   };
 
@@ -87,24 +87,6 @@ export const AccountPopover = (props) => {
       </Box>
       <Divider />
       <Box sx={{ my: 1 }}>
-        <NextLink
-          href="/dashboard/account"
-          passHref
-        >
-          <MenuItem component="a">
-            <ListItemIcon>
-              <CogIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={(
-                <Typography variant="body1">
-                    Ustawienia
-                </Typography>
-              )}
-            />
-          </MenuItem>
-        </NextLink>
-        <Divider />
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />

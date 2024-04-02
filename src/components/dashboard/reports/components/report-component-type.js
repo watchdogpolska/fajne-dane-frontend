@@ -23,7 +23,7 @@ const COMPONENT_TYPE_CONFIGS = {
         color: "#cb7cff"
     },
     "REFERENCES": {
-        name: "Bibliografia",
+        name: "BIBLIOGRAFIA",
         color: "#a9a9a9"
     },
 };
