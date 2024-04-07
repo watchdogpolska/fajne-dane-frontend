@@ -28,7 +28,10 @@ export const ComponentConfigs = {
             title: '',
             dataSourceId: '',
             dataSourceColumn: '',
-        }
+        },
+        requiredFields: [
+            'name', 'title', 'dataSourceId', 'dataSourceColumn'
+        ]
     },
     "title-block": {
         typeName: "title-block",
@@ -40,7 +43,10 @@ export const ComponentConfigs = {
             name: '',
             title: '',
             subtitle: ''
-        }
+        },
+        requiredFields: [
+            'name', 'title'
+        ]
     },
     "html-body": {
         typeName: "html-body",
@@ -51,7 +57,10 @@ export const ComponentConfigs = {
         defaultValues: {
             name: '',
             text: ''
-        }
+        },
+        requiredFields: [
+            'name', 'text'
+        ]
     },
     "frequency-table": {
         typeName: "frequency-table",
@@ -60,7 +69,14 @@ export const ComponentConfigs = {
         component: FrequencyTableForm,
         icon: TableChartIcon,
         defaultValues: {
-        }
+            name: '',
+            dataSourceId: '',
+            dataSourceKey: '',
+            title: ''
+        },
+        requiredFields: [
+            'name', 'dataSourceId', 'dataSourceKey'
+        ]
     },
     "answers-table": {
         typeName: "answers-table",
@@ -73,7 +89,10 @@ export const ComponentConfigs = {
             dataSourceId: '',
             dataSourceKey: '',
             title: ''
-        }
+        },
+        requiredFields: [
+            'name', 'dataSourceId', 'dataSourceKey'
+        ]
     },
     "answers-map": {
         typeName: "answers-map",
@@ -86,7 +105,10 @@ export const ComponentConfigs = {
             dataSourceId: '',
             dataSourceKey: '',
             title: ''
-        }
+        },
+        requiredFields: [
+            'name', 'dataSourceId', 'dataSourceKey'
+        ]
     },
     "references": {
         typeName: "references",
@@ -96,6 +118,9 @@ export const ComponentConfigs = {
         icon: MenuBookIcon,
         defaultValues: {
             name: '',
-        }
+        },
+        requiredFields: [
+            'name'
+        ]
     },
 }

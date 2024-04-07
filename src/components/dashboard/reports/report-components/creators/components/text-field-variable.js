@@ -7,8 +7,12 @@ export const TextFieldVariable = (props) => {
         description,
         name,
         formik,
+        maxLength,
+        required,
         ...other
     } = props;
+
+    let infoIcon = null;
 
     return (
         <Grid container spacing={3}>
@@ -27,12 +31,13 @@ export const TextFieldVariable = (props) => {
                     fullWidth
                     label={label}
                     name={name}
+                    inputProps={{maxLength: maxLength }}
                     error={Boolean(formik.touched[name] && formik.errors[name])}
                     helperText={formik.touched[name] && formik.errors[name]}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values[name]}
-                    required
+                    required={required === undefined ? true: required}
                 />
             </Grid>
         </Grid>

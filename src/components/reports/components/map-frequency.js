@@ -5,10 +5,6 @@ import {useEffect, useState, useRef} from 'react';
 import MapChart from "@/components/reports/components/map-chart";
 
 
-const WOJEDOWDZTWA = 'https://raw.githubusercontent.com/ppatrzyk/polska-geojson/master/wojewodztwa/wojewodztwa-min.geojson';
-const POWIATY = 'https://unpkg.com/us-atlas/states-10m.json';
-
-
 const MapFrequencyComponent = (props) => {
     const {
         component,
@@ -16,25 +12,9 @@ const MapFrequencyComponent = (props) => {
         ...other
     } = props;
     const { datasets } = useAuth();
-    const [geojson, setGeojson] = useState(null);
 
     let dataset = datasets.getDataset(component.dataUrl);
-
-
-    useEffect(() => {
-        async function fetchData() {
-            let response= await fetch(POWIATY);
-            let mapData = await response.json();
-            setGeojson(mapData);
-        }
-        if (geojson === null) {
-            fetchData();
-        }
-    }, []);
-
-    if (geojson === null) {
-        return null;
-    }
+    let indexName = component.dataView.keysLabels[component.index.replace("_name_", "_key_")];
 
     let data = dataset.data;
     let x = data.data.map((row) => row[component.index]);
@@ -58,7 +38,9 @@ const MapFrequencyComponent = (props) => {
                         variant="h5">
                 {component.title}
             </Typography>
-            <MapChart values={values}/>
+            <MapChart id={component.id}
+                      type={indexName}
+                      values={values}/>
         </Grid>
     );
 };

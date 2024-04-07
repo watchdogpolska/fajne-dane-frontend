@@ -1,7 +1,6 @@
 import React from "react"
 import {Box, Button, Card, CardContent, Grid} from '@mui/material';
 import {useRouter} from 'next/router';
-import * as Yup from 'yup';
 import {useFormik} from 'formik';
 import {useAuth} from "@/hooks/use-auth";
 import {useState} from 'react';
@@ -29,6 +28,7 @@ export const BaseComponentForm = (props) => {
 
     let config = ComponentConfigs[componentType];
     let fields = Object.keys(config.defaultValues);
+    let requiredFields = config.requiredFields;
 
     let _initialValues = initialValues || config.defaultValues;
 
@@ -75,7 +75,9 @@ export const BaseComponentForm = (props) => {
     {
         let isAnyEmpty = false;
         fields.forEach((fieldName) => {
-            isAnyEmpty = isAnyEmpty || (formik.values[fieldName] === "");
+            if (requiredFields.indexOf(fieldName) >= 0) {
+                isAnyEmpty = isAnyEmpty || (formik.values[fieldName] === "");
+            }
         });
         if (isAnyEmpty)
             return false

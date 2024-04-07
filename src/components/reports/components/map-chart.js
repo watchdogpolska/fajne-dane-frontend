@@ -11,11 +11,10 @@ const POWIATY = 'https://raw.githubusercontent.com/ppatrzyk/polska-geojson/maste
 
 
 const MapChart = (props) => {
-//   const chartRef = React.createRef();
-//   const myChartRef = this.chartRef.current.getContext("2d");
-
     const {
+        id,
         values,
+        type,
         ...other
     } = props;
 
@@ -23,17 +22,24 @@ const MapChart = (props) => {
 
     useEffect(()=>{
 
-        let canvas = document.getElementById("canvas-123")
+        let canvas = document.getElementById(`canvas-${id}`)
         if(!canvas) return
 
-        let sourceData = WOJEDOWDZTWA;
+        let sourceData = type === "Powiaty" ? POWIATY : WOJEDOWDZTWA;
+
+        const normalizeName = (name) => {
+            if (type === "Powiaty") {
+                name = name.replace("powiat ", "");
+            }
+            return name;
+        }
 
         fetch(sourceData).then((r) => r.json()).then((pol) => {
-
-            //const nation = ChartGeo.topojson.feature(us, us.objects.nation).features[0];
-            //const states = ChartGeo.topojson.feature(us, us.objects.states).features;
-            //const states = ChartGeo.topojson.feature(us, us.objects.pol).features;
             let states = pol.features;
+
+            states.forEach((d) => {
+                let value = values[normalizeName(d.properties.nazwa)];
+            });
 
             const chart = new ChartJS(canvas.getContext("2d"), {
                 type: 'choropleth',
@@ -42,7 +48,9 @@ const MapChart = (props) => {
                     datasets: [{
                         label: 'States',
                         outline: states,
-                        data: states.map((d) => ({feature: d, value: values[d.properties.nazwa]})),
+                        data: states.map((d) => ({
+                            feature: d, value: values[normalizeName(d.properties.nazwa)]
+                        })),
                     }]
                 },
                 options: {
@@ -66,7 +74,7 @@ const MapChart = (props) => {
 
 
     return (
-        <canvas id="canvas-123"></canvas>
+        <canvas id={`canvas-${id}`}></canvas>
     )
 }
 
