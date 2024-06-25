@@ -37,6 +37,8 @@ const MapChart = (props) => {
         const normalizeName = (name) => {
             if (type === "Powiaty") {
                 name = name.replace("powiat ", "");
+            } else if (type === "Województwa") {
+                name = name.toLowerCase();
             }
             return name;
         }

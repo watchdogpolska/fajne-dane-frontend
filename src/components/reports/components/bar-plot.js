@@ -40,7 +40,7 @@ const BarPlotComponent = (props) => {
     let dataView = component.dataView;
     let source = dataset.data;
     let labels = source.data.map((row) => row[component.index]);
-    let y = source.data.map((row) => row[component.value]);
+    let y = source.data.map((row) => parseFloat(row[component.value]));
 
     const options = {
         responsive: true,
