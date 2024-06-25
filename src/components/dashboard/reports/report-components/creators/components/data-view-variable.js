@@ -16,6 +16,7 @@ export const DataViewVariable = (props) => {
         disableKeys,
         disableColumns,
         multiColumns,
+        allowedKeys,
         dataSourceId,
         dataSourceKeys,
         dataSourceColumns,
@@ -42,26 +43,26 @@ export const DataViewVariable = (props) => {
         let selectedDataSourceId = formik.values[dataSourceId];
         if (selectedDataSourceId) {
             if (state.value && state.value.id !== selectedDataSourceId) {
-                if (!disableKeys) formik.setFieldValue(dataSourceKeys, null);
+                if (!disableKeys) formik.setFieldValue(dataSourceKeys, "");
                 formik.setFieldValue(dataSourceColumns, multiColumns ? [] : '');
             }
             fetchDataSourceData(selectedDataSourceId);
         } 
     }, [formik.values[dataSourceId]]);
 
+    let _allowedKeys = allowedKeys || [];
     let availableKeys = [];
     let queryLabels = [];
     if (state.value) {
         Object.entries(state.value.availableKeys).forEach(([key, value]) => {
-            availableKeys.push({index: key, label: value});
+            if (_allowedKeys.length === 0 || _allowedKeys.indexOf(value) >= 0) {
+                availableKeys.push({index: key, label: value})
+            }
         });
         Object.entries(state.value.queryLabels).forEach(([key, value]) => {
             queryLabels.push({index: key, label: value});
         });
     }
-
-    const onContentUpdate = (value) => {
-    };
 
     return (
         <Grid container spacing={3}>
@@ -101,7 +102,7 @@ export const DataViewVariable = (props) => {
                             <Grid item md={8} xs={12}>
                                 <Selector formik={formik}
                                           name={dataSourceKeys}
-                                          label="Identyfikator"
+                                          label={availableKeys.length === 0 ? "Brak akceptowanych identyfikatorów": "Identyfikator"}
                                           values={availableKeys}
                                           indexVar="index"
                                           labelVar="label"

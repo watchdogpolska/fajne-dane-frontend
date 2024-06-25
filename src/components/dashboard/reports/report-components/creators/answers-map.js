@@ -5,11 +5,13 @@ import {
 import {
     DataViewVariable
 } from "@/components/dashboard/reports/report-components/creators/components/data-view-variable";
+import {MetadataForm} from "@/components/dashboard/reports/report-components/creators/components/metadata-form";
 
 
 export const AnswersMapForm = (props) => {
     const {
         formik,
+        metadataFields,
         isUpdating,
         ...other
     } = props;
@@ -37,6 +39,7 @@ export const AnswersMapForm = (props) => {
                                           disableKeys={false}
                                           disableColumns={true}
                                           multiColumns={false}
+                                          allowedKeys={["Województwa", "Powiaty", "Gminy"]}
                                           readOnly={readOnly}
                                           dataSourceId="dataSourceId"
                                           dataSourceKeys="dataSourceKey"/>
@@ -50,6 +53,14 @@ export const AnswersMapForm = (props) => {
                                            name="title"
                                            label="Tytuł mapy"
                                            description="Tytuł, który będzie wyświetał się nad mapą."/>
+                    </CardContent>
+                </Card>
+            </Grid>
+            <Grid item md={12}>
+                <Card>
+                    <CardContent>
+                        <MetadataForm formik={formik}
+                                      metadataFields={metadataFields}/>
                     </CardContent>
                 </Card>
             </Grid>

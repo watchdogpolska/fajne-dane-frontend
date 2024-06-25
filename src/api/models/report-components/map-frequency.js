@@ -3,8 +3,8 @@ import DataView from "@/api/models/data-view";
 
 
 export default class MapFrequencyComponent extends DataComponent {
-    constructor(id, name, type, dataView, title, index, value) {
-        super(id, name, type, dataView);
+    constructor(id, name, type, dataView, title, index, value, metadata) {
+        super(id, name, type, dataView, metadata);
         this.title = title;
         this.index = index;
         this.value = value;
@@ -19,7 +19,8 @@ export default class MapFrequencyComponent extends DataComponent {
             dataView,
             data['title'],
             data['index'],
-            data['value']
+            data['value'],
+            data['metadata']
         );
     }
 

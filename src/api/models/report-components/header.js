@@ -2,8 +2,8 @@ import Component from "./component";
 
 
 export default class HeaderComponent extends Component {
-    constructor(id, name, type, title, subtitle) {
-        super(id, name, type);
+    constructor(id, name, type, title, subtitle, metadata) {
+        super(id, name, type, metadata);
         this.title = title;
         this.subtitle = subtitle;
     }
@@ -14,7 +14,8 @@ export default class HeaderComponent extends Component {
             data['name'],
             data['type'],
             data['title'],
-            data['subtitle']
+            data['subtitle'],
+            data['metadata'],
         );
     }
 

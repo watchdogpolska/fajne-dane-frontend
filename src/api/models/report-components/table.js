@@ -3,8 +3,8 @@ import DataView from "@/api/models/data-view";
 
 
 export default class TableComponent extends DataComponent {
-    constructor(id, name, type, dataView, title, columns) {
-        super(id, name, type, dataView);
+    constructor(id, name, type, dataView, title, columns, metadata) {
+        super(id, name, type, dataView, metadata);
         this.title = title;
         this.columns = columns;
     }
@@ -17,7 +17,8 @@ export default class TableComponent extends DataComponent {
             data['type'],
             dataView,
             data['title'],
-            data['columns']
+            data['columns'],
+            data['metadata']
         );
     }
 

@@ -1,14 +1,15 @@
 import React from 'react';
-import {Grid} from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 import {useAuth} from "@/hooks/use-auth";
+import {roundTwoDecimal} from "@/utils/math-utils";
 
+function formatCellValue(value, format) {
+    if (format === "percentage") {
+        return roundTwoDecimal(value* 100) + "%";
+    } else {
+        return parseFloat(value).toFixed(2);
+    }
+}
 
 
 const TableComponent = (props) => {
@@ -20,6 +21,8 @@ const TableComponent = (props) => {
     const { datasets } = useAuth();
     let dataset = datasets.datasets[component.dataUrl];
     let data = dataset.data;
+    let titleFontSize = component.metadata['titleFontSize'] || 24;
+    let valueFormat = component.metadata['formatValue'];
 
     const mapColumnName = function (column) {
         if (column.includes("_name_"))
@@ -52,9 +55,10 @@ const TableComponent = (props) => {
         let cells = [];
         for (const [cellIndex, column] of data.meta.fields.entries()) {
             let value = row[column];
-            if (parseFloat(value)) {
-                value = parseFloat(value).toFixed(2);
+            if (column === "document_id") {
+                value = formatCellValue(value, valueFormat);
             }
+
             if (cellIndex > 0) {
                 cells.push(<TableCell key={`table-${component.id}-row-${index}-${cellIndex}`}
                                       align="right">{value}</TableCell>);
@@ -79,6 +83,12 @@ const TableComponent = (props) => {
 
     return (
         <Grid item md={width} xl={width}>
+            <Typography variant="h5"
+                        mb={2}
+                        sx={{fontSize: `{titleFontSize}px !important`}}
+                        align="center">
+                {component.title}
+            </Typography>
             <TableContainer component={Paper} sx={{maxHeight: "300px"}}>
                 <Table aria-label="simple table">
                     <TableHead>

@@ -5,11 +5,13 @@ import {
 import {
     DataViewVariable
 } from "@/components/dashboard/reports/report-components/creators/components/data-view-variable";
+import {MetadataForm} from "@/components/dashboard/reports/report-components/creators/components/metadata-form";
 
 
 export const FrequencyTableForm = (props) => {
     const {
         formik,
+        metadataFields,
         isUpdating,
         ...other
     } = props;
@@ -49,6 +51,14 @@ export const FrequencyTableForm = (props) => {
                                            name="title"
                                            label="Tytuł tabeli"
                                            description="Tytuł, który będzie wyświetał się nad tabelą."/>
+                    </CardContent>
+                </Card>
+            </Grid>
+            <Grid item md={12}>
+                <Card>
+                    <CardContent>
+                        <MetadataForm formik={formik}
+                                      metadataFields={metadataFields}/>
                     </CardContent>
                 </Card>
             </Grid>

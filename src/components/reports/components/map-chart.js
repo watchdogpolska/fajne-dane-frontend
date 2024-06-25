@@ -1,13 +1,15 @@
 import React, {useEffect} from "react"
 import { Chart as ChartJS } from 'chart.js/auto';
 import * as ChartGeo from 'chartjs-chart-geo'
-
 import { ChoroplethController, GeoFeature, ColorScale, ProjectionScale } from 'chartjs-chart-geo';
+import {roundTwoDecimal} from "@/utils/math-utils";
+
 
 ChartJS.register(ChoroplethController, GeoFeature, ColorScale, ProjectionScale);
 
-const WOJEDOWDZTWA = 'https://raw.githubusercontent.com/ppatrzyk/polska-geojson/master/wojewodztwa/wojewodztwa-min.geojson';
-const POWIATY = 'https://raw.githubusercontent.com/ppatrzyk/polska-geojson/master/powiaty/powiaty-min.geojson';
+const WOJEDOWDZTWA = 'https://raw.githubusercontent.com/jusuff/PolandGeoJson/main/data/poland.voivodeships.json';
+const POWIATY = 'https://raw.githubusercontent.com/jusuff/PolandGeoJson/main/data/poland.counties.json';
+const GMINY = 'https://raw.githubusercontent.com/jusuff/PolandGeoJson/main/data/poland.municipalities.json';
 
 
 const MapChart = (props) => {
@@ -18,14 +20,19 @@ const MapChart = (props) => {
         ...other
     } = props;
 
-
-
     useEffect(()=>{
 
         let canvas = document.getElementById(`canvas-${id}`)
         if(!canvas) return
 
-        let sourceData = type === "Powiaty" ? POWIATY : WOJEDOWDZTWA;
+        let sourceData = null;
+        if (type === "Województwa") {
+            sourceData = WOJEDOWDZTWA;
+        } else if (type === "Powiaty") {
+            sourceData = POWIATY;
+        } else {
+            sourceData = GMINY;
+        }
 
         const normalizeName = (name) => {
             if (type === "Powiaty") {
@@ -37,19 +44,15 @@ const MapChart = (props) => {
         fetch(sourceData).then((r) => r.json()).then((pol) => {
             let states = pol.features;
 
-            states.forEach((d) => {
-                let value = values[normalizeName(d.properties.nazwa)];
-            });
-
             const chart = new ChartJS(canvas.getContext("2d"), {
                 type: 'choropleth',
                 data: {
-                    labels: states.map((d) => d.properties.nazwa),
+                    labels: states.map((d) => d.properties.name),
                     datasets: [{
                         label: 'States',
                         outline: states,
                         data: states.map((d) => ({
-                            feature: d, value: values[normalizeName(d.properties.nazwa)]
+                            feature: d, value: roundTwoDecimal(values[normalizeName(d.properties.name)] * 100)
                         })),
                     }]
                 },
@@ -60,12 +63,20 @@ const MapChart = (props) => {
                     legend: {
                       display: false
                     },
+                    tooltip: {
+                        callbacks: {
+                            label(item) {
+                                let value = item.formattedValue;
+                                return `${item.chart.data?.labels?.[item.dataIndex]}: ${value + "%"}`;
+                            },
+                        },
+                    },
                   },
                   scales: {
                     projection: {
                       axis: 'xy',
-                      projection: 'stereographic'
-                    }
+                      projection: 'mercator'
+                    },
                   }
                 }
             });

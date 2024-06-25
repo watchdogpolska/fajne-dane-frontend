@@ -29,6 +29,7 @@ export const BaseComponentForm = (props) => {
     let config = ComponentConfigs[componentType];
     let fields = Object.keys(config.defaultValues);
     let requiredFields = config.requiredFields;
+    let metadataFields = config.metadataFields;
 
     let _initialValues = initialValues || config.defaultValues;
 
@@ -97,8 +98,12 @@ export const BaseComponentForm = (props) => {
     if (loading) {
         return <Loading/>;
     }
+    console.log(formik.values);
 
-    let componentForm = React.createElement(config.component, {formik: formik, isUpdating: isUpdating});
+    let componentForm = React.createElement(
+        config.component,
+        {formik: formik, isUpdating: isUpdating, metadataFields: metadataFields}
+    );
 
     return (
         <>

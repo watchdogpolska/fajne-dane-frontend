@@ -14,11 +14,14 @@ const ReferencesComponent = (props) => {
     if (layout) {
         width = layout.width;
     }
+    let titleFontSize = component.metadata['titleFontSize'] || 24;
 
     return (
         <Grid item md={width} xl={width}>
-            <Typography color="textSecondary">
-                <b>Źródła danych:</b>
+            <Typography variant="h5"
+                        sx={{fontSize: `${titleFontSize}px !important`}}
+                        align="center">
+                Źródła danych:
             </Typography>
             <List dense={true}>
                 {

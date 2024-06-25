@@ -28,9 +28,15 @@ export const ComponentConfigs = {
             title: '',
             dataSourceId: '',
             dataSourceColumn: '',
+            metadata: {
+                "titleFontSize": 24,
+            }
         },
         requiredFields: [
             'name', 'title', 'dataSourceId', 'dataSourceColumn'
+        ],
+        metadataFields: [
+            { name: "titleFontSize", label: "Wielkość tytułu", type: "number"},
         ]
     },
     "title-block": {
@@ -42,10 +48,18 @@ export const ComponentConfigs = {
         defaultValues: {
             name: '',
             title: '',
-            subtitle: ''
+            subtitle: '',
+            metadata: {
+                "titleFontSize": 36,
+                "subtitleFontSize": 24,
+            }
         },
         requiredFields: [
             'name', 'title'
+        ],
+        metadataFields: [
+            { name: "titleFontSize", label: "Wielkość tytułu", type: "number"},
+            { name: "subtitleFontSize", label: "Wielkość podtytułu", type: "number"},
         ]
     },
     "html-body": {
@@ -56,11 +70,13 @@ export const ComponentConfigs = {
         icon: NotesIcon,
         defaultValues: {
             name: '',
-            text: ''
+            text: '',
+            metadata: {}
         },
         requiredFields: [
             'name', 'text'
-        ]
+        ],
+        metadataFields: []
     },
     "frequency-table": {
         typeName: "frequency-table",
@@ -71,11 +87,17 @@ export const ComponentConfigs = {
         defaultValues: {
             name: '',
             dataSourceId: '',
-            dataSourceKey: '',
-            title: ''
+            dataSourceColumn: '',
+            title: '',
+            metadata: {
+                "titleFontSize": 24,
+            }
         },
         requiredFields: [
             'name', 'dataSourceId', 'dataSourceKey'
+        ],
+        metadataFields: [
+            { name: "titleFontSize", label: "Wielkość tytułu", type: "number"},
         ]
     },
     "answers-table": {
@@ -88,10 +110,18 @@ export const ComponentConfigs = {
             name: '',
             dataSourceId: '',
             dataSourceKey: '',
-            title: ''
+            title: '',
+            metadata: {
+                "formatValue": "percentage",
+                "titleFontSize": 24,
+            }
         },
         requiredFields: [
             'name', 'dataSourceId', 'dataSourceKey'
+        ],
+        metadataFields: [
+            { name: "titleFontSize", label: "Wielkość tytułu", type: "number"},
+            { name: "formatValue", label: "Format wartości liczbowych", type: "hidden"},
         ]
     },
     "answers-map": {
@@ -104,10 +134,16 @@ export const ComponentConfigs = {
             name: '',
             dataSourceId: '',
             dataSourceKey: '',
-            title: ''
+            title: '',
+            metadata: {
+                "titleFontSize": 24,
+            }
         },
         requiredFields: [
             'name', 'dataSourceId', 'dataSourceKey'
+        ],
+        metadataFields: [
+            { name: "titleFontSize", label: "Wielkość tytułu", type: "number"},
         ]
     },
     "references": {
@@ -118,9 +154,15 @@ export const ComponentConfigs = {
         icon: MenuBookIcon,
         defaultValues: {
             name: '',
+            metadata: {
+                "titleFontSize": 24,
+            }
         },
         requiredFields: [
             'name'
+        ],
+        metadataFields: [
+            { name: "titleFontSize", label: "Wielkość tytułu", type: "number"},
         ]
     },
 }

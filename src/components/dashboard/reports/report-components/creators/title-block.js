@@ -1,10 +1,12 @@
 import {Card, CardContent, Grid} from '@mui/material';
 import {TextFieldVariable} from "./components/text-field-variable";
+import {MetadataForm} from "@/components/dashboard/reports/report-components/creators/components/metadata-form";
 
 
 export const TitleBlockForm = (props) => {
     const {
         formik,
+        metadataFields,
         ...other
     } = props;
 
@@ -43,6 +45,14 @@ export const TitleBlockForm = (props) => {
                                            label={"Podtytuł"}
                                            required={false}
                                            description={"Treść podtytułu, który pojawi się pod nagłówkiem."}/>
+                    </CardContent>
+                </Card>
+            </Grid>
+            <Grid item md={12}>
+                <Card>
+                    <CardContent>
+                        <MetadataForm formik={formik}
+                                      metadataFields={metadataFields}/>
                     </CardContent>
                 </Card>
             </Grid>

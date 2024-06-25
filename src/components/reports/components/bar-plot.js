@@ -35,6 +35,8 @@ const BarPlotComponent = (props) => {
     const { datasets } = useAuth();
     let dataset = datasets.getDataset(component.dataUrl);
 
+    let titleFontSize = component.metadata['titleFontSize'] || 24;
+
     let dataView = component.dataView;
     let source = dataset.data;
     let labels = source.data.map((row) => row[component.index]);
@@ -49,6 +51,9 @@ const BarPlotComponent = (props) => {
             title: {
                 display: true,
                 text: component.title,
+                font: {
+                    size: titleFontSize
+                }
             },
         },
     };

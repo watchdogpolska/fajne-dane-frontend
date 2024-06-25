@@ -13,6 +13,8 @@ const MapFrequencyComponent = (props) => {
     } = props;
     const { datasets } = useAuth();
 
+    let titleFontSize = component.metadata['titleFontSize'] || 24;
+
     let dataset = datasets.getDataset(component.dataUrl);
     let indexName = component.dataView.keysLabels[component.index.replace("_name_", "_key_")];
 
@@ -32,8 +34,8 @@ const MapFrequencyComponent = (props) => {
 
     return (
         <Grid item md={width} xl={width}>
-            <Typography color="textSecondary"
-                        align={"center"}
+            <Typography align={"center"}
+                        sx={{fontSize: `${titleFontSize}px !important`}}
                         mb={2}
                         variant="h5">
                 {component.title}

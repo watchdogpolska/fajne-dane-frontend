@@ -36,14 +36,15 @@ export class ReportComponentsRepository extends Repository {
         return HTMLComponent.fromJson(response.data);
     }
 
-    async createReferencesComponent(reportId, {name}) {
+    async createReferencesComponent(reportId, {name, metadata}) {
         let response = await this.post(`/reports/${reportId}/components/create/references/`, {
             name: name,
+            metadata: metadata,
         })
         return ReferencesComponent.fromJson(response.data);
     }
 
-    async createFrequencyPlotComponent(reportId, {name, title, dataSourceId, dataSourceColumn}) {
+    async createFrequencyPlotComponent(reportId, {name, title, dataSourceId, dataSourceColumn, metadata}) {
         let response = await this.post(`/reports/${reportId}/components/create/barplot/`, {
             data: {
                 name: name,
@@ -58,13 +59,14 @@ export class ReportComponentsRepository extends Repository {
                 type: "BAR_PLOT",
                 title: title,
                 index: dataSourceColumn,
-                value: "count"
+                value: "count",
+                metadata: metadata,
             }
         })
         return BarPlotComponent.fromJson(response.data);
     }
 
-    async createFrequencyTableComponent(reportId, {name, title, dataSourceId, dataSourceColumn}) {
+    async createFrequencyTableComponent(reportId, {name, title, dataSourceId, dataSourceColumn, metadata}) {
         let response = await this.post(`/reports/${reportId}/components/create/table/`, {
             data: {
                 name: name,
@@ -79,13 +81,14 @@ export class ReportComponentsRepository extends Repository {
                 type: "TABLE",
                 title: title,
                 index: dataSourceColumn,
-                value: "count"
+                value: "count",
+                metadata: metadata,
             }
         })
         return TableComponent.fromJson(response.data);
     }
 
-    async createAnswersMapComponent(reportId, {name, title, dataSourceId, dataSourceKey}) {
+    async createAnswersMapComponent(reportId, {name, title, dataSourceId, dataSourceKey, metadata}) {
         let dataSourceKeyName = dataSourceKey.replace('_key_', '_name_');
         let response = await this.post(`/reports/${reportId}/components/create/answersmap/`, {
             data: {
@@ -101,13 +104,14 @@ export class ReportComponentsRepository extends Repository {
                 type: "MAP_FREQUENCY",
                 title: title,
                 index: dataSourceKeyName,
-                value: "document_id"
+                value: "document_id",
+                metadata: metadata,
             }
         })
         return MapFrequencyComponent.fromJson(response.data);
     }
 
-    async createAnswersTableComponent(reportId, {name, title, dataSourceId, dataSourceKey}) {
+    async createAnswersTableComponent(reportId, {name, title, dataSourceId, dataSourceKey, metadata}) {
         let dataSourceKeyName = dataSourceKey.replace('_key_', '_name_');
         let response = await this.post(`/reports/${reportId}/components/create/table/`, {
             data: {
@@ -123,17 +127,19 @@ export class ReportComponentsRepository extends Repository {
                 type: "TABLE",
                 title: title,
                 index: dataSourceKeyName,
-                value: "document_id"
+                value: "document_id",
+                metadata: metadata
             }
         })
         return TableComponent.fromJson(response.data);
     }
 
-    async createHeaderComponent(reportId, {name, title, subtitle}) {
+    async createHeaderComponent(reportId, {name, title, subtitle, metadata}) {
         let response = await this.post(`/reports/${reportId}/components/create/header/`, {
             name: name,
             title: title,
-            subtitle: subtitle
+            subtitle: subtitle,
+            metadata: metadata
         })
         return HeaderComponent.fromJson(response.data);
     }

@@ -12,8 +12,6 @@ export const TextFieldVariable = (props) => {
         ...other
     } = props;
 
-    let infoIcon = null;
-
     return (
         <Grid container spacing={3}>
             <Grid item md={4} xs={12}>

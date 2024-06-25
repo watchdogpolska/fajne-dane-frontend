@@ -2,8 +2,8 @@ import Component from "./component";
 
 
 export default class HTMLComponent extends Component {
-    constructor(id, name, type, text) {
-        super(id, name, type);
+    constructor(id, name, type, text, metadata) {
+        super(id, name, type, metadata);
         this.text = text;
     }
 
@@ -12,7 +12,8 @@ export default class HTMLComponent extends Component {
             data['id'],
             data['name'],
             data['type'],
-            data['text']
+            data['text'],
+            data['metadata'],
         );
     }
 

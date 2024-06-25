@@ -68,16 +68,19 @@ const EditReportComponent = () => {
         initialValues = {
             name: component.name,
             title: component.title,
-            subtitle: component.subtitle
+            subtitle: component.subtitle,
+            metadata: component.metadata,
         };
     } else if (componentType === "html-body") {
         initialValues = {
             name: component.name,
-            text: component.text
+            text: component.text,
+            metadata: component.metadata,
         };
     } else if (componentType === "references") {
         initialValues = {
             name: component.name,
+            metadata: component.metadata,
         };
     } else if (componentType === "frequency-plot") {
         initialValues = {
@@ -85,6 +88,7 @@ const EditReportComponent = () => {
             title: component.title,
             dataSourceId: component.dataView.dataSource.id,
             dataSourceColumn: component.index,
+            metadata: component.metadata,
         };
     } else if (componentType === "frequency-table") {
         let componentIndex = component.dataView.values[0];
@@ -93,6 +97,7 @@ const EditReportComponent = () => {
             title: component.title,
             dataSourceId: component.dataView.dataSource.id,
             dataSourceColumn: componentIndex,
+            metadata: component.metadata,
         };
     } else if (componentType === "answers-map") {
         initialValues = {
@@ -100,6 +105,7 @@ const EditReportComponent = () => {
             title: component.title,
             dataSourceId: component.dataView.dataSource.id,
             dataSourceKey: component.index.replace("_name_", "_key_"),
+            metadata: component.metadata,
         };
     } else if (componentType === "answers-table") {
         let componentIndex = component.dataView.keys[0];
@@ -108,6 +114,7 @@ const EditReportComponent = () => {
             title: component.title,
             dataSourceId: component.dataView.dataSource.id,
             dataSourceKey: componentIndex.replace("_name_", "_key_"),
+            metadata: component.metadata,
         };
     }
 
