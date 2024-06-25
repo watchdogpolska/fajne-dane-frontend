@@ -51,6 +51,7 @@ export const ReportComponentSelector = (props) => {
         });
         return (
             <Grid container
+                  mt={2}
                   justifyContent="space-between"
                   spacing={2}>
                 {components}
