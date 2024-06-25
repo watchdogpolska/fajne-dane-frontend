@@ -76,9 +76,7 @@ const AddReportComponent = () => {
                                     </Link>
                                 </NextLink>
                             </Grid>
-                            <Grid item md={12}>
-                                <ReportComponentSelector reportId={reportId}/>
-                            </Grid>
+                            <ReportComponentSelector reportId={reportId}/>
                         </Grid>
                     </Box>
                 </Container>

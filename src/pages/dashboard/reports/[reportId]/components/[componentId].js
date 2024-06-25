@@ -152,12 +152,10 @@ const EditReportComponent = () => {
                                     </Link>
                                 </NextLink>
                             </Grid>
-                            <Grid item md={12}>
-                                <BaseComponentForm componentType={componentType}
-                                                   reportId={reportId}
-                                                   componentId={componentId}
-                                                   initialValues={initialValues}/>
-                            </Grid>
+                            <BaseComponentForm componentType={componentType}
+                                               reportId={reportId}
+                                               componentId={componentId}
+                                           initialValues={initialValues}/>
                         </Grid>
                     </Box>
                 </Container>

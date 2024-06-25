@@ -7,6 +7,7 @@ export const Loading = () => {
         <Box sx={{
             display: 'flex',
             justifyContent:'center',
+            marginTop: "100px",
             alignItems:'center'
         }}>
             <CircularProgress />

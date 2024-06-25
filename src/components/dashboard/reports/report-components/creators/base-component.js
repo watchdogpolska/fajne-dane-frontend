@@ -1,5 +1,5 @@
 import React from "react"
-import {Box, Button, Card, CardContent, Grid} from '@mui/material';
+import {Box, Button, Card, CardContent, Typography, Grid} from '@mui/material';
 import {useRouter} from 'next/router';
 import {useFormik} from 'formik';
 import {useAuth} from "@/hooks/use-auth";
@@ -9,8 +9,6 @@ import {Loading} from "@/components/dashboard/common/loading";
 import {RedirectBackConfirmModal} from "@/components/dashboard/common/redirect-back-confirm-modal";
 import {DeleteConfirmModal} from '@/components/dashboard/common/delete-confirm-modal';
 import {ComponentConfigs} from "@/components/dashboard/reports/report-components/creators/configs";
-
-
 
 
 export const BaseComponentForm = (props) => {
@@ -106,58 +104,70 @@ export const BaseComponentForm = (props) => {
 
     return (
         <>
-            <RedirectBackConfirmModal open={cancelModalOpen}
-                                      onClose={handleCloseCancel}
-                                      onAccept={handleAcceptCancel}/>
-            <DeleteConfirmModal open={deleteModalOpen}
-                                header="Usunać wybrany komponent?"
-                                message1="Czy jesteś pewien, że chcesz usunąć wybrany komponent?"
-                                message2="Uwaga, operacja usunięcia wpisów jest nieodwracalna."
-                                onClose={handleCloseDelete}
-                                onAccept={handleAcceptDelete}/>
-            <form onSubmit={formik.handleSubmit}>
-                <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                        {componentForm}
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                justifyContent: 'space-between',
-                                mx: -1,
-                                mb: -1,
-                                mt: 3
-                            }}
-                        >
-                            {
-                                isUpdating ?
-                                    <Button onClick={handleOpenDelete}
-                                            sx={{ m: 1, ml: 'auto' }}
-                                            variant="outlined" color="error">
-                                        Usuń
-                                    </Button> : null
-                            }
-                            <Button onClick={handleOpenCancel}
-                                    sx={isUpdating ? {m: 1} : { m: 1 , ml: 'auto'}}
-                                    variant="outlined">
-                                Anuluj
-                            </Button>
-                            <Button sx={{ m: 1 }}
-                                    type="submit"
-                                    disabled={!checkSubmitEnabled()}
-                                    variant="contained">
+            <Grid item xs={12}>
+                <Typography variant="h4">
+                    {config.name}
+                </Typography>
+                <Typography color="textSecondary"
+                            variant="body2"
+                            sx={{ mt: 1 }}>
+                    {config.description}
+                </Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <RedirectBackConfirmModal open={cancelModalOpen}
+                                          onClose={handleCloseCancel}
+                                          onAccept={handleAcceptCancel}/>
+                <DeleteConfirmModal open={deleteModalOpen}
+                                    header="Usunać wybrany komponent?"
+                                    message1="Czy jesteś pewien, że chcesz usunąć wybrany komponent?"
+                                    message2="Uwaga, operacja usunięcia wpisów jest nieodwracalna."
+                                    onClose={handleCloseDelete}
+                                    onAccept={handleAcceptDelete}/>
+                <form onSubmit={formik.handleSubmit}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            {componentForm}
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    justifyContent: 'space-between',
+                                    mx: -1,
+                                    mb: -1,
+                                    mt: 3
+                                }}
+                            >
                                 {
                                     isUpdating ?
-                                    "Aktualizuj komponent" :
-                                    "Dodaj komponent"
+                                        <Button onClick={handleOpenDelete}
+                                                sx={{ m: 1, ml: 'auto' }}
+                                                variant="outlined" color="error">
+                                            Usuń
+                                        </Button> : null
                                 }
-                            </Button>
-                        </Box>
+                                <Button onClick={handleOpenCancel}
+                                        sx={isUpdating ? {m: 1} : { m: 1 , ml: 'auto'}}
+                                        variant="outlined">
+                                    Anuluj
+                                </Button>
+                                <Button sx={{ m: 1 }}
+                                        type="submit"
+                                        disabled={!checkSubmitEnabled()}
+                                        variant="contained">
+                                    {
+                                        isUpdating ?
+                                        "Aktualizuj komponent" :
+                                        "Dodaj komponent"
+                                    }
+                                </Button>
+                            </Box>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </form>
+                </form>
+            </Grid>
         </>
     );
 };

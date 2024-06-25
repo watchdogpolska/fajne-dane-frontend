@@ -55,10 +55,15 @@ export const MetadataForm = (props) => {
     metadataFields.forEach((field) => {
         if (field.type === "number") {
             if (fields.length > 0) {
-                fields.push(<Grid item md={4} xs="hidden"/>);
+                fields.push(
+                    <Grid item
+                          key={`metadata-hidden-field-${fields.length}`}
+                          md={4}
+                          sx={{display: {xs: "none", md: "block"}}}/>
+                );
             }
             fields.push(
-                <Grid item md={8} xs={12} key={field.name}>
+                <Grid item md={8} xs={12} key={`metadata-field-${fields.length}`}>
                     <NumberMetadataField name={field.name}
                                          label={field.label}
                                          value={state[field.name]}
