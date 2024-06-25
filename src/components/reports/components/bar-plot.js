@@ -51,6 +51,7 @@ const BarPlotComponent = (props) => {
             title: {
                 display: true,
                 text: component.title,
+                color: "#121828",
                 font: {
                     size: titleFontSize
                 }
